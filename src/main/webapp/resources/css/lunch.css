@@ -1,11 +1,15 @@
 .lunch {
     display: flex;
     flex-direction: column;
-    margin-left: 10%;
+    margin: 0 10%;
 }
 
 .lunchItemMain {
     display: flex;
+}
+
+.lunchItem {
+    margin-top: 3%;
 }
 
 .lunchItemMain * {
