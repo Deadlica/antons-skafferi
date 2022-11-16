@@ -55,6 +55,8 @@
     padding: 5px;
     position: relative;
     cursor: pointer;
+    background-color: lightblue;
+    border-radius: 30px;
 }
 .calender-days div:hover{
     background-color: red;
