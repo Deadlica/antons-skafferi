@@ -30,6 +30,10 @@ h1 {
     font-family: Cinzel;
 }
 
+h2, h3, h4, p {
+    font-family: Cormorant;
+}
+
 .header-container {
     display: flex;
     flex-direction: column;
