@@ -83,7 +83,7 @@
 }
 
 .month-change:hover{
-    color: var(--joel_brown);
+    color: black;
 }
 .calender-footer{
     padding: 10px;
