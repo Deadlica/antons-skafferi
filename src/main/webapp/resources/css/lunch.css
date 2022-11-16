@@ -1,0 +1,4 @@
+.lunchNav {
+    display: flex;
+    flex-direction: row;
+}
