@@ -21,7 +21,6 @@ let days=document.querySelector('.calender-days')
 generateCalender=(month,year)=>{
     days.innerHTML='';
     let days_of_month =[31,getFebDays(year),31,30,31,30,31,31,30,31,30,31]
-    let temp
     let month_picker=document.querySelector('.month22')
     month_picker.innerHTML=month_names[month]
 
@@ -43,15 +42,10 @@ generateCalender=(month,year)=>{
 
         }
         else {
-            days.innerHTML+= '<div></div>'
+            days.innerHTML+= '<span></span>'
         }
-temp=index
     }
 
-    while ((temp+1)%7!==0){
-        temp++
-        days.innerHTML+= '<div></div>'
-    }
 
 
 
