@@ -1,4 +1,7 @@
-
+:root {
+    --joel_brown: #9b5f03;
+    --background_white: #f5f5f5;
+}
 .booking{
     height: 100vh;
     display:  grid;
@@ -9,8 +12,9 @@
 .calender{
     height: max-content;
     width: max-content;
-    background-color: #8787f5;
+    background-color: var(--joel_brown);
     border-radius: 30px;
+    border-style: solid;
 
 
 }
@@ -18,7 +22,7 @@
 .calender-header{
     font-size: 30px;
     font-weight: 600;
-    color: aqua;
+    color: var(--background_white);
     padding: 10px;
 }
 
@@ -36,7 +40,7 @@
 .calender-week-day div{
     display: grid;
     place-items: center;
-    color: black;
+    color: var(--background_white);
 }
 
 .calender-days{
@@ -55,11 +59,13 @@
     padding: 5px;
     position: relative;
     cursor: pointer;
-    background-color: lightblue;
+    background-color: var(--background_white);
     border-radius: 30px;
+    border-style: solid;
+
 }
 .calender-days div:hover{
-    background-color: red;
+    background-color: var(--joel_brown);
     border-radius: 30px;
 
 }
@@ -77,7 +83,7 @@
 }
 
 .month-change:hover{
-    color: red;
+    color: var(--joel_brown);
 }
 .calender-footer{
     padding: 10px;
