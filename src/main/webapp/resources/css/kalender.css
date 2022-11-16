@@ -1,0 +1,88 @@
+
+.booking{
+    height: 100vh;
+    display:  grid;
+    place-items: center;
+
+}
+
+.calender{
+    height: max-content;
+    width: max-content;
+    background-color: #8787f5;
+    border-radius: 30px;
+
+
+}
+
+.calender-header{
+    font-size: 30px;
+    font-weight: 600;
+    color: aqua;
+    padding: 10px;
+}
+
+.calender-body{
+}
+
+.calender-week-day{
+    display: grid;
+    grid-template-columns: repeat(7,14%);
+    font-weight: 600;
+    gap: 2px;
+}
+
+
+.calender-week-day div{
+    display: grid;
+    place-items: center;
+    color: black;
+}
+
+.calender-days{
+    display: grid;
+    grid-template-columns: repeat(7,14%);
+    gap: 2px;
+}
+
+
+.calender-days div{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    position: relative;
+    cursor: pointer;
+    background-color: lightblue;
+    border-radius: 30px;
+}
+.calender-days div:hover{
+    background-color: red;
+    border-radius: 30px;
+
+}
+
+.month-picker{
+    display: flex;
+    align-items: center;
+    padding: 0 40%;
+}
+.month-change{
+    width: 20px;
+    border-radius: 50%;
+    display: grid;
+    cursor: pointer;
+}
+
+.month-change:hover{
+    color: red;
+}
+.calender-footer{
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
