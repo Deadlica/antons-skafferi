@@ -19,6 +19,8 @@ let days=document.querySelector('.calender-days')
 
 
 generateCalender=(month,year)=>{
+    let currDate=new Date()
+    console.log('----------'+currDate.getUTCDate())
     days.innerHTML='';
     let days_of_month =[31,getFebDays(year),31,30,31,30,31,31,30,31,30,31]
     let month_picker=document.querySelector('.month22')
@@ -38,8 +40,13 @@ generateCalender=(month,year)=>{
         console.log(index+'--------'+firstDayStart)
 
         if (index>=firstDayStart-1){
+        if ((index - firstDayStart+2)==currDate.getUTCDate()&&currDate.getMonth()==month){
+            days.innerHTML+= "<div class ='this-day'>"+ (index - firstDayStart+2) +'</div>'
+        }
+        else {
             days.innerHTML+= '<div>'+ (index - firstDayStart+2) +'</div>'
 
+        }
         }
         else {
             days.innerHTML+= '<span></span>'

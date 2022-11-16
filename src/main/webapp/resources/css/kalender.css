@@ -64,10 +64,14 @@
     border-style: solid;
 
 }
+
+.calender-days div.this-day{
+    background-color: gray;
+}
+
 .calender-days div:hover{
     background-color: var(--joel_brown);
     border-radius: 30px;
-
 }
 
 .month-picker{
