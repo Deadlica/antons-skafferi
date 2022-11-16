@@ -43,7 +43,7 @@ h2, h3, h4, p {
 .nav-bar {
     background-color: var(--joel_brown);
     color: white;
-    padding: 1em 0;
+    padding: 0.3em 0;
 }
 
 .nav-bar ul {
@@ -56,7 +56,7 @@ h2, h3, h4, p {
 
 .nav-bar ul li {
     text-transform: uppercase;
-    font-family: 'Cinzel';
+    font-family: Cinzel, cursive;
     font-weight: lighter;
     font-size: xx-large;
 }
@@ -85,8 +85,4 @@ h2, h3, h4, p {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.circle h1 {
-    font-family: 'Cinzel';
 }

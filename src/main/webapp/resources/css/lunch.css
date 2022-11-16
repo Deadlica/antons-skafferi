@@ -17,8 +17,7 @@
 }
 
 .lunchItemDescription {
-    margin: 0;
-    font-style: italic;
+    color: darkslategrey;
 }
 
 .breakPoint {
