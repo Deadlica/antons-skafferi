@@ -1,53 +1,52 @@
 
-.booking{
+.booking {
     height: 100vh;
     place-items: center;
     display: flex;
 }
 
-.calender{
-    height: max-content;
+.calender {
     width: max-content;
     background-color: var(--joel_brown);
     border-radius: 30px;
     border-style: solid;
-padding: 0 10px;
+    padding: 0 10px;
     height: 520px;
 
 }
 
-.calender-header{
+.calender-header {
     font-size: 30px;
     font-weight: 600;
     color: var(--background_white);
     padding: 10px;
 }
 
-.calender-body{
+.calender-body {
 }
 
-.calender-week-day{
+.calender-week-day {
     display: grid;
-    grid-template-columns: repeat(7,14%);
+    grid-template-columns: repeat(7, 14%);
     font-weight: 600;
     gap: 2px;
 }
 
 
-.calender-week-day p{
+.calender-week-day p {
     display: grid;
     place-items: center;
     color: var(--background_white);
 }
 
-.calender-days{
+.calender-days {
     display: grid;
-    grid-template-columns: repeat(7,14%);
+    grid-template-columns: repeat(7, 14%);
     gap: 2px;
 }
 
 
-.calender-days p{
+.calender-days p {
     width: 50px;
     font-size: 30px;
     height: 50px;
@@ -63,22 +62,23 @@ padding: 0 10px;
 
 }
 
-.calender-days p.this-day{
+.calender-days p.this-day {
     background-color: gray;
 }
 
-.calender-days p:hover{
+.calender-days p:hover {
     background-color: var(--joel_brown);
     border-radius: 30px;
 }
 
 
-.month-picker{
+.month-picker {
     display: flex;
     align-items: center;
     padding: 0 35%;
 }
-.month-change{
+
+.month-change {
     width: 20px;
     border-radius: 50%;
     display: grid;
@@ -88,10 +88,11 @@ padding: 0 10px;
 
 }
 
-.month-change:hover{
+.month-change:hover {
     color: black;
 }
-.calender-footer{
+
+.calender-footer {
     padding: 10px;
     display: flex;
     justify-content: flex-end;
@@ -99,8 +100,7 @@ padding: 0 10px;
 }
 
 
-
-.booking-inputs{
+.booking-inputs {
     display: grid;
     padding: 0 10%;
 }
