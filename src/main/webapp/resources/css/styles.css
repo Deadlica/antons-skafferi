@@ -41,6 +41,8 @@ h2, h3, h4, p {
 }
 
 .nav-bar {
+    position: sticky;
+    top: 0;
     background-color: var(--joel_brown);
     color: white;
     padding: 0.3em 0;
