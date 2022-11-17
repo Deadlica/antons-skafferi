@@ -101,4 +101,7 @@
     display: grid;
     padding: 0 10%;
 }
-
+.booking-inputs label {
+    display: grid;
+    align-content: center;
+}
