@@ -39,6 +39,11 @@ h2, h3, h4, p {
     font-family: Cormorant, serif;
 }
 
+.main {
+    padding: 0 20%;
+    background-color: var(--background_white);
+}
+
 .header-container {
     display: flex;
     flex-direction: column;
@@ -75,7 +80,7 @@ h2, h3, h4, p {
 .header-img {
     background: url("#{resource['images/food.png']}") center;
     background-size: cover;
-    padding: 6em 0;
+    padding: 2em 0;
     display: flex;
     align-items: center;
     justify-content: center;

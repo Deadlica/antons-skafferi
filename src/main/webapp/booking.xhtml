@@ -4,55 +4,51 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
+    <div class="main">
+        <div class="booking">
+            <div class="calender">
+                <div class="calender-header">
+                    <p class="year-book">2022</p>
+                    <div class="month-picker">
+                        <div class="month-change" id="prev-month">
+                            <p> &#171;</p>
+                        </div>
+                        <div class="month22"></div>
+                        <div class="month-change" id="next-month">
+                            <p> &#187;</p>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="calender-body">
+                    <div class="calender-week-day">
+                        <p>mån</p>
+                        <p>tis</p>
+                        <p>ons</p>
+                        <p>tor</p>
+                        <p>fre</p>
+                        <p>lör</p>
+                        <p>sön</p>
+                    </div>
+                    <div class="calender-days">
 
-
-
-
-<div class="booking">
-    <div class ="calender">
-        <div class="calender-header">
-<p class="year-book">2022</p>
-        <div class="month-picker">
-            <div class="month-change" id="prev-month">
-                <p> &#171;</p>
+                    </div>
+                </div>
             </div>
-            <div class="month22"></div>
-            <div class="month-change" id="next-month">
-                <p> &#187;</p>
+
+
+            <div class="booking-inputs">
+                <label> *Name:</label><input type="text" placeholder="Namn"/>
+                <label>*telefon-nummer:</label><input type="tel" placeholder="xxx-xxxxxxx"/>
+                <label>*Antal (1-4 annars kontakta):</label><input type="number" min="1" max="4" placeholder="x"/>
+                <label>*Ankomst tid:</label><input id="appt-time" type="time" value="13"/>
+
+                <button>submit</button>
             </div>
-        </div>
-    </div>
-
-        <div class="calender-body">
-        <div class="calender-week-day">
-            <p>mån</p>
-            <p>tis</p>
-            <p>ons</p>
-            <p>tor</p>
-            <p>fre</p>
-            <p>lör</p>
-            <p>sön</p>
-        </div>
-        <div class="calender-days">
 
         </div>
+
     </div>
-    </div>
-
-
-<div class="booking-inputs">
-<label> *Name:</label><input type="text" placeholder = "Namn"/>
-    <label>*telefon-nummer:</label><input type="tel" placeholder="xxx-xxxxxxx"/>
-<label>*Antal (1-4 annars kontakta):</label><input type="number" min="1" max="4" placeholder="x"/>
-<label>*Ankomst tid:</label><input id="appt-time" type="time" value="13" />
-
-    <button>submit</button>
-</div>
-
-</div>
-
-
 
     <h:outputScript library="js" name="calendar.js"/>
 
