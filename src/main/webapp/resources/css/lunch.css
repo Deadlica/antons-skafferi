@@ -1,7 +1,6 @@
 .lunch {
     display: flex;
     flex-direction: column;
-    margin: 0 10%;
 }
 
 .lunchItemMain {
@@ -17,7 +16,8 @@
 }
 
 .lunchItemDescription {
-    color: darkslategrey;
+    color: #202020;
+    font-size: larger;
 }
 
 .breakPoint {

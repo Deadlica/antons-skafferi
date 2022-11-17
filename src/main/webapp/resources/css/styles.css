@@ -39,6 +39,10 @@ h2, h3, h4, p {
     font-family: Cormorant, serif;
 }
 
+.main {
+    margin: 0 20%;
+}
+
 .header-container {
     display: flex;
     flex-direction: column;
