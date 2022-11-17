@@ -1,17 +1,18 @@
 
 .booking {
-    height: 100vh;
-    place-items: center;
     display: flex;
+    padding: 10% 10%;
 }
 
 .calender {
-    width: max-content;
+    width: 40%;
     background-color: var(--joel_brown);
     border-radius: 30px;
     border-style: solid;
-    padding: 0 10px;
-    height: 520px;
+    padding: 0 30px;
+    height: 420px;
+    max-width: 400px;
+    min-width: 270px;
 
 }
 
@@ -19,7 +20,6 @@
     font-size: 30px;
     font-weight: 600;
     color: var(--background_white);
-    padding: 10px;
 }
 
 .calender-body {
@@ -29,7 +29,6 @@
     display: grid;
     grid-template-columns: repeat(7, 14%);
     font-weight: 600;
-    gap: 2px;
 }
 
 
@@ -42,22 +41,21 @@
 .calender-days {
     display: grid;
     grid-template-columns: repeat(7, 14%);
-    gap: 2px;
+    gap: 1% 1%;
 }
 
 
 .calender-days p {
-    width: 50px;
+    width: 90%;
     font-size: 30px;
-    height: 50px;
+    height: 90%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px;
     position: relative;
     cursor: pointer;
     background-color: var(--background_white);
-    border-radius: 30px;
+    border-radius: 100%;
     border-style: solid;
 
 }
@@ -68,7 +66,6 @@
 
 .calender-days p:hover {
     background-color: var(--joel_brown);
-    border-radius: 30px;
 }
 
 
@@ -83,8 +80,8 @@
     border-radius: 50%;
     display: grid;
     cursor: pointer;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 20%;
+    padding-right: 20%;
 
 }
 
