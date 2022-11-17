@@ -56,6 +56,7 @@ h2, h3, h4, p {
     color: white;
     padding: 0.3em 0;
     box-shadow: 0 4px 10px rgb(0 0 0 / 0.2);
+    z-index: 100;
 }
 
 .nav-bar ul {
@@ -114,7 +115,7 @@ h2, h3, h4, p {
         font-size: medium;
     }
 
-    .breakPoint {
+    .break-point {
         display: none;
     }
 }

@@ -3,24 +3,24 @@
     flex-direction: column;
 }
 
-.lunchItemMain {
+.lunch-item-main {
     display: flex;
 }
 
-.lunchItem {
+.lunch-item {
     margin-top: 3%;
 }
 
-.lunchItemMain * {
+.lunch-item-main * {
     margin-bottom: 2%;
 }
 
-.lunchItemDescription {
+.lunch-item-description {
     color: #202020;
     font-size: larger;
 }
 
-.breakPoint {
+.break-point {
     margin-left: 2%;
     margin-right: 2%;
 }
