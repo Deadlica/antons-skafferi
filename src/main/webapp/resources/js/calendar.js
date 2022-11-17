@@ -24,7 +24,7 @@ generateCalender=(month,year)=>{
     days.innerHTML='';
     let days_of_month =[31,getFebDays(year),31,30,31,30,31,31,30,31,30,31]
     let month_picker=document.querySelector('.month22')
-    month_picker.innerHTML=month_names[month]
+    month_picker.innerHTML="<p>"+month_names[month]+"</p>"
 
     console.log(month_names[month])
     let first_day= new Date( year,month, 1)
@@ -40,11 +40,11 @@ generateCalender=(month,year)=>{
         console.log(index+'--------'+firstDayStart)
 
         if (index>=firstDayStart-1){
-        if ((index - firstDayStart+2)==currDate.getUTCDate()&&currDate.getMonth()==month){
-            days.innerHTML+= "<div class ='this-day'>"+ (index - firstDayStart+2) +'</div>'
+        if ((index - firstDayStart+2)==currDate.getUTCDate()&&currDate.getMonth()==month&&currDate.getFullYear()==year){
+            days.innerHTML+= "<p class ='this-day'>"+ (index - firstDayStart+2) +'</p>'
         }
         else {
-            days.innerHTML+= '<div>'+ (index - firstDayStart+2) +'</div>'
+            days.innerHTML+= '<p>'+ (index - firstDayStart+2) +'</p>'
 
         }
         }
@@ -63,6 +63,7 @@ let curr_year=currDate.getFullYear()
 console.log(curr_month+'--------'+curr_year)
 generateCalender(curr_month,curr_year)
 
+let yearpicker=document.querySelector('.year-book')
 
 document.querySelector('#prev-month').onclick=()=>{
     curr_month--
@@ -72,6 +73,7 @@ document.querySelector('#prev-month').onclick=()=>{
     else {
         curr_month=11
         curr_year--
+        yearpicker.innerHTML=curr_year
 
         generateCalender(curr_month, curr_year)
 
@@ -87,6 +89,7 @@ document.querySelector('#next-month').onclick=()=>{
 else {
         curr_month=0
         curr_year++
+        yearpicker.innerHTML=curr_year
 
         generateCalender(curr_month, curr_year)
 

@@ -12,7 +12,7 @@
 <div class="booking">
     <div class ="calender">
         <div class="calender-header">
-
+<p class="year-book">2022</p>
         <div class="month-picker">
             <div class="month-change" id="prev-month">
                 <p> &#171;</p>
@@ -26,13 +26,13 @@
 
         <div class="calender-body">
         <div class="calender-week-day">
-            <div>mån</div>
-            <div>tis</div>
-            <div>ons</div>
-            <div>tor</div>
-            <div>fre</div>
-            <div>lör</div>
-            <div>sön</div>
+            <p>mån</p>
+            <p>tis</p>
+            <p>ons</p>
+            <p>tor</p>
+            <p>fre</p>
+            <p>lör</p>
+            <p>sön</p>
         </div>
         <div class="calender-days">
 
@@ -42,12 +42,10 @@
 
 
 <div class="booking-inputs">
-    <h:inputText row = "1" col = "10" value = "Namn"/>
-
-
-    <input type="tel"/>
-
-    <input id="appt-time" type="time" name="appt-time" step="0" value="13" />
+<label> *Name:</label><input type="text" placeholder = "Namn"/>
+    <label>*telefon-nummer:</label><input type="tel" placeholder="xxx-xxxxxxx"/>
+<label>*Antal (1-4 annars kontakta):</label><input type="number" min="1" max="4" placeholder="x"/>
+<label>*Ankomst tid:</label><input id="appt-time" type="time" value="13" />
 
     <button>submit</button>
 </div>
