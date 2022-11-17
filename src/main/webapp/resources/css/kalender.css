@@ -4,9 +4,8 @@
 }
 .booking{
     height: 100vh;
-    display:  grid;
     place-items: center;
-
+    display: flex;
 }
 
 .calender{
@@ -74,16 +73,20 @@
     border-radius: 30px;
 }
 
+
 .month-picker{
     display: flex;
     align-items: center;
-    padding: 0 40%;
+    padding: 0 35%;
 }
 .month-change{
     width: 20px;
     border-radius: 50%;
     display: grid;
     cursor: pointer;
+    padding-left: 20px;
+    padding-right: 20px;
+
 }
 
 .month-change:hover{
@@ -94,5 +97,12 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+
+
+.booking-inputs{
+    display: grid;
+    padding: 0 10%;
 }
 

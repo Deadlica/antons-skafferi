@@ -15,11 +15,11 @@
 
         <div class="month-picker">
             <div class="month-change" id="prev-month">
-                <p> &lt;</p>
+                <p> &#171;</p>
             </div>
             <div class="month22"></div>
             <div class="month-change" id="next-month">
-                <p> &#62;</p>
+                <p> &#187;</p>
             </div>
         </div>
     </div>
@@ -39,7 +39,21 @@
         </div>
     </div>
     </div>
+
+
+<div class="booking-inputs">
+    <h:inputText row = "1" col = "10" value = "Namn"/>
+
+
+    <input type="tel"/>
+
+    <input id="appt-time" type="time" name="appt-time" step="0" value="13" />
+
+    <button>submit</button>
 </div>
+
+</div>
+
 
 
     <h:outputScript library="js" name="calendar.js"/>
