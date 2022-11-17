@@ -55,6 +55,7 @@ h2, h3, h4, p {
     background-color: var(--joel_brown);
     color: white;
     padding: 0.3em 0;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.2);
 }
 
 .nav-bar ul {
@@ -106,4 +107,14 @@ h2, h3, h4, p {
     background-color: var(--joel_brown);
     color: white;
     padding: 1em 0 2em;
+}
+
+@media screen and (max-width: 750px) {
+    .nav-bar ul li {
+        font-size: medium;
+    }
+
+    .breakPoint {
+        display: none;
+    }
 }
