@@ -39,7 +39,7 @@ h2, h3, h4, p, label {
 }
 
 .main {
-    padding: 5vh 20% 0;
+    padding: 5vh 10% 0;
     background-color: var(--background_white);
 }
 
@@ -177,6 +177,56 @@ h2, h3, h4, p, label {
 
 .checked {
     color: gold;
+}
+
+.admin-week {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1.5em 0;
+}
+
+
+.admin-day {
+    padding: 3px;
+    border: solid 1px #202020;
+}
+
+.admin-day > h3 {
+    text-align: center;
+}
+
+.admin-day > hr {
+    height: 1px;
+    border: none;
+    background-color: #202020;
+}
+
+.admin-added-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-added-item > span {
+    font-size: xx-large;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.admin-added-item > span:hover {
+    color: red
+}
+
+.admin-add-lunch {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.admin-add-lunch > input[type='number'] {
+    width: 3em;
 }
 
 @media screen and (max-width: 750px) {
