@@ -62,6 +62,11 @@
     background-color: gray;
 }
 
+.calender-days p.selected {
+    background-color: green;
+}
+
+
 .calender-days p:hover {
     background-color: var(--joel_brown);
 }

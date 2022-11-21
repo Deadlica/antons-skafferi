@@ -41,10 +41,10 @@ generateCalender=(month,year)=>{
 
         if (index>=firstDayStart-1){
         if ((index - firstDayStart+2)==currDate.getUTCDate()&&currDate.getMonth()==month&&currDate.getFullYear()==year){
-            days.innerHTML+= "<p class ='this-day'>"+ (index - firstDayStart+2) +'</p>'
+            days.innerHTML+= "<p id='"+index+"' class ='this-day week-day'>"+ (index - firstDayStart+2) +'</p>'
         }
         else {
-            days.innerHTML+= '<p>'+ (index - firstDayStart+2) +'</p>'
+            days.innerHTML+= "<p id='"+index+"' class ='week-day'>"+ (index - firstDayStart+2)+"</p>"
 
         }
         }
@@ -95,5 +95,28 @@ else {
 
     }
 }
+document.querySelector('.week-day').onclick=()=> {
 
+   //nått
+
+}
+
+console.log("test!")
+let prevTarget
+document.querySelectorAll('#days .week-day').forEach(day=>{
+    day.addEventListener("click", event=>{
+        event.currentTarget.classList.toggle("selected");
+        removePrevDate(prevTarget)
+        prevTarget= event.target.id
+    });
+});
+
+
+removePrevDate=(prev)=>{
+    if(prev) {
+        let days = document.getElementById(prev)
+        days.classList.toggle("selected")
+    }return
+
+}
 
