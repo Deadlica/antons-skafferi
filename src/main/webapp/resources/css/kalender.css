@@ -47,7 +47,10 @@
 }
 
 
-.calender-days p {
+
+
+.week-day
+{
     font-size: 30px;display: flex;
     align-items: center;
     justify-content: center;
@@ -58,16 +61,16 @@
     border-width: thin;
 }
 
-.calender-days p.this-day {
+.this-day {
     background-color: gray;
 }
 
-.calender-days p.selected {
+.selected {
     background-color: green;
 }
 
 
-.calender-days p:hover {
+.week-day:hover {
     background-color: var(--joel_brown);
 }
 
