@@ -48,18 +48,14 @@
 
 
 .calender-days p {
-    width: 90%;
-    font-size: 30px;
-    height: 90%;
-    display: flex;
+    font-size: 30px;display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     cursor: pointer;
     background-color: var(--background_white);
-    border-radius: 100%;
     border-style: solid;
-
+    border-width: thin;
 }
 
 .calender-days p.this-day {
