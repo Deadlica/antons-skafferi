@@ -32,15 +32,14 @@ a {
 
 h1 {
     font-family: Cinzel, cursive;
-    margin-top: 5%;
 }
 
-h2, h3, h4, p {
+h2, h3, h4, p, label {
     font-family: Cormorant, serif;
 }
 
 .main {
-    padding: 0 20%;
+    padding: 5vh 20% 0;
     background-color: var(--background_white);
 }
 
@@ -101,6 +100,68 @@ h2, h3, h4, p {
     justify-content: center;
 }
 
+
+.review-form > label {
+    display: none;
+}
+
+.star-name {
+    display: flex;
+    align-items: flex-start;
+}
+
+.review-name-input {
+    margin-top: 0.8em;
+    font-size: x-large;
+}
+
+.review-form > textarea {
+    display: block;
+    max-width: 100%;
+}
+
+.stars {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.stars > input {
+    display: none;
+}
+
+.stars > label {
+    position: relative;
+    font-size: xxx-large;
+    height: fit-content;
+    color: #FFD700;
+    cursor: pointer;
+}
+
+.stars > label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0;
+}
+
+.stars > label:hover:before,
+.stars > label:hover ~ label:before {
+    opacity: 1 !important;
+}
+
+.stars > input:checked ~ label:before {
+    opacity: 1;
+}
+
+.rating:hover > input:checked ~ label:before {
+    opacity: 0.4;
+}
+
+.last {
+    padding-bottom: 6vh;
+}
+
+
 .footer-container {
     display: flex;
     flex-direction: row;
@@ -110,12 +171,40 @@ h2, h3, h4, p {
     padding: 1em 0 2em;
 }
 
+.footer-container * {
+    font-weight: normal;
+}
+
+.checked {
+    color: gold;
+}
+
 @media screen and (max-width: 750px) {
     .nav-bar ul li {
         font-size: medium;
     }
 
+    .main {
+        padding: 5vh 10% 0;
+    }
+
     .break-point {
         display: none;
+    }
+
+    .lunch-item-main {
+        justify-content: space-between;
+    }
+
+    .lunch-item-main * {
+        margin: 0 3px;
+    }
+
+    .lunch-item-price {
+        white-space: nowrap;
+    }
+
+    .star-name {
+        display: block;
     }
 }

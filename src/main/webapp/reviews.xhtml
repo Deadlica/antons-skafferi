@@ -2,6 +2,24 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-
+    <div class="main last">
+        <h1>Betyg och Kommentarer</h1>
+        <form class="review-form" action="">
+            <label for="review_name">Namn</label>
+            <div class="star-name">
+                <input type="text" name="review-name-input" id="review_name" class="review-name-input"
+                       placeholder="Namn"/>
+                <div class="stars">
+                    <input type="radio" name="rating" value="5" id="5"/><label for="5">☆</label>
+                    <input type="radio" name="rating" value="4" id="4"/><label for="4">☆</label>
+                    <input type="radio" name="rating" value="3" id="3"/><label for="3">☆</label>
+                    <input type="radio" name="rating" value="2" id="2"/><label for="2">☆</label>
+                    <input type="radio" name="rating" value="1" id="1"/><label for="1">☆</label>
+                </div>
+            </div>
+            <label for="review_comment">Kommentar</label>
+            <textarea name="review-comment" id="review_comment" cols="70" rows="3" placeholder="Kommentar..."/>
+        </form>
+    </div>
 
 </ui:composition>
