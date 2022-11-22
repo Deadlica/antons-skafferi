@@ -19,7 +19,6 @@ let yearpicker=document.querySelector('.year-book')
 
 generateCalender=(month,year)=>{
     let currDate=new Date()
-    console.log('----------'+currDate.getUTCDate())
     days.innerHTML='';
     let days_of_month =[31,getFebDays(year),31,30,31,30,31,31,30,31,30,31]
     let month_picker=document.querySelector('.month22')
@@ -27,7 +26,6 @@ generateCalender=(month,year)=>{
 
     console.log(month_names[month])
     let first_day= new Date( year,month, 1)
-    console.log(first_day.getDay()+'-----')
 
     firstDayStart=first_day.getDay()
     if(firstDayStart==0){
@@ -85,14 +83,13 @@ if (curr_month>11){
 }
 
 
-console.log("test!")
-let prevTarget
 loadNewDatesListners=()=>{
-    prevTarget=undefined
+    let prevTarget=undefined
     document.querySelectorAll('#days .week-day').forEach(day=>{
         day.addEventListener("click", event=>{
-            event.currentTarget.classList.toggle("selected");
+            event.currentTarget.classList.add("selected");
             removePrevDate(prevTarget)
+
             prevTarget= event.target.id
         });
     });
@@ -101,7 +98,7 @@ loadNewDatesListners=()=>{
 removePrevDate=(prev)=>{
     if(prev) {
         let days = document.getElementById(prev)
-        days.classList.toggle("selected")
+        days.classList.remove("selected")
     }return
 
 }
