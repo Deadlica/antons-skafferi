@@ -3,6 +3,21 @@
     flex-direction: column;
 }
 
+.lunch-days ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.lunch-days ul li {
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+.lunch-days ul li:hover {
+    font-size: 150%;
+}
+
 .lunch-item-main {
     display: flex;
 }
