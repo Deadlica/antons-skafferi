@@ -28,20 +28,18 @@ generateCalender=(month,year)=>{
     let first_day= new Date( year,month, 1)
 
     firstDayStart=first_day.getDay()
+
     if(firstDayStart==0){
         firstDayStart=7
     }
 
-    for (let index =0; index<days_of_month[month]+firstDayStart-1;index++){
-
-        console.log(index+'--------'+firstDayStart)
-
-        if (index>=firstDayStart-1){
-        if ((index - firstDayStart+2)==currDate.getUTCDate()&&currDate.getMonth()==month&&currDate.getFullYear()==year){
-            days.innerHTML+= "<div id='"+index+"' class ='this-day week-day'>"+ (index - firstDayStart+2) +'</div>'
+    for (let index =1; index<days_of_month[month]+firstDayStart;index++){
+        if (index>=firstDayStart){
+        if ((index - firstDayStart+1)==currDate.getDate()&&currDate.getMonth()==month&&currDate.getFullYear()==year){
+            days.innerHTML+= "<div id='"+(index- firstDayStart+1)+"' class ='this-day week-day'>"+ (index - firstDayStart+1) +'</div>'
         }
         else {
-            days.innerHTML+= "<div id='"+index+"' class ='week-day'>"+ (index - firstDayStart+2)+"</div>"
+            days.innerHTML+= "<div id='"+(index- firstDayStart+1)+"' class ='week-day'>"+ (index - firstDayStart+1)+"</div>"
 
         }
         }
@@ -87,8 +85,12 @@ loadNewDatesListners=()=>{
     let prevTarget=undefined
     document.querySelectorAll('#days .week-day').forEach(day=>{
         day.addEventListener("click", event=>{
-            event.currentTarget.classList.add("selected");
-            removePrevDate(prevTarget)
+            event.currentTarget.classList.toggle("selected");
+            if (prevTarget!= event.target.id)
+            {
+                removePrevDate(prevTarget)
+            }
+
 
             prevTarget= event.target.id
         });
