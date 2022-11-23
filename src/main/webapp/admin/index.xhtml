@@ -11,21 +11,22 @@
     <h:outputScript library="js" name="admin.js"/>
 </h:head>
 
+<h:body>
+    <f:view>
+        <ui:include src="nav.xhtml"/>
+        <div class="main">
+            <div class="admin-lunch">
+                <h1>Dagens Lunch</h1>
+                <h2>Vecka 47</h2>
+                <div class="admin-week" id="week1"></div>
+                <h2>Vecka 48</h2>
+                <div class="admin-week" id="week2"></div>
+            </div>
 
-<f:view>
-    <ui:include src="nav.xhtml"></ui:include>
-    <div class="main">
-        <div class="admin-lunch">
-            <h1>Dagens Lunch</h1>
-            <h2>Vecka 47</h2>
-            <div class="admin-week" id="week1"></div>
-            <h2>Vecka 48</h2>
-            <div class="admin-week" id="week2"></div>
+
         </div>
-
-
-    </div>
-
-    <ui:include src="fooditem.xhtml"></ui:include>
-</f:view>
+        <h:outputLabel for="#{LunchItem}"></h:outputLabel>
+        <ui:include src="fooditem.xhtml"/>
+    </f:view>
+</h:body>
 </html>

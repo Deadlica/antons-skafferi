@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         for (; i < cap; i++) {
             curr_date.setDate(curr_date.getDate() + 1)
             curr_week.innerHTML += "" + `
-                <div class="admin-day">
+                <div class="admin-day" xmlns:h="http://java.sun.com/jsf/html">
                     <h3>${curr_date.getDate() + "/" + curr_date.getMonth()}</h3>
                     <hr/>
                     <div class="admin-daily-lunch">
@@ -37,10 +37,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     <form action="">
                         <div class="admin-add-lunch">
                             <label for="${"food_item" + i}">Ny rätt</label>
-                            <select name="${"food_item" + i}"id="food_item">
-                                <option>Kryddigt Renskav</option>
-                                <option>Krämig Älgfärs</option>
-                            </select>
+                            <h:selectOneMenu >
+                            </h:selectOneMenu>
                         </div>
                         <div class="admin-add-lunch">
                             <label for="${"price" + i}">Pris</label>
