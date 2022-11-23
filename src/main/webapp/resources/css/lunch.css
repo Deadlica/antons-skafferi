@@ -14,9 +14,6 @@
     cursor: pointer;
 }
 
-.lunch-days ul li:hover {
-    font-size: 150%;
-}
 
 .lunch-item-main {
     display: flex;
