@@ -8,21 +8,21 @@
         <h:panelGroup class="admin-daily-lunch">
             <h:panelGroup class="admin-added-item">
                 <p>Kryddigt Renskav</p>
-                <i class="fa-solid fa-xmark"/>
+                <i class="fa-solid fa-minus"/>
             </h:panelGroup>
         </h:panelGroup>
         <h:form>
-            <h:panelGroup layout="block" styleClass="admin-add-lunch">
+            <h:panelGroup layout="block">
                 <label>Rätt</label>
                 <h:selectOneMenu>
-                    <f:selectItems value='#{LunchItem.list}'/>
+                    <f:selectItems value='#{LunchItems.list}'/>
                 </h:selectOneMenu>
             </h:panelGroup>
-            <h:panelGroup layout="block" styleClass="admin-add-lunch">
+            <h:panelGroup layout="block">
                 <label>Pris</label>
                 <h:inputText size='3'/>
             </h:panelGroup>
-            <h:panelGroup layout="block" styleClass="admin-add-lunch">
+            <h:panelGroup layout="block">
                 <h:outputLabel for="desc">Beskrivning</h:outputLabel>
                 <h:inputTextarea id="desc"/>
             </h:panelGroup>

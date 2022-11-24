@@ -211,11 +211,10 @@ h2, h3, h4, p, label {
 
 .admin-added-item > i {
     font-size: x-large;
-    color: red;
     cursor: pointer;
 }
 
-.admin-added-item > span:hover {
+.admin-added-item > i:hover {
     color: red
 }
 
