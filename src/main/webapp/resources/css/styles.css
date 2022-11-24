@@ -30,6 +30,12 @@ a {
     color: inherit;
 }
 
+.navigation-line-break {
+    border-top: 3px solid #7D5A3E;
+    opacity: 0.3;
+
+}
+
 h1 {
     font-family: Cinzel, cursive;
 }
