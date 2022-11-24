@@ -2,7 +2,6 @@
 const currentDate = new Date();
 const options = {weekday: 'long'};
 const currentDay = new Intl.DateTimeFormat('en-US', options).format(currentDate);
-const currentDay = new Intl.DateTimeFormat('en-US', options).format(currentDate);
 
 document.addEventListener("DOMContentLoaded", function () {
     checkToday("Monday");
