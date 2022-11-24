@@ -31,7 +31,7 @@ function setWeekDates() {
     let curr_date = getMondayOfCurrentWeek()
     let arr = document.querySelectorAll(".admin-day")
     for (let i = 0; i < 10; i++) {
-        arr[i].firstElementChild.innerHTML = `${curr_date.toLocaleDateString("sv-SE", {weekday: 'long'})} ${curr_date.getDate()} / ${curr_date.getMonth()}`
+        arr[i].firstElementChild.innerHTML = `${capitalizeFirstLetter(curr_date.toLocaleDateString("sv-SE", {weekday: 'long'}))} ${curr_date.getDate()} / ${curr_date.getMonth()}`
         curr_date.setDate(curr_date.getDate() + 1)
         if (i === 4) {
             curr_date.setDate(curr_date.getDate() + 2)
