@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
             clicked_type_Menu(item.id);
         })
     })
-    document.getElementById("menu_item").querySelectorAll('.menu-item').forEach(item => {
+
+    document.getElementById("all_items_menu").querySelectorAll('.menu-item').forEach(item => {
         var disc_objekt= document.getElementById(item.id).getElementsByClassName("menu-item-description")
         var read_more= document.getElementById(item.id).getElementsByClassName("menu-item-ingr")
         disc_objekt[0].style.display="none";
