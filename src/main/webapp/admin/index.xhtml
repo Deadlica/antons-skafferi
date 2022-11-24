@@ -17,16 +17,31 @@
         <div class="main">
             <div class="admin-lunch">
                 <h1>Dagens Lunch</h1>
-                <h2>Vecka 47</h2>
-                <div class="admin-week" id="week1"></div>
-                <h2>Vecka 48</h2>
-                <div class="admin-week" id="week2"></div>
+                <h2 id="header_w1">Vecka 47</h2>
+                <div class="admin-week" id="week1">
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                </div>
+                <h2 id="header_w2">Vecka 48</h2>
+                <div class="admin-week" id="week2">
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                    <ui:include src="lunch-day.xhtml"></ui:include>
+                </div>
             </div>
 
 
         </div>
-        <h:outputLabel for="#{LunchItem}"></h:outputLabel>
+        <ui:include src="carte.xhtml"/>
         <ui:include src="fooditem.xhtml"/>
+
+
+        <ui:include src="footer.xhtml"/>
     </f:view>
 </h:body>
 </html>

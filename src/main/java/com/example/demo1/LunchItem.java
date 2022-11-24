@@ -31,13 +31,6 @@ public class LunchItem extends HttpServlet {
         private double price;
         private String date;
 
-        public Item(String name, String desc, double price, String date) {
-            this.name = name;
-            this.desc = desc;
-            this.price = price;
-            this.date = date;
-        }
-
         public String getName() {
             return name;
         }

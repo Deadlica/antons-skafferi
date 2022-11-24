@@ -8,11 +8,7 @@
         <h:form>
             <h:outputLabel for="#{FoodItem}">Namn</h:outputLabel>
             <h:inputText type="text" id="food_name" for="#{FoodItem.name}"/>
-            <h:selectOneMenu>
-                <f:selectItems value="#{LunchItem.list}"/>
-            </h:selectOneMenu>
             <h:commandButton value="Lägg till"/>
         </h:form>
-
     </div>
 </ui:composition>

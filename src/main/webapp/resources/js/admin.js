@@ -7,52 +7,36 @@ window.addEventListener('DOMContentLoaded', (event) => {
         return monday;
     }
 
-    function create_lunch_week(week) {
-        let curr_week
-        let monday_date = getMondayOfCurrentWeek()
-        let i = 0
-        let cap = 5
-        if (week == 1) {
-            curr_week = document.getElementById("week1")
-        } else {
-            curr_week = document.getElementById("week2")
-            monday_date.setDate(monday_date.getDate() + 7)
-            i = 5
-            cap = 10
-        }
-        curr_week.innerHTML = "";
-        let curr_date = monday_date
-        for (; i < cap; i++) {
+    Date.prototype.getWeek = function () {
+        var date = new Date(this.getTime());
+        date.setHours(0, 0, 0, 0);
+        // Thursday in current week decides the year.
+        date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+        // January 4 is always in week 1.
+        var week1 = new Date(date.getFullYear(), 0, 4);
+        // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+        return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+    }
+
+    function setWeeks() {
+        const today = new Date()
+        document.getElementById("header_w1").innerHTML = `Vecka ${today.getWeek()}`
+        document.getElementById("header_w2").innerHTML = `Vecka ${+today.getWeek() + 1}`
+    }
+
+    function setWeekDates() {
+        curr_date = getMondayOfCurrentWeek()
+        arr = document.querySelectorAll(".admin-day")
+        for (let i = 0; i < 10; i++) {
+            arr[i].firstElementChild.innerHTML = `${curr_date.getDate()} / ${curr_date.getMonth()}`
             curr_date.setDate(curr_date.getDate() + 1)
-            curr_week.innerHTML += "" + `
-                <div class="admin-day" xmlns:h="http://java.sun.com/jsf/html">
-                    <h3>${curr_date.getDate() + "/" + curr_date.getMonth()}</h3>
-                    <hr/>
-                    <div class="admin-daily-lunch">
-                        <div class="admin-added-item">
-                            <p>Kryddigt Renskav</p>
-                            <span>&#8722;</span>
-                        </div>
-                    </div>
-                    <form action="">
-                        <div class="admin-add-lunch">
-                            <label for="${"food_item" + i}">Ny rätt</label>
-                            <h:selectOneMenu >
-                            </h:selectOneMenu>
-                        </div>
-                        <div class="admin-add-lunch">
-                            <label for="${"price" + i}">Pris</label>
-                            <input type="number" id="${"price" + i}" size='3' value="90"/>
-                        </div>
-                        <input type="submit" value="Spara"/>
-                    </form>
-                </div>
-            `
+            if (i == 4) {
+                curr_date.setDate(curr_date.getDate() + 2)
+            }
         }
     }
 
-    create_lunch_week(1)
-    create_lunch_week(2)
-
+    setWeeks()
+    setWeekDates()
 
 });

@@ -229,6 +229,12 @@ h2, h3, h4, p, label {
     width: 3em;
 }
 
+@media screen and (max-width: 1200px) {
+    .admin-week {
+        flex-direction: column;
+    }
+}
+
 @media screen and (max-width: 750px) {
     .nav-bar ul li {
         font-size: medium;
@@ -257,4 +263,5 @@ h2, h3, h4, p, label {
     .star-name {
         display: block;
     }
+
 }
