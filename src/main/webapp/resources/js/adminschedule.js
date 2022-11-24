@@ -14,5 +14,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         let text = document.getElementById("adminscheduleweek").innerHTML;
         document.getElementById("adminscheduleweek").innerHTML = text + " " + today.getWeek();
     }
+
+    function setWeekDays(){
+
+    }
     setweek()
 });
