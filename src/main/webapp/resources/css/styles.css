@@ -209,9 +209,9 @@ h2, h3, h4, p, label {
     align-items: center;
 }
 
-.admin-added-item > span {
-    font-size: xx-large;
-    font-weight: bold;
+.admin-added-item > i {
+    font-size: x-large;
+    color: red;
     cursor: pointer;
 }
 
