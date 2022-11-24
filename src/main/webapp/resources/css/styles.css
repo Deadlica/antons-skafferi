@@ -39,7 +39,7 @@ h2, h3, h4, p, label {
 }
 
 .main {
-    padding: 5vh 20% 0;
+    padding: 5vh 20% 10vh;
     background-color: var(--background_white);
 }
 
