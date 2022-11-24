@@ -204,6 +204,17 @@ h2, h3, h4, p, label {
         white-space: nowrap;
     }
 
+    .menu-item-main {
+        justify-content: space-between;
+    }
+
+    .menu-item-main * {
+        margin: 0 3px;
+    }
+
+    .menu-item-price {
+        white-space: nowrap;
+    }
     .star-name {
         display: block;
     }

@@ -86,6 +86,10 @@ loadNewDatesListners=()=>{
     document.querySelectorAll('#days .week-day').forEach(day=>{
         day.addEventListener("click", event=>{
             event.currentTarget.classList.toggle("selected");
+            console.log(event.target.id)
+            console.log(curr_year)
+            console.log(curr_month)
+
             if (prevTarget!= event.target.id)
             {
                 removePrevDate(prevTarget)
