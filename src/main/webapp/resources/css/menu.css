@@ -1,0 +1,41 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-days ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.menu-days ul li {
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+
+.menu-item-main {
+    display: flex;
+}
+
+.menu-item {
+    margin-top: 3%;
+    cursor: pointer;
+
+}
+
+
+.menu-item-description {
+    color: #202020;
+    font-size: larger;
+
+}
+
+.break-point {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.menu-item-ingr{
+    font-style: oblique;
+}

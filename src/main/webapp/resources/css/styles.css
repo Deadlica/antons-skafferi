@@ -39,7 +39,7 @@ h2, h3, h4, p, label {
 }
 
 .main {
-    padding: 5vh 20% 0;
+    padding: 5vh 20% 10vh;
     background-color: var(--background_white);
 }
 
@@ -179,6 +179,18 @@ h2, h3, h4, p, label {
     color: gold;
 }
 
+.today-event{
+    padding: 2% 0 5%;
+}
+.events{
+    padding: 1% 0 0;
+}
+
+
+
+
+
+
 @media screen and (max-width: 750px) {
     .nav-bar ul li {
         font-size: medium;
@@ -204,6 +216,17 @@ h2, h3, h4, p, label {
         white-space: nowrap;
     }
 
+    .menu-item-main {
+        justify-content: space-between;
+    }
+
+    .menu-item-main * {
+        margin: 0 3px;
+    }
+
+    .menu-item-price {
+        white-space: nowrap;
+    }
     .star-name {
         display: block;
     }
