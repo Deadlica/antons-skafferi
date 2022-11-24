@@ -24,6 +24,7 @@ function checkToday(date) {
         document.getElementById(date).style.color = "#7D5A3E";
         document.getElementById(date).style.fontWeight = "bold";
         document.getElementById(date).style.fontSize = "130%";
+        document.getElementById("lunch-" + date).style.display = "inline"
     }
 }
 
@@ -33,10 +34,12 @@ function clickedDay(Day) {
             document.getElementById(item.id).style.color = "#7D5A3E";
             document.getElementById(item.id).style.fontWeight = "bold";
             document.getElementById(item.id).style.fontSize = "130%";
+            document.getElementById("lunch-" + item.id).style.display = "inline"
         } else {
             document.getElementById(item.id).style.color = "black";
             document.getElementById(item.id).style.fontWeight = "normal";
             document.getElementById(item.id).style.fontSize = "100%";
+            document.getElementById("lunch-" + item.id).style.display = "none"
         }
     })
 }

@@ -14,6 +14,9 @@
     cursor: pointer;
 }
 
+.lunch-items {
+    display: none;
+}
 
 .lunch-item-main {
     display: flex;
