@@ -36,5 +36,4 @@ window.addEventListener('DOMContentLoaded', () => {
 
     setWeeks()
     setWeekDates()
-
 });
