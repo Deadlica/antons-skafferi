@@ -95,7 +95,6 @@ h2, h3, h4, p, label {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .circle {
@@ -203,6 +202,61 @@ h2, h3, h4, p, label {
     padding: 1% 0 0;
 }
 
+
+.admin-week {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1.5em 0;
+}
+
+
+.admin-day {
+    padding: 3px;
+    border: solid 1px #202020;
+}
+
+.admin-day > h3 {
+    text-align: center;
+}
+
+.admin-day > hr {
+    height: 1px;
+    border: none;
+    background-color: #202020;
+}
+
+.admin-added-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-added-item > i {
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.admin-added-item > i:hover {
+    color: red
+}
+
+.admin-add-lunch {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.admin-add-lunch > input[type='number'] {
+    width: 3em;
+}
+
+@media screen and (max-width: 1200px) {
+    .admin-week {
+        flex-direction: column;
+    }
+}
 
 @media screen and (max-width: 750px) {
     .nav-bar ul li {

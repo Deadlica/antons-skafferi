@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <h:outputStylesheet library="css" name="adminschedule.css"/>
+    <h:outputScript library="js" name="adminschedule.js"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+</h:head>
+
+
+<f:view>
+    <ui:include src="nav.xhtml"/>
+    <div class="main">
+        <div class="scheduleheader"><i class="fa-solid fa-angle-left"/>
+            <h2 id="adminscheduleweek">Vecka</h2><i class="fa-solid fa-angle-right"/>
+        </div>
+        <h2>Lunchpersonal</h2>
+        <div class="scheduledaycontainer" id="schedulelunch">
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+        </div>
+        <h2>Middagspersonal</h2>
+        <div class="scheduledaycontainer" id="scheduledinner">
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+            <ui:include src="staff-day.xhtml"/>
+        </div>
+    </div>
+</f:view>
+</html>

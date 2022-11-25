@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <h:outputScript library="js" name="admin.js"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+</h:head>
+
+<h:body>
+    <f:view>
+        <ui:include src="nav.xhtml"/>
+        <div class="main">
+            <div class="admin-lunch">
+                <h1>Dagens Lunch</h1>
+                <h2 id="header_w1">Vecka 47</h2>
+                <div class="admin-week" id="week1">
+                    <ui:include src="lunch-day.xhtml"/>
+                    <ui:include src="lunch-day.xhtml"/>
+                    <ui:include src="lunch-day.xhtml"/>
+                    <ui:include src="lunch-day.xhtml"/>
+                    <ui:include src="lunch-day.xhtml"/>
+                </div>
+                <h2 id="header_w2">Vecka 48</h2>
+                <div class="admin-week" id="week2">
+                    <ui:include src="lunch-day.xhtml"/>
+                    <ui:include src="lunch-day.xhtml"/>
+                    <ui:include src="lunch-day.xhtml"/>
+                    <ui:include src="lunch-day.xhtml"/>
+                    <ui:include src="lunch-day.xhtml"/>
+                </div>
+            </div>
+
+
+        </div>
+        <ui:include src="carte.xhtml"/>
+        <ui:include src="fooditem.xhtml"/>
+
+
+        <ui:include src="footer.xhtml"/>
+    </f:view>
+</h:body>
+</html>
