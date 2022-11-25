@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:panelGroup layout="block" styleClass="main">
+        <h1>Á la carte</h1>
+        <h:panelGroup layout="block">
+            <h2>Förrätt</h2>
+            <h:form style="width:300px;">
+                <h:panelGroup layout="block" styleClass="admin-add-lunch">
+                    <h:outputLabel>Välj rätt</h:outputLabel>
+                    <h:selectOneMenu>
+                        <f:selectItem/>
+                    </h:selectOneMenu>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="admin-add-lunch">
+                    <h:outputLabel>Pris</h:outputLabel>
+                    <h:inputText/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="admin-add-lunch">
+                    <h:outputLabel>Beskrivning</h:outputLabel>
+                    <h:inputTextarea/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="admin-add-lunch">
+                    <h:outputLabel>Kategori</h:outputLabel>
+                    <h:selectOneMenu>
+                        <f:selectItem itemValue="Förrätt" itemLabel="Förrätt"/>
+                        <f:selectItem itemValue="Varmrätt" itemLabel="Varmrätt"/>
+                        <f:selectItem itemValue="Dessert" itemLabel="Dessert"/>
+                        <f:selectItem itemValue="Dryck" itemLabel="Dryck"/>
+                    </h:selectOneMenu>
+                </h:panelGroup>
+            </h:form>
+        </h:panelGroup>
+        <h:panelGroup layout="block">
+            <h2>Varmrätter</h2>
+            <h:panelGroup layout="block">
+                <p>Krämig älgfärs</p>
+                <span>&#8722;</span>
+            </h:panelGroup>
+            <h:panelGroup layout="block">
+                <p>Kryddigt Renskav</p>
+                <span>&#8722;</span>
+            </h:panelGroup>
+            <h:panelGroup layout="block">
+                <p>Fajitas</p>
+                <span>&#8722;</span>
+            </h:panelGroup>
+        </h:panelGroup>
+    </h:panelGroup>
+</ui:composition>
