@@ -79,6 +79,13 @@ public class FoodItemsBean implements Serializable {
         return response.body();
     }
 
+    public void addDish(Dish d) throws URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
+                .POST((HttpRequest.BodyPublisher) d)
+                .build();
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

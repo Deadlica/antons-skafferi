@@ -35,8 +35,8 @@
         <h:panelGroup layout="block">
             <h2>Varmrätter</h2>
             <ui:repeat value="#{CarteBean.mainCourses}" var="item">
-                <h:outputText value="#{item.dish.name}"/><br/>
-                <h:outputText value="#{item.description}"/><br/>
+                <h3><h:outputText value="#{item.dish.name}" id="item"/></h3>
+                <p><h:outputText value="#{item.description}"/></p>
             </ui:repeat>
             <h:panelGroup layout="block">
             </h:panelGroup>
