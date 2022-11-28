@@ -143,7 +143,7 @@ public class CarteBean implements Serializable {
                 case "Varmrätt":
                     mainCourses.add(i);
                     break;
-                case "Dessert":
+                case "Efterrätt":
                     desserts.add(i);
                     break;
                 case "Dryck":
