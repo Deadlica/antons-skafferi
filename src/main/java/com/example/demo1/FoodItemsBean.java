@@ -3,13 +3,12 @@ package com.example.demo1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import java.net.*;
+import java.net.ProxySelector;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -56,6 +55,7 @@ public class FoodItemsBean implements Serializable {
 
     public FoodItemsBean() throws IOException, URISyntaxException, InterruptedException {
         addList();
+        addDish();
     }
 
     private List<Dish> list;
@@ -67,7 +67,7 @@ public class FoodItemsBean implements Serializable {
     }
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
-        HttpRequest request2 = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
                 .GET()
                 .build();
@@ -75,18 +75,18 @@ public class FoodItemsBean implements Serializable {
                 .newBuilder()
                 .proxy(ProxySelector.getDefault())
                 .build()
-                .send(request2, HttpResponse.BodyHandlers.ofString());
+                .send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
     }
 
-    public void addDish(Dish d) throws URISyntaxException {
-        HttpRequest request2 = HttpRequest.newBuilder()
+    public HttpResponse<String> addDish() throws URISyntaxException, IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
-                .POST((HttpRequest.BodyPublisher) d)
+                .POST(HttpRequest.BodyPublishers.ofString("{\"id\": 1337, \"name\":\"Räkmacka\"}"))
                 .build();
+        return client
+                .send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }
