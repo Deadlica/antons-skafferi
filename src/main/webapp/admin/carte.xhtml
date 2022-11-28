@@ -9,8 +9,8 @@
             <h:form style="width:300px;">
                 <h:panelGroup layout="block" styleClass="admin-add-lunch">
                     <h:outputLabel>Välj rätt</h:outputLabel>
-                    <h:selectOneMenu>
-                        <f:selectItem/>
+                    <h:selectOneMenu value="#{FoodItemsBean}">
+                        <f:selectItems value="#{FoodItemsBean.list}"/>
                     </h:selectOneMenu>
                 </h:panelGroup>
                 <h:panelGroup layout="block" styleClass="admin-add-lunch">
@@ -34,9 +34,11 @@
         </h:panelGroup>
         <h:panelGroup layout="block">
             <h2>Varmrätter</h2>
+            <ui:repeat value="#{CarteBean.mainCourses}" var="item">
+                <h3><h:outputText value="#{item.dish.name}" id="item"/></h3>
+                <p><h:outputText value="#{item.description}"/></p>
+            </ui:repeat>
             <h:panelGroup layout="block">
-                <p>Krämig älgfärs</p>
-                <span>&#8722;</span>
             </h:panelGroup>
             <h:panelGroup layout="block">
                 <p>Kryddigt Renskav</p>

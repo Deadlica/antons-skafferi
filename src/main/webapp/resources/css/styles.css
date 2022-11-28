@@ -258,6 +258,15 @@ h2, h3, h4, p, label {
     }
 }
 
+.today-event {
+    padding: 2% 0 5%;
+}
+
+.events {
+    padding: 1% 0 0;
+}
+
+
 @media screen and (max-width: 750px) {
     .nav-bar ul li {
         font-size: medium;
