@@ -2,13 +2,15 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-   <h:panelGroup class="admin-schedule">
+   <h:panelGroup class="admin-schedule" layout="block">
       <h3 id="admin-schedule-date">date</h3>
-      <ui:include src="working-staff.xhtml"></ui:include>
-      <h:form class="admin-form-add-staff"><h:selectOneMenu>
-         <f:selectItem itemValue="10419" itemLabel="Angelica Engström"></f:selectItem>
-         <f:selectItem itemValue="190493" itemLabel="Samuel Greenberg"></f:selectItem>
-      </h:selectOneMenu>
-         <h:commandButton value="Lägg till personal"></h:commandButton></h:form>
+      <h:panelGroup class="admin-schedule-day" layout="block">
+         <ui:include src="working-staff.xhtml"></ui:include>
+         <h:form class="admin-form-add-staff">
+            <h:selectOneMenu><!--Hämta från ett specifikt datum-->
+               <f:selectItems value="#{StaffBean.setFreeJSONEmployees('2022-12-03')}"/>
+            </h:selectOneMenu>
+            <h:commandButton value="Lägg till"></h:commandButton></h:form>
+      </h:panelGroup>
    </h:panelGroup>
 </ui:composition>
