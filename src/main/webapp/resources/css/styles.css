@@ -30,6 +30,12 @@ a {
     color: inherit;
 }
 
+.navigation-line-break {
+    border-top: 3px solid #7D5A3E;
+    opacity: 0.3;
+
+}
+
 h1 {
     font-family: Cinzel, cursive;
 }
@@ -38,8 +44,12 @@ h2, h3, h4, p, label {
     font-family: Cormorant, serif;
 }
 
+.title {
+    padding-bottom: 3%;
+}
+
 .main {
-    padding: 5vh 10% 0;
+    padding: 5vh 20% 10vh;
     background-color: var(--background_white);
 }
 
@@ -81,7 +91,7 @@ h2, h3, h4, p, label {
 .header-img {
     background: url("#{resource['images/food.png']}") center;
     background-size: cover;
-    padding: 2em 0;
+    padding: 1em 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -92,12 +102,17 @@ h2, h3, h4, p, label {
     border-radius: 50%;
     background: rgba(0, 0, 0, 0);
     color: white;
-    width: 175px;
-    height: 175px;
+    width: 120px;
+    height: 120px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.circle h1 {
+    font-size: 1.5em;
 }
 
 
@@ -211,11 +226,10 @@ h2, h3, h4, p, label {
 
 .admin-added-item > i {
     font-size: x-large;
-    color: red;
     cursor: pointer;
 }
 
-.admin-added-item > span:hover {
+.admin-added-item > i:hover {
     color: red
 }
 
@@ -234,6 +248,15 @@ h2, h3, h4, p, label {
         flex-direction: column;
     }
 }
+
+.today-event {
+    padding: 2% 0 5%;
+}
+
+.events {
+    padding: 1% 0 0;
+}
+
 
 @media screen and (max-width: 750px) {
     .nav-bar ul li {
@@ -257,6 +280,18 @@ h2, h3, h4, p, label {
     }
 
     .lunch-item-price {
+        white-space: nowrap;
+    }
+
+    .menu-item-main {
+        justify-content: space-between;
+    }
+
+    .menu-item-main * {
+        margin: 0 3px;
+    }
+
+    .menu-item-price {
         white-space: nowrap;
     }
 

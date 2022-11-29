@@ -11,16 +11,14 @@ getFebDays=(year)=>{
         return 28
 }
 
-let calender= document.querySelector('.calender')
-
 const month_names=['jan','feb','mar','apr', 'maj','jun','jul','aug','sep','oct','nov','dec']
 
 let days=document.querySelector('.calender-days')
+let yearpicker=document.querySelector('.year-book')
 
 
 generateCalender=(month,year)=>{
     let currDate=new Date()
-    console.log('----------'+currDate.getUTCDate())
     days.innerHTML='';
     let days_of_month =[31,getFebDays(year),31,30,31,30,31,31,30,31,30,31]
     let month_picker=document.querySelector('.month22')
@@ -28,28 +26,25 @@ generateCalender=(month,year)=>{
 
     console.log(month_names[month])
     let first_day= new Date( year,month, 1)
-    console.log(first_day.getDay()+'-----')
 
     firstDayStart=first_day.getDay()
+
     if(firstDayStart==0){
         firstDayStart=7
     }
 
-    for (let index =0; index<days_of_month[month]+firstDayStart-1;index++){
-
-        console.log(index+'--------'+firstDayStart)
-
-        if (index>=firstDayStart-1){
-        if ((index - firstDayStart+2)==currDate.getUTCDate()&&currDate.getMonth()==month&&currDate.getFullYear()==year){
-            days.innerHTML+= "<p class ='this-day'>"+ (index - firstDayStart+2) +'</p>'
+    for (let index =1; index<days_of_month[month]+firstDayStart;index++){
+        if (index>=firstDayStart){
+        if ((index - firstDayStart+1)==currDate.getDate()&&currDate.getMonth()==month&&currDate.getFullYear()==year){
+            days.innerHTML+= "<div id='"+(index- firstDayStart+1)+"' class ='this-day week-day'>"+ (index - firstDayStart+1) +'</div>'
         }
         else {
-            days.innerHTML+= '<p>'+ (index - firstDayStart+2) +'</p>'
+            days.innerHTML+= "<div id='"+(index- firstDayStart+1)+"' class ='week-day'>"+ (index - firstDayStart+1)+"</div>"
 
         }
         }
         else {
-            days.innerHTML+= '<span></span>'
+            days.innerHTML+= '<div></div>'
         }
     }
 
@@ -57,43 +52,67 @@ generateCalender=(month,year)=>{
 
 
 }
-let currDate=new Date()
-let curr_month=currDate.getMonth()
-let curr_year=currDate.getFullYear()
-console.log(curr_month+'--------'+curr_year)
-generateCalender(curr_month,curr_year)
 
-let yearpicker=document.querySelector('.year-book')
 
 document.querySelector('#prev-month').onclick=()=>{
     curr_month--
-    if (curr_month>=0) {
-        generateCalender(curr_month, curr_year)
-    }
-    else {
+    if (curr_month<0) {
         curr_month=11
         curr_year--
         yearpicker.innerHTML=curr_year
-
-        generateCalender(curr_month, curr_year)
-
     }
+    generateCalender(curr_month, curr_year)
+    loadNewDatesListners();
 }
 
 document.querySelector('#next-month').onclick=()=>{
     curr_month++
 
-    if (curr_month<=11) {
-        generateCalender(curr_month, curr_year)
-    }
-else {
+
+if (curr_month>11){
         curr_month=0
         curr_year++
         yearpicker.innerHTML=curr_year
 
-        generateCalender(curr_month, curr_year)
 
     }
+    generateCalender(curr_month, curr_year)
+    loadNewDatesListners();
 }
+
+
+loadNewDatesListners=()=>{
+    let prevTarget=undefined
+    document.querySelectorAll('#days .week-day').forEach(day=>{
+        day.addEventListener("click", event=>{
+            event.currentTarget.classList.toggle("selected");
+            console.log(event.target.id)
+            console.log(curr_year)
+            console.log(curr_month)
+
+            if (prevTarget!= event.target.id)
+            {
+                removePrevDate(prevTarget)
+            }
+
+
+            prevTarget= event.target.id
+        });
+    });
+}
+
+removePrevDate=(prev)=>{
+    if(prev) {
+        let days = document.getElementById(prev)
+        days.classList.remove("selected")
+    }return
+
+}
+
+let currDate=new Date()
+let curr_month=currDate.getMonth()
+let curr_year=currDate.getFullYear()
+generateCalender(curr_month,curr_year)
+loadNewDatesListners();
 
 

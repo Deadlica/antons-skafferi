@@ -4,28 +4,26 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
 /**
  * TODO: Lägga till så att denna fetchar datat från DBn i sin konstruktor!
  */
-@Named(value = "LunchItem")
+@Named(value = "LunchItems")
 @SessionScoped
-public class LunchItem extends HttpServlet {
+public class LunchItems extends HttpServlet {
 
-    public LunchItem() {
+    public LunchItems() {
         /*
          * Lägg till fetching till DB.
          *
          */
     }
 
-    private class Item {
+    private static class Item {
         private String name;
         private String desc;
         private double price;
@@ -41,7 +39,7 @@ public class LunchItem extends HttpServlet {
         }
     }
 
-    private ArrayList<Item> list = new ArrayList<Item>();
+    private ArrayList<Item> list = new ArrayList<>();
 
     public ArrayList<Item> getList() {
         return list;

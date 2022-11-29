@@ -1,7 +1,6 @@
 
 .booking {
     display: flex;
-    padding: 10% 10%;
 }
 
 .calender {
@@ -47,26 +46,30 @@
 }
 
 
-.calender-days p {
-    width: 90%;
-    font-size: 30px;
-    height: 90%;
-    display: flex;
+
+
+.week-day
+{
+    font-size: 30px;display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     cursor: pointer;
     background-color: var(--background_white);
-    border-radius: 100%;
     border-style: solid;
-
+    border-width: thin;
 }
 
-.calender-days p.this-day {
+.this-day {
     background-color: gray;
 }
 
-.calender-days p:hover {
+.selected {
+    background-color: green;
+}
+
+
+.week-day:hover {
     background-color: var(--joel_brown);
 }
 
@@ -106,4 +109,15 @@
 .booking-inputs label {
     display: grid;
     align-content: center;
+}
+@media screen and (max-width: 750px) {
+
+.booking{
+    display: block;
+    padding: 0% 0%;
+}
+    .booking-inputs
+    {    padding: 0% 0%;
+        width: 40%;
+    }
 }

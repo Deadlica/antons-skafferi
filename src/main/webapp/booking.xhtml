@@ -4,8 +4,11 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
-    <div class="main">
+    <div class="main" id="booking_loc">
+        <h1>BOKA BORD</h1>
+
         <div class="booking">
+
             <div class="calender">
                 <div class="calender-header">
                     <p class="year-book">2022</p>
@@ -30,7 +33,7 @@
                         <p>lör</p>
                         <p>sön</p>
                     </div>
-                    <div class="calender-days">
+                    <div class="calender-days" id="days">
 
                     </div>
                 </div>
@@ -43,7 +46,7 @@
                 <label>*Antal (1-4 annars kontakta):<input type="number" min="1" max="4" placeholder="x"/></label>
                 <label>*Ankomst tid:<input id="appt-time" type="time" value="13"/></label>
 
-                <button>submit</button>
+                <button id="make_booking">submit</button>
             </div>
 
         </div>
