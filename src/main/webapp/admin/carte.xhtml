@@ -5,8 +5,7 @@
     <h:panelGroup layout="block" styleClass="main">
         <h1>Á la carte</h1>
         <h:panelGroup layout="block">
-            <h2>Förrätt</h2>
-            <h:form style="width:300px;">
+            <h:form>
                 <h:panelGroup layout="block" styleClass="admin-add-lunch">
                     <h:outputLabel>Välj rätt</h:outputLabel>
                     <h:selectOneMenu value="#{FoodItemsBean}">
@@ -33,20 +32,33 @@
             </h:form>
         </h:panelGroup>
         <h:panelGroup layout="block">
-            <h2>Varmrätter</h2>
-            <ui:repeat value="#{CarteBean.mainCourses}" var="item">
-                <h3><h:outputText value="#{item.dish.name}" id="item"/></h3>
-                <p><h:outputText value="#{item.description}"/></p>
-            </ui:repeat>
             <h:panelGroup layout="block">
+                <h2>Förrätt</h2>
+                <ui:repeat value="#{CarteBean.starters}" var="starter">
+                    <h3><h:outputText value="#{starter.dish.name}" id="starter"/></h3>
+                    <p><h:outputText value="#{starter.description}"/></p>
+                </ui:repeat>
             </h:panelGroup>
             <h:panelGroup layout="block">
-                <p>Kryddigt Renskav</p>
-                <span>&#8722;</span>
+                <h2>Varmrätter</h2>
+                <ui:repeat value="#{CarteBean.mainCourses}" var="main">
+                    <h3><h:outputText value="#{main.dish.name}" id="main"/></h3>
+                    <p><h:outputText value="#{main.description}"/></p>
+                </ui:repeat>
             </h:panelGroup>
             <h:panelGroup layout="block">
-                <p>Fajitas</p>
-                <span>&#8722;</span>
+                <h2>Dessert</h2>
+                <ui:repeat value="#{CarteBean.desserts}" var="dessert">
+                    <h3><h:outputText value="#{dessert.dish.name}" id="dessert"/></h3>
+                    <p><h:outputText value="#{dessert.description}"/></p>
+                </ui:repeat>
+            </h:panelGroup>
+            <h:panelGroup layout="block">
+                <h2>Dryck</h2>
+                <ui:repeat value="#{CarteBean.drinks}" var="drink">
+                    <h3><h:outputText value="#{drink.dish.name}" id="drink"/></h3>
+                    <p><h:outputText value="#{drink.description}"/></p>
+                </ui:repeat>
             </h:panelGroup>
         </h:panelGroup>
     </h:panelGroup>
