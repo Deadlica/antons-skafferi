@@ -4,7 +4,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
    <h:panelGroup class="admin-schedule">
       <h3 id="admin-schedule-date">date</h3>
-      <h:form><h:selectOneMenu>
+      <ui:include src="working-staff.xhtml"></ui:include>
+      <h:form class="admin-form-add-staff"><h:selectOneMenu>
          <f:selectItem itemValue="10419" itemLabel="Angelica Engström"></f:selectItem>
          <f:selectItem itemValue="190493" itemLabel="Samuel Greenberg"></f:selectItem>
       </h:selectOneMenu>
