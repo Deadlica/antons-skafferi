@@ -4,14 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.ProxySelector;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.*;
+import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,10 +53,18 @@ public class FoodItemsBean implements Serializable {
 
     public FoodItemsBean() throws IOException, URISyntaxException, InterruptedException {
         addList();
-        addDish();
     }
 
     private List<Dish> list;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void addList() throws IOException, InterruptedException, URISyntaxException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -67,6 +73,7 @@ public class FoodItemsBean implements Serializable {
     }
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
+        // Sam http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
                 .GET()
@@ -79,14 +86,17 @@ public class FoodItemsBean implements Serializable {
         return response.body();
     }
 
-    public HttpResponse<String> addDish() throws URISyntaxException, IOException, InterruptedException {
+    public HttpResponse<String> addDish(String name) throws URISyntaxException, IOException, InterruptedException {
+
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
-                .POST(HttpRequest.BodyPublishers.ofString("{\"id\": 1337, \"name\":\"Räkmacka\"}"))
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString("{\"id\": 1, \"name\": \"" + name + "\"}"))
                 .build();
-        return client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return response;
     }
 
 }

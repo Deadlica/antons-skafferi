@@ -7,8 +7,9 @@
         <h1>Lägg till en Maträtt</h1>
         <h:form>
             <h:outputLabel for="#{FoodItem}">Namn</h:outputLabel>
-            <h:inputText type="text" id="food_name" for="#{FoodItem.name}"/>
-            <h:commandButton value="Lägg till"/>
+            <h:inputText type="text" id="food_name" value="#{FoodItemsBean.name}" required="true"
+                         requiredMessage="Du måste skriva in ett namn"/>
+            <h:commandButton action="#{FoodItemsBean.addDish(FoodItemsBean.name)}" value="Lägg till"/>
         </h:form>
     </div>
 </ui:composition>
