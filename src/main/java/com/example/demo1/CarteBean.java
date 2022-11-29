@@ -167,6 +167,16 @@ public class CarteBean implements Serializable {
         return response.body();
     }
 
-
+    public HttpResponse<String> deleteItem(int id) throws URISyntaxException, IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"id\":" + id + " }"))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return response;
+    }
 }
 
