@@ -194,6 +194,15 @@ h2, h3, h4, p, label {
     color: gold;
 }
 
+.today-event {
+    padding: 2% 0 5%;
+}
+
+.events {
+    padding: 1% 0 0;
+}
+
+
 .admin-week {
     display: flex;
     flex-direction: row;
@@ -298,5 +307,4 @@ h2, h3, h4, p, label {
     .star-name {
         display: block;
     }
-
 }

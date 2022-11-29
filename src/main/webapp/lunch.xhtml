@@ -4,7 +4,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <div class="lunch main">
-            <h1 class="title">DAGENS LUNCH</h1>
+            <h1 class="title" id="title-lunch">DAGENS LUNCH</h1>
             <div class="lunch-days">
                 <ul class="lunch-days-list" id="lunch-days-list-id">
                     <li id="Monday">MÅNDAG</li>
@@ -18,117 +18,68 @@
 
 
             <div class="lunch-items" id="lunch-Monday">
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Bacon-Wrapped Pork Tenderloin</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">129 :-</h2>
+                <ui:repeat value="#{LunchBean.monday}" var="item">
+                    <div class="lunch-item">
+                        <div class="lunch-item-main">
+                            <h2 class="lunch-item-name"><h:outputText value="#{item.dish.name}"/></h2>
+                            <hr class="break-point"/>
+                            <h2 class="lunch-item-price"><h:outputText value="#{item.price}"/> :- </h2>
+                        </div>
+                        <p class="lunch-item-description"><h:outputText value="#{item.description}"/></p>
                     </div>
-                    <p class="lunch-item-description">This bacon-wrapped pork tenderloin is one of those miracle recipes that just happens to only require 4 ingredients: pork, bacon, honey and olive oil.</p>
-                </div>
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Texas Roadhouse Prime Rib Recipe</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">135 :-</h2>
-                    </div>
-                    <p class="lunch-item-description">When it comes to beef, the Texas Roadhouse prime rib is king. It’s the most tender and succulent beef roasted to perfection and oozing with mouth-watering flavors.</p>
-                </div>
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Surströmmingstaco</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">30 :-</h2>
-                    </div>
-                    <p class="lunch-item-description">Ihopslängd rätt från komposten!</p>
-                </div>
+                </ui:repeat>
             </div>
 
             <div class="lunch-items" id="lunch-Tuesday">
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Peanut Butter Sandwich</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">129 :-</h2>
+                <ui:repeat value="#{LunchBean.tuesday}" var="item">
+                    <div class="lunch-item">
+                        <div class="lunch-item-main">
+                            <h2 class="lunch-item-name"><h:outputText value="#{item.dish.name}"/></h2>
+                            <hr class="break-point"/>
+                            <h2 class="lunch-item-price"><h:outputText value="#{item.price}"/> :- </h2>
+                        </div>
+                        <p class="lunch-item-description"><h:outputText value="#{item.description}"/></p>
                     </div>
-                    <p class="lunch-item-description">This bacon-wrapped pork tenderloin is one of those miracle recipes that just happens to only require 4 ingredients: pork, bacon, honey and olive oil.</p>
-                </div>
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Coco pops</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">135 :-</h2>
-                    </div>
-                    <p class="lunch-item-description">When it comes to beef, the Texas Roadhouse prime rib is king. It’s the most tender and succulent beef roasted to perfection and oozing with mouth-watering flavors.</p>
-                </div>
+                </ui:repeat>
             </div>
 
             <div class="lunch-items" id="lunch-Wednesday">
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Italian Ketchup Pasta </h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">129 :-</h2>
+                <ui:repeat value="#{LunchBean.wednesday}" var="item">
+                    <div class="lunch-item">
+                        <div class="lunch-item-main">
+                            <h2 class="lunch-item-name"><h:outputText value="#{item.dish.name}"/></h2>
+                            <hr class="break-point"/>
+                            <h2 class="lunch-item-price"><h:outputText value="#{item.price}"/> :- </h2>
+                        </div>
+                        <p class="lunch-item-description"><h:outputText value="#{item.description}"/></p>
                     </div>
-                    <p class="lunch-item-description">This bacon-wrapped pork tenderloin is one of those miracle recipes that just happens to only require 4 ingredients: pork, bacon, honey and olive oil.</p>
-                </div>
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Burnt Pancakes</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">135 :-</h2>
-                    </div>
-                    <p class="lunch-item-description">When it comes to beef, the Texas Roadhouse prime rib is king. It’s the most tender and succulent beef roasted to perfection and oozing with mouth-watering flavors.</p>
-                </div>
+                </ui:repeat>
             </div>
 
             <div class="lunch-items" id="lunch-Thursday">
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Spicy Coca Cola</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">129 :-</h2>
+                <ui:repeat value="#{LunchBean.thursday}" var="item">
+                    <div class="lunch-item">
+                        <div class="lunch-item-main">
+                            <h2 class="lunch-item-name"><h:outputText value="#{item.dish.name}"/></h2>
+                            <hr class="break-point"/>
+                            <h2 class="lunch-item-price"><h:outputText value="#{item.price}"/> :- </h2>
+                        </div>
+                        <p class="lunch-item-description"><h:outputText value="#{item.description}"/></p>
                     </div>
-                    <p class="lunch-item-description">This bacon-wrapped pork tenderloin is one of those miracle recipes that just happens to only require 4 ingredients: pork, bacon, honey and olive oil.</p>
-                </div>
+                </ui:repeat>
             </div>
 
             <div class="lunch-items" id="lunch-Friday">
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Oriental Things</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">129 :-</h2>
+                <ui:repeat value="#{LunchBean.friday}" var="item">
+                    <div class="lunch-item">
+                        <div class="lunch-item-main">
+                            <h2 class="lunch-item-name"><h:outputText value="#{item.dish.name}"/></h2>
+                            <hr class="break-point"/>
+                            <h2 class="lunch-item-price"><h:outputText value="#{item.price}"/> :- </h2>
+                        </div>
+                        <p class="lunch-item-description"><h:outputText value="#{item.description}"/></p>
                     </div>
-                    <p class="lunch-item-description">This bacon-wrapped pork tenderloin is one of those miracle recipes that just happens to only require 4 ingredients: pork, bacon, honey and olive oil.</p>
-                </div>
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Chili Nut Salad</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">135 :-</h2>
-                    </div>
-                    <p class="lunch-item-description">When it comes to beef, the Texas Roadhouse prime rib is king. It’s the most tender and succulent beef roasted to perfection and oozing with mouth-watering flavors.</p>
-                </div>
-
-                <div class="lunch-item">
-                    <div class="lunch-item-main">
-                        <h2 class="lunch-item-name">Apple Pizza</h2>
-                        <hr class="break-point"/>
-                        <h2 class="lunch-item-price">30 :-</h2>
-                    </div>
-                    <p class="lunch-item-description">Ihopslängd rätt från komposten!</p>
-                </div>
+                </ui:repeat>
             </div>
         </div>
     </h:head>
