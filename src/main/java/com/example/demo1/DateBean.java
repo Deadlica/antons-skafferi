@@ -4,10 +4,10 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 @RequestScoped
 @Named(value = "DateBean")
@@ -16,8 +16,36 @@ public class DateBean implements Serializable {
         return date;
     }
 
+    public static class Weekday {
+        private final String text;
+        private final String date;
+        Weekday(String text, String date){
+            this.text = text;
+            this.date = date;
+        }
+        public String getDate() {
+            return date;
+        }
+        public String getText() {
+            return text;
+        }
+    }
+
     DateBean(){
         week = getCurrWeek();
+        weekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
+        weekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
+        weekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY)));
+        weekdays.add(new Weekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY)));
+        weekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
+        weekdays.add(new Weekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY)));
+        weekdays.add(new Weekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY)));
+
+        earlyweekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
+        earlyweekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
+        earlyweekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY)));
+        earlyweekdays.add(new Weekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY)));
+        earlyweekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
     }
 
     public void setDate(String date) {
@@ -33,6 +61,7 @@ public class DateBean implements Serializable {
         if(week < 0){
             week = week + 52;
         }
+        setWeek(week);
     }
 
     public void increaseWeek(){
@@ -40,11 +69,28 @@ public class DateBean implements Serializable {
         if(week > 52){
             week = week - 52;
         }
+        setWeek(week);
     }
     public int getCurrWeek() {
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         return date.get(weekFields.weekOfWeekBasedYear());
+    }
+
+    public String getText(int day){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, day);
+        Date date = c.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d/M");
+        return dateFormat.format(date);
+    }
+
+    public String getDay(int day){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_WEEK, day);
+        Date date = c.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(date);
     }
     private String date;
 
@@ -56,69 +102,25 @@ public class DateBean implements Serializable {
         this.week = week;
     }
 
-    public String getMonday() {
-        return monday;
-    }
-
-    public void setMonday(String monday) {
-        this.monday = monday;
-    }
-
-    public String getTuesday() {
-        return tuesday;
-    }
-
-    public void setTuesday(String tuesday) {
-        this.tuesday = tuesday;
-    }
-
-    public String getWednesday() {
-        return wednesday;
-    }
-
-    public void setWednesday(String wednesday) {
-        this.wednesday = wednesday;
-    }
-
-    public String getThursday() {
-        return thursday;
-    }
-
-    public void setThursday(String thursday) {
-        this.thursday = thursday;
-    }
-
-    public String getFriday() {
-        return friday;
-    }
-
-    public void setFriday(String friday) {
-        this.friday = friday;
-    }
-
-    public String getSaturday() {
-        return saturday;
-    }
-
-    public void setSaturday(String saturday) {
-        this.saturday = saturday;
-    }
-
-    public String getSunday() {
-        return sunday;
-    }
-
-    public void setSunday(String sunday) {
-        this.sunday = sunday;
-    }
-
     private int week;
-    private String monday;
-    private String tuesday;
-    private String wednesday;
-    private String thursday;
-    private String friday;
-    private String saturday;
-    private String sunday;
 
+    public List<Weekday> getWeekdays() {
+        return weekdays;
+    }
+
+    public void setWeekdays(List<Weekday> weekdays) {
+        this.weekdays = weekdays;
+    }
+
+    private List<Weekday> weekdays = new ArrayList<>();
+
+    private List<Weekday> earlyweekdays = new ArrayList<>();
+
+    public List<Weekday> getEarlyweekdays() {
+        return earlyweekdays;
+    }
+
+    public void setEarlyweekdays(List<Weekday> earlyweekdays) {
+        this.earlyweekdays = earlyweekdays;
+    }
 }

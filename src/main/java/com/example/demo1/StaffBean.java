@@ -151,7 +151,7 @@ public class StaffBean implements Serializable {
     }
     public HttpResponse<String> addStaff() throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://192.168.50.102:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"ssn\": , \"name\": \"\"}"))
@@ -161,21 +161,23 @@ public class StaffBean implements Serializable {
         return response;
     }
 
-    public HttpResponse<String> deleteStaff(String ssn) throws URISyntaxException, IOException, InterruptedException {
+    public String deleteStaff(Employee employee) throws URISyntaxException, IOException, InterruptedException {
+        //employee = employees.get(employees.size() - 1);
+
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://192.168.50.102:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"ssn\": \"" + ssn + "\"}"))
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + employee.email + "\",\"firstName\":\""+employee.firstName+ "\",\"lastName\":\"" + employee.lastName +"\",\"phoneNumber\":\"" + employee.phoneNumber+ "\", \"ssn\":\""+ employee.ssn+"\"}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
-        return response;
+        return response.body().toString();
     }
 
     public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
+                .uri(new URI("http://192.168.50.102:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
@@ -196,7 +198,7 @@ public class StaffBean implements Serializable {
 
     public String getFreeJSONEmployees(String date) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/available?date=" + date))
+                .uri(new URI("http://192.168.50.102:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/available?date=" + date))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient

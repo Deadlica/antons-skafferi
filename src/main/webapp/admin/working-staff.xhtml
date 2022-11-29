@@ -2,7 +2,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:repeat class="working-employees" value="#{StaffBean.employees}" var="employee"><!--Hämta arbetare från ett specifikt datum-->
+    <ui:repeat class="working-employees" value="#{ShiftBean.getFreeJSONEmployees(weekday.date)}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
       <h:panelGroup class="admin-schedule-workers">
         <h4><h:outputText value="#{employee.firstName} #{employee.lastName}" id="employee"/></h4><i class="fa-solid fa-minus"></i>
       </h:panelGroup>

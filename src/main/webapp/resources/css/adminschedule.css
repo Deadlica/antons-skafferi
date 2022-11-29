@@ -94,3 +94,8 @@ input[type="submit"]:hover{
 .admin-form-delete-staff *{
     width: 100%;
 }
+
+.click-all{
+    display: block;
+    background: white;
+}
