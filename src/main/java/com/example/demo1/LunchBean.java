@@ -143,11 +143,24 @@ public class LunchBean implements Serializable {
         LunchItem[] list_arr = objectMapper.readValue(getJSON(), LunchItem[].class);
         List<LunchItem> arr = new ArrayList<>(Arrays.asList(list_arr));
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String thisMonday = (LocalDateTime.now().with(DayOfWeek.MONDAY)).format(format);
-        String thisTuesday = (LocalDateTime.now().with(DayOfWeek.TUESDAY)).format(format);
-        String thisWednesday = (LocalDateTime.now().with(DayOfWeek.WEDNESDAY)).format(format);
-        String thisThursday = (LocalDateTime.now().with(DayOfWeek.THURSDAY)).format(format);
-        String thisFriday = (LocalDateTime.now().with(DayOfWeek.FRIDAY)).format(format);
+        String thisMonday;
+        String thisTuesday;
+        String thisWednesday;
+        String thisThursday;
+        String thisFriday;
+        if (LocalDate.now().getDayOfWeek().equals(DayOfWeek.SATURDAY) | LocalDate.now().getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            thisMonday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY))).format(format);
+            thisTuesday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.TUESDAY))).format(format);
+            thisWednesday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY))).format(format);
+            thisThursday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.THURSDAY))).format(format);
+            thisFriday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.FRIDAY))).format(format);
+        } else {
+            thisMonday = (LocalDateTime.now().with(DayOfWeek.MONDAY)).format(format);
+            thisTuesday = (LocalDateTime.now().with(DayOfWeek.TUESDAY)).format(format);
+            thisWednesday = (LocalDateTime.now().with(DayOfWeek.WEDNESDAY)).format(format);
+            thisThursday = (LocalDateTime.now().with(DayOfWeek.THURSDAY)).format(format);
+            thisFriday = (LocalDateTime.now().with(DayOfWeek.FRIDAY)).format(format);
+        }
 
         for (LunchItem i : arr) {
             if (i.date.equals(thisMonday)) {

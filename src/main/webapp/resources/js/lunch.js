@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
             clickedDay(item.id);
         })
     })
-
+    if (currentDay == "Saturday" | currentDay == "Sunday") {
+        document.getElementById("title-lunch").innerHTML = "DAGENS LUNCH (nästa vecka)"
+    }
 })
 
 
