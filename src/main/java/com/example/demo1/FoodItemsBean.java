@@ -91,7 +91,7 @@ public class FoodItemsBean implements Serializable {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
                 .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json")
+                .header("Content-Type", "application/json;charset=UTF-8")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"id\": 1, \"name\": \"" + name + "\"}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
