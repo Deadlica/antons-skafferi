@@ -3,6 +3,7 @@ package com.example.demo1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
+import jakarta.json.JsonObject;
 
 import java.io.*;
 import java.net.*;
@@ -87,7 +88,6 @@ public class FoodItemsBean implements Serializable {
     }
 
     public HttpResponse<String> addDish(String name) throws URISyntaxException, IOException, InterruptedException {
-
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
                 .version(HttpClient.Version.HTTP_2)

@@ -202,6 +202,10 @@ h2, h3, h4, p, label {
     padding: 1% 0 0;
 }
 
+.admin-main {
+    padding: 5vh 0 10vh;
+    background-color: var(--background_white);
+}
 
 .admin-week {
     display: flex;
