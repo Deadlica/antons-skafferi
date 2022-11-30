@@ -38,6 +38,11 @@ public class FoodItemsBean implements Serializable {
             this.name = name;
         }
 
+        public Dish(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
         @Override
         public String toString() {
             return this.name;
@@ -88,14 +93,19 @@ public class FoodItemsBean implements Serializable {
     }
 
     public HttpResponse<String> addDish(String name) throws URISyntaxException, IOException, InterruptedException {
+        Dish tempDish = new Dish(1, name);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(tempDish);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"id\": 1, \"name\": \"" + name + "\"}"))
+                .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
+        list.clear();
+        addList();
         return response;
     }
 
