@@ -92,6 +92,7 @@ public class CarteBean implements Serializable {
         setLists();
     }
 
+    CarteItem carteItem = new CarteItem();
     List<CarteItem> starters = new ArrayList<>();
     List<CarteItem> mainCourses = new ArrayList<>();
     List<CarteItem> desserts = new ArrayList<>();
@@ -176,6 +177,26 @@ public class CarteBean implements Serializable {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
+        return response;
+    }
+
+
+    public HttpResponse<String> addItem(CarteItem carteItem) throws IOException, URISyntaxException, InterruptedException {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(carteItem);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        starters.clear();
+        mainCourses.clear();
+        desserts.clear();
+        drinks.clear();
+        setLists();
         return response;
     }
 }
