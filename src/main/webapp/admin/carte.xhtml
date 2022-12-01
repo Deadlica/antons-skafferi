@@ -32,34 +32,55 @@
             </h:form>
         </h:panelGroup>
         <h:panelGroup layout="block">
+
+            <!-- FÖRRÄTTER -->
             <h:panelGroup layout="block">
                 <h2>Förrätt</h2>
                 <ui:repeat value="#{CarteBean.starters}" var="starter">
-                    <h3><h:outputText value="#{starter.dish.name}" id="starter"/></h3>
-                    <p><h:outputText value="#{starter.description}"/></p>
+                    <h:panelGroup layout="block"
+                                  style="display: flex; flex-direction: row; justify-content: space-between">
+                        <h3><h:outputText value="#{starter.dish.name}" id="starter"/></h3>
+                        <i class="fa-solid fa-trash"/>
+                    </h:panelGroup>
                 </ui:repeat>
             </h:panelGroup>
+
+            <!-- VARMRÄTTER -->
             <h:panelGroup layout="block">
                 <h2>Varmrätter</h2>
                 <ui:repeat value="#{CarteBean.mainCourses}" var="main">
-                    <h3><h:outputText value="#{main.dish.name}" id="main"/></h3>
-                    <p><h:outputText value="#{main.description}"/></p>
+                    <h:panelGroup layout="block"
+                                  style="display: flex; flex-direction: row; justify-content: space-between">
+                        <h3><h:outputText value="#{main.dish.name}" id="main"/></h3>
+                        <i class="fa-solid fa-trash"/>
+                    </h:panelGroup>
                 </ui:repeat>
             </h:panelGroup>
+
+            <!-- DESSERT -->
             <h:panelGroup layout="block">
                 <h2>Dessert</h2>
                 <ui:repeat value="#{CarteBean.desserts}" var="dessert">
-                    <h3><h:outputText value="#{dessert.dish.name}" id="dessert"/></h3>
-                    <p><h:outputText value="#{dessert.description}"/></p>
+                    <h:panelGroup layout="block"
+                                  style="display: flex; flex-direction: row; justify-content: space-between">
+                        <h3><h:outputText value="#{dessert.dish.name}" id="dessert"/></h3>
+                        <i class="fa-solid fa-trash"/>
+                    </h:panelGroup>
                 </ui:repeat>
             </h:panelGroup>
+
+            <!-- DRYCK -->
             <h:panelGroup layout="block">
                 <h2>Dryck</h2>
                 <ui:repeat value="#{CarteBean.drinks}" var="drink">
-                    <h3><h:outputText value="#{drink.dish.name}" id="drink"/></h3>
-                    <p><h:outputText value="#{drink.description}"/></p>
+                    <h:panelGroup layout="block"
+                                  style="display: flex; flex-direction: row; justify-content: space-between">
+                        <h3><h:outputText value="#{drink.dish.name}" id="drink"/></h3>
+                        <i class="fa-solid fa-trash"/>
+                    </h:panelGroup>
                 </ui:repeat>
             </h:panelGroup>
+
         </h:panelGroup>
     </h:panelGroup>
 </ui:composition>
