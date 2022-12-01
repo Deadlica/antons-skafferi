@@ -14,17 +14,17 @@
         <h:form>
             <div>
                 <label>Rätt</label>
-                <h:selectOneMenu>
-                    <f:selectItems value='#{LunchItems.list}'/>
+                <h:selectOneMenu value="#{FoodItemsBean}">
+                    <f:selectItems value="#{FoodItemsBean.list}"/>
                 </h:selectOneMenu>
             </div>
             <div>
                 <label>Pris</label>
-                <h:inputText size='3'/>
+                <h:inputText required="true" size='3'/>
             </div>
             <h:panelGroup layout="block">
                 <p><h:outputLabel for="desc">Beskrivning</h:outputLabel></p>
-                <h:inputTextarea id="desc"/>
+                <h:inputTextarea required="true" id="desc"/>
             </h:panelGroup>
             <h:panelGroup layout="block" styleClass="admin-add-lunch" style="flex-direction: row-reverse">
                 <h:commandButton value="Spara"/>
