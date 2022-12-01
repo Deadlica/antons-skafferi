@@ -159,6 +159,8 @@ public class CarteBean implements Serializable {
                 .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
                 .GET()
                 .build();
+
+            //10.82.231.15
         HttpResponse<String> response = HttpClient
                 .newBuilder()
                 .proxy(ProxySelector.getDefault())
