@@ -87,7 +87,7 @@ public class ShiftBean implements Serializable {
 
     public String getJSONLunchShift(String date) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/lunch?date=" + date))
+                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/lunch?date=" + date))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
@@ -110,7 +110,7 @@ public class ShiftBean implements Serializable {
 
     public String getJSONDinnerShift(String date) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/dinner?date=" + date))
+                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/dinner?date=" + date))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
