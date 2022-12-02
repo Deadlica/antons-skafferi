@@ -13,6 +13,13 @@
     cursor: pointer;
 }
 
+.schedule-container{
+    padding: 2%;
+    margin: 2%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: white;
+}
+
 .schedule-day-container{
     display: flex;
     flex-direction: row;
@@ -29,6 +36,7 @@
     border: #202020 1px solid;
     padding: 10%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: var(--background_white);
 }
 
 .admin-form-add-staff{
@@ -81,6 +89,7 @@ input[type="submit"]:hover{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    background: white;
 }
 
 .add-delete-staff h2{

@@ -66,10 +66,28 @@ public class ShiftBean implements Serializable {
             this.employee = employee;
         }
     }
-    List<ShiftBean.Shift> shift = new ArrayList<>();
-    public String getJSONEmployees(String date) throws IOException, InterruptedException, URISyntaxException {
+    List<ShiftBean.Shift> lunchShift = new ArrayList<>();
+    List<ShiftBean.Shift> dinnerShift = new ArrayList<>();
+
+    public List<Shift> getLunchShift() {
+        return lunchShift;
+    }
+
+    public void setLunchShift(List<Shift> lunchShift) {
+        this.lunchShift = lunchShift;
+    }
+
+    public List<Shift> getDinnerShift() {
+        return dinnerShift;
+    }
+
+    public void setDinnerShift(List<Shift> dinnerShift) {
+        this.dinnerShift = dinnerShift;
+    }
+
+    public String getJSONLunchShift(String date) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://192.168.50.102:8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift?date=" + date))
+                .uri(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/lunch?date=" + date))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
@@ -79,15 +97,38 @@ public class ShiftBean implements Serializable {
                 .send(request2, HttpResponse.BodyHandlers.ofString());
         return response.body();
     }
-    public List<ShiftBean.Shift> setJSONEmployees(String date) throws IOException, URISyntaxException, InterruptedException {
-        shift.clear();
+    public List<ShiftBean.Shift> setJSONLunchShift(String date) throws IOException, URISyntaxException, InterruptedException {
+        lunchShift.clear();
         ObjectMapper objectMapper = new ObjectMapper();
-        ShiftBean.Shift[] list_arr = objectMapper.readValue(getJSONEmployees(date), ShiftBean.Shift[].class);
+        ShiftBean.Shift[] list_arr = objectMapper.readValue(getJSONLunchShift(date), ShiftBean.Shift[].class);
         List<ShiftBean.Shift> arr = new ArrayList<>(Arrays.asList(list_arr));
         for(ShiftBean.Shift i : arr){
-            shift.add(i);
+            lunchShift.add(i);
         }
-        return shift;
+        return lunchShift;
+    }
+
+    public String getJSONDinnerShift(String date) throws IOException, InterruptedException, URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/dinner?date=" + date))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request2, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+    public List<ShiftBean.Shift> setJSONDinnerShift(String date) throws IOException, URISyntaxException, InterruptedException {
+        dinnerShift.clear();
+        ObjectMapper objectMapper = new ObjectMapper();
+        ShiftBean.Shift[] list_arr = objectMapper.readValue(getJSONDinnerShift(date), ShiftBean.Shift[].class);
+        List<ShiftBean.Shift> arr = new ArrayList<>(Arrays.asList(list_arr));
+        for(ShiftBean.Shift i : arr){
+            dinnerShift.add(i);
+        }
+        return dinnerShift;
     }
 
 }
