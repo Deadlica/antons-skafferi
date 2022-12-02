@@ -171,6 +171,8 @@ public class CarteBean implements Serializable {
                 .uri(uri)
                 .GET()
                 .build();
+
+            //10.82.231.15
         HttpResponse<String> response = HttpClient
                 .newBuilder()
                 .proxy(ProxySelector.getDefault())
