@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("all_items_menu").querySelectorAll('.menu-item').forEach(item => {
         var disc_objekt = document.getElementById(item.id).getElementsByClassName("menu-item-description")
         var read_more = document.getElementById(item.id).getElementsByClassName("menu-item-ingr")
-        disc_objekt[0].style.display = "none";
-        read_more[0].style.display = "inline";
+        disc_objekt[0].style.display = "block";
+        read_more[0].style.display = "none";
 
         item.addEventListener('click', event => {
             if (disc_objekt[0].style.display === "none") {
@@ -33,12 +33,14 @@ function clicked_type_Menu(Day) {
             document.getElementById(item.id).style.color = "#7D5A3E";
             document.getElementById(item.id).style.fontWeight = "bold";
             document.getElementById(item.id).style.fontSize = "130%";
+            document.getElementById(item.id).style.opacity = "1";
             console.log(item.id + "_item")
             document.getElementById(item.id + "_item").style.display = "block"
         } else {
             document.getElementById(item.id).style.color = "black";
             document.getElementById(item.id).style.fontWeight = "normal";
             document.getElementById(item.id).style.fontSize = "100%";
+            document.getElementById(item.id).style.opacity = "0.6";
             console.log(document.getElementById(item.id + "_item"))
             document.getElementById(item.id + "_item").style.display = "none"
 
