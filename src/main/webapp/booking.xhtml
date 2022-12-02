@@ -41,7 +41,7 @@
 
                 </div>
                 <div class="submitDate">
-                    <label> Selected date: <h:inputText id="inputText" style="width: 25%;" value="#{BookingBean.date}"/></label>
+                    <label> Selected date: <h:inputText id="inputText" style="width: 25%;" value="#{BookingBean.infobooking.date}"/></label>
 
                     <label> tillgängliga platser: <h:outputText value="#{BookingBean.availablePlaces}"/></label>
 
@@ -51,10 +51,10 @@
 
 
             <div class="booking-inputs">
-                <label> *Name: <h:inputText value="#{BookingBean.firstName}"/></label>
-                <label>*telefon-nummer:<h:inputText type="tel" value="#{BookingBean.phoneNumber}"/></label>
-                <label>*Antal (1-4 annars kontakta):<h:inputText type="number" min="1" max="4" value="#{BookingBean.numberOfPeople}"/></label>
-                <label>*Ankomst tid:<h:inputText id="appt-time" type="text" value="#{BookingBean.time}"/></label>
+                <label> *Name: <h:inputText value="#{BookingBean.infobooking.firstName}"/></label>
+                <label>*telefon-nummer:<h:inputText type="tel" value="#{BookingBean.infobooking.phoneNumber}"/></label>
+                <label>*Antal (1-4 annars kontakta):<h:inputText type="number" min="1" max="4" value="#{BookingBean.infobooking.numberOfPeople}"/></label>
+                <label>*Ankomst tid:<h:inputText id="appt-time" type="text" value="#{BookingBean.infobooking.time}"/></label>
                 <h:commandButton value="Boka" actionListener="#{BookingBean.makeBooking()}"></h:commandButton>
                 <h:outputText value="#{BookingBean.receivingMessage}"/>
             </div>

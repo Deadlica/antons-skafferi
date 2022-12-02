@@ -32,16 +32,94 @@ public class BookingBean implements Serializable {
         }
     }
     Amount holder= new Amount();
+public static class infoBooking {
+    String date = String.valueOf(LocalDate.now());
+    String firstName;
+    int id=1;
+    String lastName="nått";
 
-String receivingMessage;
+
+    int numberOfPeople;
+
     String phoneNumber;
-        String firstName;
-        String lastName;
-        int numberOfPeople;
-        int tableNumber;
-        String time;
-        String date= String.valueOf(LocalDate.now());;
-        int id;
+
+    int tableNumber=1;
+    String time;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getNumberOfPeople() {
+        return numberOfPeople;
+    }
+
+    public void setNumberOfPeople(int numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
+    }
+
+    public int getTableNumber() {
+        return tableNumber;
+    }
+
+    public void setTableNumber(int tableNumber) {
+        this.tableNumber = tableNumber;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+}
+    String receivingMessage;
+infoBooking infobooking=new infoBooking();
+
+    public infoBooking getInfobooking() {
+        return infobooking;
+    }
+
+    public void setInfobooking(infoBooking infobooking) {
+        this.infobooking = infobooking;
+    }
 
     public Amount getHolder() {
         return holder;
@@ -51,21 +129,6 @@ String receivingMessage;
         this.holder = holder;
     }
 
-    public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = (date);
-        }
 
     public String getReceivingMessage() {
         return receivingMessage;
@@ -75,53 +138,6 @@ String receivingMessage;
         this.receivingMessage = receivingMessage;
     }
 
-    public String getPhoneNumber() {
-            return phoneNumber;
-        }
-
-        public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public int getNumberOfPeople() {
-            return numberOfPeople;
-        }
-
-        public void setNumberOfPeople(int numberOfPeople) {
-            this.numberOfPeople = numberOfPeople;
-        }
-
-        public int getTableNumber() {
-            return tableNumber;
-        }
-
-        public void setTableNumber(int tableNumber) {
-            this.tableNumber = tableNumber;
-        }
-
-        public String getTime() {
-            return time;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
 
 
     public void setLists() throws IOException, URISyntaxException, InterruptedException {
@@ -139,7 +155,7 @@ String receivingMessage;
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking/count?date="+date))
+                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking/count?date="+infobooking.date))
                 .GET()
                 .build();
 
@@ -158,8 +174,7 @@ String receivingMessage;
             return;
         }
         if (verifyInputs()){
-            //addBooking();
-            receivingMessage="bra input";
+            addBooking();
             return ;
         }
         receivingMessage="inputs är ogilltiga!";
@@ -169,7 +184,7 @@ String receivingMessage;
 public boolean verifyInputs(){
 
 
-        if (phoneNumber==null || firstName==null){
+        if (infobooking.phoneNumber==null || infobooking.firstName==null){
             return false;
         }
         return true;
@@ -178,11 +193,15 @@ public boolean verifyInputs(){
 
     public HttpResponse<String> addBooking() throws URISyntaxException, IOException, InterruptedException {
 
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(infobooking);
+
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"id\": DEFAULT, \"phoneNumber\": "+phoneNumber+ ",\"firtsname\": \""+firstName+"\",\"lastsname\": \""+firstName+"\",\"numberOfPeople\": "+numberOfPeople+",\"numberOfPeople\": "+numberOfPeople+",\"tableNumber\": DEFAULT, \"date\": "+date+",\"time\":"+time))
+                .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
