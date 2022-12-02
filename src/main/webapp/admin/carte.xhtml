@@ -2,7 +2,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:panelGroup layout="block" styleClass="admin-main">
+    <h:panelGroup layout="block" styleClass="main">
         <h1>Á la carte</h1>
         <h:panelGroup layout="block">
             <h:form>
@@ -34,12 +34,11 @@
         <h:panelGroup layout="block">
 
             <!-- FÖRRÄTTER -->
-            <h:panelGroup layout="block">
+            <h:panelGroup layout="block" style="margin-top:4em;">
                 <h2>Förrätt</h2>
                 <ui:repeat value="#{CarteBean.starters}" var="starter">
-                    <h:panelGroup layout="block"
-                                  style="display: flex; flex-direction: row; justify-content: space-between">
-                        <h3><h:outputText value="#{starter.dish.name}" id="starter"/></h3>
+                    <h:panelGroup layout="block" styleClass="admin-carte-item">
+                        <p><h:outputText value="#{starter.dish.name}" id="starter"/></p>
                         <i class="fa-solid fa-trash"/>
                     </h:panelGroup>
                 </ui:repeat>
@@ -49,9 +48,8 @@
             <h:panelGroup layout="block">
                 <h2>Varmrätter</h2>
                 <ui:repeat value="#{CarteBean.mainCourses}" var="main">
-                    <h:panelGroup layout="block"
-                                  style="display: flex; flex-direction: row; justify-content: space-between">
-                        <h3><h:outputText value="#{main.dish.name}" id="main"/></h3>
+                    <h:panelGroup layout="block" styleClass="admin-carte-item">
+                        <p><h:outputText value="#{main.dish.name}" id="main"/></p>
                         <i class="fa-solid fa-trash"/>
                     </h:panelGroup>
                 </ui:repeat>
@@ -61,9 +59,8 @@
             <h:panelGroup layout="block">
                 <h2>Dessert</h2>
                 <ui:repeat value="#{CarteBean.desserts}" var="dessert">
-                    <h:panelGroup layout="block"
-                                  style="display: flex; flex-direction: row; justify-content: space-between">
-                        <h3><h:outputText value="#{dessert.dish.name}" id="dessert"/></h3>
+                    <h:panelGroup layout="block" styleClass="admin-carte-item">
+                        <p><h:outputText value="#{dessert.dish.name}" id="dessert"/></p>
                         <i class="fa-solid fa-trash"/>
                     </h:panelGroup>
                 </ui:repeat>
@@ -73,9 +70,8 @@
             <h:panelGroup layout="block">
                 <h2>Dryck</h2>
                 <ui:repeat value="#{CarteBean.drinks}" var="drink">
-                    <h:panelGroup layout="block"
-                                  style="display: flex; flex-direction: row; justify-content: space-between">
-                        <h3><h:outputText value="#{drink.dish.name}" id="drink"/></h3>
+                    <h:panelGroup layout="block" styleClass="admin-carte-item">
+                        <p><h:outputText value="#{drink.dish.name}" id="drink"/></p>
                         <i class="fa-solid fa-trash"/>
                     </h:panelGroup>
                 </ui:repeat>
