@@ -182,8 +182,9 @@ public class LunchBean implements Serializable {
     }
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
+        URL location = new URL();
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/lunch"))
+                .uri(new URI("http://" + location.getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/lunch"))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
