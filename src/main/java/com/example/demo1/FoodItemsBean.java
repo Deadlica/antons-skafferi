@@ -43,6 +43,9 @@ public class FoodItemsBean implements Serializable {
             this.name = name;
         }
 
+        public Dish() {
+        }
+
         @Override
         public String toString() {
             return this.name;
@@ -68,6 +71,19 @@ public class FoodItemsBean implements Serializable {
         return name;
     }
 
+
+    URI uri;
+
+    {
+        try {
+            // uri = new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
+            uri = new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void setName(String name) {
         this.name = name;
     }
@@ -81,7 +97,7 @@ public class FoodItemsBean implements Serializable {
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
         // Sam http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
+                .uri(uri)
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
@@ -97,7 +113,7 @@ public class FoodItemsBean implements Serializable {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(tempDish);
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
+        HttpRequest request = HttpRequest.newBuilder(uri)
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .POST(HttpRequest.BodyPublishers.ofString(json))

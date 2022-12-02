@@ -88,8 +88,19 @@ public class CarteBean implements Serializable {
         }
     }
 
-    public CarteBean() throws IOException, URISyntaxException, InterruptedException {
+    public CarteBean() throws IOException, InterruptedException {
         setLists();
+    }
+
+    URI uri;
+
+    {
+        try {
+            // uri = new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
+            uri = new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     CarteItem carteItem = new CarteItem();
@@ -130,7 +141,7 @@ public class CarteBean implements Serializable {
         this.drinks = drinks;
     }
 
-    public void setLists() throws IOException, URISyntaxException, InterruptedException {
+    public void setLists() throws IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         CarteItem[] list_arr = objectMapper.readValue(getJSON(), CarteItem[].class);
         List<CarteItem> arr = new ArrayList<>(Arrays.asList(list_arr));
@@ -155,11 +166,13 @@ public class CarteBean implements Serializable {
         }
     }
 
-    public String getJSON() throws IOException, InterruptedException, URISyntaxException {
+    public String getJSON() throws IOException, InterruptedException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
+                .uri(uri)
                 .GET()
                 .build();
+
+            //10.82.231.15
         HttpResponse<String> response = HttpClient
                 .newBuilder()
                 .proxy(ProxySelector.getDefault())
@@ -168,9 +181,9 @@ public class CarteBean implements Serializable {
         return response.body();
     }
 
-    public HttpResponse<String> deleteItem(int id) throws URISyntaxException, IOException, InterruptedException {
+    public HttpResponse<String> deleteItem(int id) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
+        HttpRequest request = HttpRequest.newBuilder(uri)
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .PUT(HttpRequest.BodyPublishers.ofString("{\"id\":" + id + " }"))
@@ -185,7 +198,7 @@ public class CarteBean implements Serializable {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(carteItem);
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
+        HttpRequest request = HttpRequest.newBuilder(uri)
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
