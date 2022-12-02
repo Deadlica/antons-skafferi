@@ -14,23 +14,31 @@
 }
 
 .schedule-day-container{
-    margin-bottom: 2%;
-    margin-top: 2%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-.schedule-day-container > span{
+.admin-schedule{
+    width: 15%;
+    margin: 2%;
+}
+
+.admin-schedule-day{
     overflow: auto;
     border: #202020 1px solid;
-    padding: 2%;
+    padding: 10%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .admin-form-add-staff{
+    margin-top: 10%;
     display: flex;
     flex-direction: row;
+}
+
+.admin-form-add-staff *{
+    width: 100%;
 }
 
 input[type="submit"]{
@@ -42,8 +50,47 @@ input[type="submit"]{
     cursor: pointer;
 }
 
+input[type="submit"]:hover{
+    color: black;
+}
+
 .admin-schedule-workers{
+    background: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3%;
+    margin-bottom: 2%;
+    cursor: pointer;
+    align-items: center;
+}
+
+.admin-schedule-workers:hover{
+    color: whitesmoke;
+    background: #7D5A3E;
+}
+
+.admin-form-add-new-staff{
+    display: flex;
+    flex-direction: column;
+}
+
+.add-delete-staff{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 5%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+.add-delete-staff h2{
+    margin-bottom: 5%;
+}
+
+.add-delete-staff input[type="submit"]{
+    margin-top: 5%;
+}
+
+.admin-form-delete-staff *{
+    width: 100%;
 }
