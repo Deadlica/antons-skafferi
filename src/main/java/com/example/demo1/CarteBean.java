@@ -96,7 +96,8 @@ public class CarteBean implements Serializable {
 
     {
         try {
-            uri = new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
+            // uri = new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
+            uri = new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/lunch");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
