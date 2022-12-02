@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.inject.Named;
-import org.primefaces.event.SelectEvent;
 
 import java.io.IOException;
 import java.io.Serializable;
