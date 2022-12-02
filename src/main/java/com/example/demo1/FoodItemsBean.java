@@ -94,8 +94,7 @@ public class FoodItemsBean implements Serializable {
         setList(new ArrayList<>(Arrays.asList(list_arr)));
     }
 
-    public String getJSON() throws IOException, InterruptedException, URISyntaxException {
-        // Sam http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish
+    public String getJSON() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .GET()
@@ -122,6 +121,31 @@ public class FoodItemsBean implements Serializable {
         System.out.println(response.body());
         list.clear();
         addList();
+        return response;
+    }
+
+
+    public HttpResponse<String> delItem(int id) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(URI.create(uri + "?id=" + id))
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return response;
+    }
+
+    public HttpResponse<String> putItem() throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(uri)
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"id\":266, \"name\":\"Aubergine Tartare\"}"))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
         return response;
     }
 
