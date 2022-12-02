@@ -261,6 +261,13 @@ h2, h3, h4, p, label {
     }
 }
 
+.admin-carte-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 300px;
+}
+
 .today-event {
     padding: 2% 0 5%;
 }
