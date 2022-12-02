@@ -126,8 +126,8 @@ String receivingMessage;
 
     public void setLists() throws IOException, URISyntaxException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
-        //holder = objectMapper.readValue(getJSON(), Amount.class);
-        holder.size=4;
+        holder = objectMapper.readValue(getJSON(), Amount.class);
+        //holder.size=4;
     }
 
     public int getAvailablePlaces(){
