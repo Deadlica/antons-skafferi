@@ -3,7 +3,9 @@ package com.example.demo1;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
@@ -12,6 +14,9 @@ import java.util.*;
 @RequestScoped
 @Named(value = "DateBean")
 public class DateBean implements Serializable {
+    private URL location = new URL();
+    private String link = location.getLink();
+
     public String getDate() {
         return date;
     }
@@ -19,19 +24,22 @@ public class DateBean implements Serializable {
     public static class Weekday {
         private final String text;
         private final String date;
-        Weekday(String text, String date){
+
+        Weekday(String text, String date) {
             this.text = text;
             this.date = date;
         }
+
         public String getDate() {
             return date;
         }
+
         public String getText() {
             return text;
         }
     }
 
-    DateBean(){
+    DateBean() throws IOException, URISyntaxException, InterruptedException {
         week = getCurrWeek();
         weekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
         weekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
@@ -52,32 +60,33 @@ public class DateBean implements Serializable {
         this.date = date;
     }
 
-    public String getNow(){
+    public String getNow() {
         return new Date().toString();
     }
 
-    public void decreaseWeek(){
+    public void decreaseWeek() {
         week = week - 1;
-        if(week < 0){
+        if (week < 0) {
             week = week + 52;
         }
         setWeek(week);
     }
 
-    public void increaseWeek(){
+    public void increaseWeek() {
         week = week + 1;
-        if(week > 52){
+        if (week > 52) {
             week = week - 52;
         }
         setWeek(week);
     }
+
     public int getCurrWeek() {
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         return date.get(weekFields.weekOfWeekBasedYear());
     }
 
-    public String getText(int day){
+    public String getText(int day) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, day);
         Date date = c.getTime();
@@ -85,13 +94,14 @@ public class DateBean implements Serializable {
         return dateFormat.format(date);
     }
 
-    public String getDay(int day){
+    public String getDay(int day) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, day);
         Date date = c.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(date);
     }
+
     private String date;
 
     public int getWeek() {

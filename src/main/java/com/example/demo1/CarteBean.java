@@ -19,10 +19,13 @@ import java.util.List;
 @Named(value = "CarteBean")
 @RequestScoped
 public class CarteBean implements Serializable {
+    private URL location = new URL();
+    private String link = location.getLink();
 
     public static class Dish {
         private int id;
         private String name;
+        private String type;
 
         public String getName() {
             return name;
@@ -32,12 +35,20 @@ public class CarteBean implements Serializable {
             return id;
         }
 
+        public String getType() {
+            return type;
+        }
+
         public void setId(int id) {
             this.id = id;
         }
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
 
         public Dish() {
@@ -88,7 +99,7 @@ public class CarteBean implements Serializable {
         }
     }
 
-    public CarteBean() throws IOException, InterruptedException {
+    public CarteBean() throws IOException, InterruptedException, URISyntaxException {
         setLists();
     }
 
@@ -97,7 +108,7 @@ public class CarteBean implements Serializable {
     {
         try {
             // uri = new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
-            uri = new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
+            uri = new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -141,7 +152,7 @@ public class CarteBean implements Serializable {
         this.drinks = drinks;
     }
 
-    public void setLists() throws IOException, InterruptedException {
+    public void setLists() throws IOException, InterruptedException, URISyntaxException {
         ObjectMapper objectMapper = new ObjectMapper();
         CarteItem[] list_arr = objectMapper.readValue(getJSON(), CarteItem[].class);
         List<CarteItem> arr = new ArrayList<>(Arrays.asList(list_arr));
@@ -167,9 +178,8 @@ public class CarteBean implements Serializable {
     }
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
-        URL location = new URL();
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + location.getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
+                .uri(new URI("http://" + link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient

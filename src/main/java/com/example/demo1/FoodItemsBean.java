@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.json.JsonObject;
+
 import java.io.*;
 import java.net.*;
 import java.io.*;
@@ -19,6 +20,9 @@ import java.util.List;
 @Named(value = "FoodItemsBean")
 @RequestScoped
 public class FoodItemsBean implements Serializable {
+    private URL location = new URL();
+    private String link = location.getLink();
+
     public static class Dish {
         private int id;
         private String name;
@@ -77,8 +81,8 @@ public class FoodItemsBean implements Serializable {
 
     {
         try {
-            // uri = new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
-            uri = new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
+            uri = new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
+            //uri = new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

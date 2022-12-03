@@ -26,10 +26,14 @@ import java.util.Locale;
 @Named(value = "LunchBean")
 @RequestScoped
 public class LunchBean implements Serializable {
+    private URL location = new URL();
+    private String link = location.getLink();
 
     public static class Dish {
         private int id;
         private String name;
+
+        private String type;
 
         public String getName() {
             return name;
@@ -39,12 +43,20 @@ public class LunchBean implements Serializable {
             return id;
         }
 
+        public String getType() {
+            return type;
+        }
+
         public void setId(int id) {
             this.id = id;
         }
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
 
         public Dish() {
@@ -182,9 +194,8 @@ public class LunchBean implements Serializable {
     }
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
-        URL location = new URL();
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + location.getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/lunch"))
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/lunch"))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient

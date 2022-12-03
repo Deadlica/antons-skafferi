@@ -17,17 +17,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 @Named(value = "EventBean")
 @RequestScoped
-public class EventBean implements Serializable{
-    public static class Event  {
-         int id;
-         String NAME;
-         String DESCRIPTION;
-         String Date;
-         int PRICE;
+public class EventBean implements Serializable {
+    private URL location = new URL();
+    private String link = location.getLink();
 
-         int getId() {
+    public static class Event {
+        int id;
+        String NAME;
+        String DESCRIPTION;
+        String Date;
+        int PRICE;
+
+        int getId() {
             return id;
         }
 
@@ -72,6 +76,7 @@ public class EventBean implements Serializable{
     public EventBean() throws IOException, URISyntaxException, InterruptedException {
         setLists();
     }
+
     List<Event> futureEvents = new ArrayList<>();
     List<Event> todayEvents = new ArrayList<>();
 
@@ -92,38 +97,36 @@ public class EventBean implements Serializable{
     }
 
 
-    public void setLists() throws IOException, URISyntaxException, InterruptedException
-        {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Event[] list_arr = objectMapper.readValue(getJSON(), Event[].class);
-            List<Event> arr = new ArrayList<>(Arrays.asList(list_arr));
+    public void setLists() throws IOException, URISyntaxException, InterruptedException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Event[] list_arr = objectMapper.readValue(getJSON(), Event[].class);
+        List<Event> arr = new ArrayList<>(Arrays.asList(list_arr));
 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-            Date date = new Date();
-            for (Event i :
-                    arr) {
-                if (i.Date.equals(formatter.format(date)))
-                {
-                    todayEvents.add(i);
+        Date date = new Date();
+        for (Event i :
+                arr) {
+            if (i.Date.equals(formatter.format(date))) {
+                todayEvents.add(i);
+            } else {
+                futureEvents.add(i);
             }
-                else {
-                    futureEvents.add(i);
-                }
 
         }
 
     }
-        public String getJSON () throws IOException, InterruptedException, URISyntaxException {
-            HttpRequest request2 = HttpRequest.newBuilder()
-                    .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/event"))
-                    .GET()
-                    .build();
-            HttpResponse<String> response = HttpClient
-                    .newBuilder()
-                    .proxy(ProxySelector.getDefault())
-                    .build()
-                    .send(request2, HttpResponse.BodyHandlers.ofString());
-            return response.body();
-        }
+
+    public String getJSON() throws IOException, InterruptedException, URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event"))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request2, HttpResponse.BodyHandlers.ofString());
+        return response.body();
     }
+}
