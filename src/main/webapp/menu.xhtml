@@ -19,15 +19,15 @@
             <div class="menu-items starter-items" id="starter_item">
                 <ui:repeat value="#{CarteBean.starters}" var="item">
 
-                    <h:panelGroup class="menu-item" id="item">
+                    <h:panelGroup layout="block" class="menu-item" id="item">
                         <div class="menu-item-main">
                             <h2 class="menu-item-name"><h:outputText value="#{item.dish.name}"/></h2>
-                            <hr class="break-point"/>
                             <h2 class="menu-item-price"><h:outputText value="#{item.price}"/> :-</h2>
                         </div>
                         <h4 class="menu-item-ingr">läs mer...</h4>
                         <p class="menu-item-description"><h:outputText value="#{item.description}"/></p>
                     </h:panelGroup>
+                    <hr class="navigation-line-break-inner"/>
                 </ui:repeat>
 
 
@@ -38,15 +38,15 @@
 
                 <ui:repeat value="#{CarteBean.mainCourses}" var="item">
 
-                    <h:panelGroup class="menu-item" id="item">
+                    <h:panelGroup layout="block" class="menu-item" id="item">
                         <div class="menu-item-main">
                             <h2 class="menu-item-name"><h:outputText value="#{item.dish.name}"/></h2>
-                            <hr class="break-point"/>
                             <h2 class="menu-item-price"><h:outputText value="#{item.price}"/> :-</h2>
                         </div>
                         <h4 class="menu-item-ingr">läs mer...</h4>
                         <p class="menu-item-description"><h:outputText value="#{item.description}"/></p>
                     </h:panelGroup>
+                    <hr class="navigation-line-break-inner"/>
                 </ui:repeat>
 
 
@@ -57,15 +57,15 @@
 
                 <ui:repeat value="#{CarteBean.desserts}" var="item">
 
-                    <h:panelGroup class="menu-item" id="item">
+                    <h:panelGroup layout="block" class="menu-item" id="item">
                         <div class="menu-item-main">
                             <h2 class="menu-item-name"><h:outputText value="#{item.dish.name}"/></h2>
-                            <hr class="break-point"/>
                             <h2 class="menu-item-price"><h:outputText value="#{item.price}"/> :-</h2>
                         </div>
                         <h4 class="menu-item-ingr">läs mer...</h4>
                         <p class="menu-item-description"><h:outputText value="#{item.description}"/></p>
                     </h:panelGroup>
+                    <hr class="navigation-line-break-inner"/>
                 </ui:repeat>
 
             </div>
@@ -74,15 +74,15 @@
 
                 <ui:repeat value="#{CarteBean.drinks}" var="item">
 
-                    <h:panelGroup class="menu-item" id="item">
+                    <h:panelGroup layout="block" class="menu-item" id="item">
                         <div class="menu-item-main">
                             <h2 class="menu-item-name"><h:outputText value="#{item.dish.name}"/></h2>
-                            <hr class="break-point"/>
                             <h2 class="menu-item-price"><h:outputText value="#{item.price}"/> :-</h2>
                         </div>
                         <h4 class="menu-item-ingr">läs mer...</h4>
                         <p class="menu-item-description"><h:outputText value="#{item.description}"/></p>
                     </h:panelGroup>
+                    <hr class="navigation-line-break-inner"/>
                 </ui:repeat>
 
 

@@ -166,13 +166,12 @@ public class CarteBean implements Serializable {
         }
     }
 
-    public String getJSON() throws IOException, InterruptedException {
+    public String getJSON() throws IOException, InterruptedException, URISyntaxException {
+        URL location = new URL();
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(uri)
+                .uri(new URI("http://" + location.getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
                 .GET()
                 .build();
-
-        //10.82.231.15
         HttpResponse<String> response = HttpClient
                 .newBuilder()
                 .proxy(ProxySelector.getDefault())

@@ -1,7 +1,3 @@
-.lunch {
-    display: flex;
-    flex-direction: column;
-}
 
 .lunch-days ul {
     display: flex;
@@ -12,6 +8,7 @@
 .lunch-days ul li {
     transition-duration: 0.2s;
     cursor: pointer;
+    opacity: 0.6;
 }
 
 .lunch-items {
@@ -20,19 +17,25 @@
 
 .lunch-item-main {
     display: flex;
+    justify-content: space-between;
 }
+
 
 .lunch-item {
     margin-top: 3%;
+    margin-right: 10%;
+    margin-left: 2%;
 }
 
 .lunch-item-main * {
-    margin-bottom: 2%;
+    margin-bottom: 1%;
 }
 
 .lunch-item-description {
     color: #202020;
     font-size: larger;
+    width: 80%;
+    word-wrap: break-word;
 }
 
 .break-point {
