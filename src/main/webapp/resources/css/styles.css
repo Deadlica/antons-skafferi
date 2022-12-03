@@ -96,9 +96,9 @@ h2, h3, h4, p, label {
 
 .nav-bar ul li {
     text-transform: uppercase;
-    font-family: Raleway;
+    font-family: Cinzel, cursive;
     font-weight: lighter;
-    font-size: x-large;
+    font-size: xx-large;
 }
 
 .nav-bar ul li:hover {

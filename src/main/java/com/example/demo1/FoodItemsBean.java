@@ -80,9 +80,10 @@ public class FoodItemsBean implements Serializable {
     }
 
     public HttpResponse<String> addDish() throws URISyntaxException, IOException, InterruptedException {
+        URL location = new URL();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
+                .uri(new URI("http://" + location.getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish"))
                 .POST(HttpRequest.BodyPublishers.ofString("{\"id\": 1337, \"name\":\"Räkmacka\"}"))
                 .build();
         return client
