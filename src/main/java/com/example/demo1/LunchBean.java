@@ -28,6 +28,7 @@ import java.util.Locale;
 public class LunchBean implements Serializable {
     private URL location = new URL();
     private String link = location.getLink();
+    private String week = "currentWeek";
 
     public static class Dish {
         private int id;
@@ -129,6 +130,10 @@ public class LunchBean implements Serializable {
         return friday;
     }
 
+    public String getWeek() {
+        return week;
+    }
+
     public void setMonday(List<LunchItem> monday) {
         this.monday = monday;
     }
@@ -149,12 +154,26 @@ public class LunchBean implements Serializable {
         this.friday = friday;
     }
 
+    public void setWeek(String week) {
+        this.week = week;
+    }
+
+    private boolean isNextWeekLunchSet(List<LunchItem> arr, ArrayList<String> nextWeek) {
+        for (LunchItem i : arr) {
+            for (String nextWeekDay : nextWeek) {
+                if (i.date.equals(nextWeekDay)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public void setLists() throws IOException, URISyntaxException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         LunchItem[] list_arr = objectMapper.readValue(getJSON(), LunchItem[].class);
         List<LunchItem> arr = new ArrayList<>(Arrays.asList(list_arr));
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        /*DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String thisMonday;
         String thisTuesday;
         String thisWednesday;
@@ -190,7 +209,50 @@ public class LunchBean implements Serializable {
             if (i.date.equals(thisFriday)) {
                 friday.add(i);
             }
+        }*/
+
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String thisMonday = (LocalDateTime.now().with(DayOfWeek.MONDAY)).format(format);
+        String thisTuesday = (LocalDateTime.now().with(DayOfWeek.TUESDAY)).format(format);
+        String thisWednesday = (LocalDateTime.now().with(DayOfWeek.WEDNESDAY)).format(format);
+        String thisThursday = (LocalDateTime.now().with(DayOfWeek.THURSDAY)).format(format);
+        String thisFriday = (LocalDateTime.now().with(DayOfWeek.FRIDAY)).format(format);
+
+        String nextMonday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY))).format(format);
+        String nextTuesday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.TUESDAY))).format(format);
+        String nextWednesday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY))).format(format);
+        String nextThursday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.THURSDAY))).format(format);
+        String nextFriday = (LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.FRIDAY))).format(format);
+        ArrayList<String> nextWeek = new ArrayList<>(Arrays.asList(nextMonday, nextTuesday, nextWednesday, nextThursday, nextFriday));
+        if ((LocalDate.now().getDayOfWeek().equals(DayOfWeek.SATURDAY)
+                | LocalDate.now().getDayOfWeek().equals(DayOfWeek.SUNDAY))
+                && isNextWeekLunchSet(arr, nextWeek)) {
+            thisMonday = nextMonday;
+            thisTuesday = nextTuesday;
+            thisWednesday = nextWednesday;
+            thisThursday = nextThursday;
+            thisFriday = nextFriday;
+            setWeek("nextWeek");
         }
+        for (LunchItem i : arr) {
+            if (i.date.equals(thisMonday)) {
+                monday.add(i);
+            }
+            if (i.date.equals(thisTuesday)) {
+                tuesday.add(i);
+            }
+            if (i.date.equals(thisWednesday)) {
+                wednesday.add(i);
+            }
+            if (i.date.equals(thisThursday)) {
+                thursday.add(i);
+            }
+            if (i.date.equals(thisFriday)) {
+                friday.add(i);
+            }
+        }
+
     }
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {

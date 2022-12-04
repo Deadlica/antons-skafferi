@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     })
     if (currentDay == "Saturday" | currentDay == "Sunday") {
+        document.getElementById("Monday").style.color = "#7D5A3E";
+        document.getElementById("Monday").style.opacity = "1";
+        document.getElementById("Monday").style.fontWeight = "bold";
+        document.getElementById("Monday").style.fontSize = "130%";
+        document.getElementById("lunch-Monday").style.display = "inline"
+    }
+    if (document.getElementById("which-week").value == "nextWeek") {
         document.getElementById("title-lunch").innerHTML = "DAGENS LUNCH (nästa vecka)"
     }
 })
