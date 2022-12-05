@@ -19,46 +19,7 @@ import java.util.List;
 @Named(value = "CarteBean")
 @RequestScoped
 public class CarteBean implements Serializable {
-    private URL location = new URL();
-    private String link = location.getLink();
 
-    public static class Dish {
-        private int id;
-        private String name;
-        private String type;
-
-        public String getName() {
-            return name;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public Dish() {
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
-    }
 
     public static class CarteItem {
         String category;
@@ -108,7 +69,7 @@ public class CarteBean implements Serializable {
     {
         try {
             // uri = new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
-            uri = new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
+            uri = new URI("http://" + new URL().getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -179,7 +140,7 @@ public class CarteBean implements Serializable {
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte"))
+                .uri(uri)
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
