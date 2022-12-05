@@ -72,6 +72,9 @@
 .week-day:hover {
     background-color: var(--joel_brown);
 }
+.full{
+    background-color: red;
+}
 
 
 .month-picker {

@@ -7,21 +7,29 @@
     <div class="main" id="booking_loc">
         <h1>BOKA BORD</h1>
 
-        <h:form id="myform" onsubmit="#{BookingBean.setLists()}" >
+        <h:form id="myform" >
 
         <div class="booking">
 
             <div class="calender">
                 <div class="calender-header">
-                    <p class="year-book">2022</p>
+                    <p class="year-book">#{CalendarBean.shownYear}</p>
                     <div class="month-picker">
-                        <div class="month-change" id="prev-month">
-                            <p> &#171;</p>
+                            <h:panelGroup id="prev-month" class="month-change"   layout="block">
+
+                                <h:commandButton actionListener="#{CalendarBean.prevMonth()}" value="◀"></h:commandButton>
+
+                            </h:panelGroup>
+                        <div class="month">
+                            <h:outputText value="#{CalendarBean.getMonthName()}"/>
+
                         </div>
-                        <div class="month"></div>
-                        <div class="month-change" id="next-month">
-                            <p> &#187;</p>
-                        </div>
+
+                            <h:panelGroup id="next-month" class="month-change"   layout="block">
+
+                            <h:commandButton actionListener="#{CalendarBean.nextMonth()}" value="▶"></h:commandButton>
+
+                            </h:panelGroup>
                     </div>
                 </div>
 
@@ -36,14 +44,19 @@
                         <p>sön</p>
                     </div>
                     <div class="calender-days" id="days">
+                        <ui:repeat value="#{CalendarBean.amountDays}"  var="item2">
+                            <h:panelGroup id="item2" class="week-day #{item2.type}"  layout="block">
 
+                                <h:outputText value="#{item2.datum}"/>
+
+                            </h:panelGroup>
+                        </ui:repeat>
                     </div>
 
                 </div>
                 <div class="submitDate">
-                    <label> Selected date: <h:inputText id="inputText" style="width: 25%;" value="#{BookingBean.infobooking.date}"/></label>
+                    <label> Selected date: <h:inputText id="inputText" style="width: 25%;" value="#{CalendarBean.bookingBean.infobooking.date}"/></label>
 
-                    <label> tillgängliga platser: <h:outputText value="#{BookingBean.availablePlaces}"/></label>
 
                 </div>
             </div>
@@ -51,12 +64,13 @@
 
 
             <div class="booking-inputs">
-                <label> *Name: <h:inputText value="#{BookingBean.infobooking.firstName}"/></label>
-                <label>*telefon-nummer:<h:inputText type="tel" value="#{BookingBean.infobooking.phoneNumber}"/></label>
-                <label>*Antal (1-4 annars kontakta):<h:inputText type="number" min="1" max="4" value="#{BookingBean.infobooking.numberOfPeople}"/></label>
-                <label>*Ankomst tid:<h:inputText id="appt-time" type="text" value="#{BookingBean.infobooking.time}"/></label>
-                <h:commandButton value="Boka" actionListener="#{BookingBean.makeBooking()}"></h:commandButton>
-                <h:outputText value="#{BookingBean.receivingMessage}"/>
+                <label> *Förnamn: <h:inputText value="#{CalendarBean.bookingBean.infobooking.firstName}"/></label>
+                <label> *Efternamn: <h:inputText value="#{CalendarBean.bookingBean.infobooking.lastName}"/></label>
+                <label>*telefon-nummer:<h:inputText type="tel" value="#{CalendarBean.bookingBean.infobooking.phoneNumber}"/></label>
+                <label>*Antal (1-4 annars kontakta):<h:inputText type="number" min="1" max="4" value="#{CalendarBean.bookingBean.infobooking.numberOfPeople}"/></label>
+                <label>*Ankomst tid:<h:inputText  id="appt-time" type="text" value="#{CalendarBean.bookingBean.infobooking.time}"/></label>
+                <h:commandButton value="Boka" actionListener="#{CalendarBean.bookingBean.makeBooking()}"></h:commandButton>
+                <h:outputText value="#{CalendarBean.bookingBean.receivingMessage}"/>
             </div>
 
         </div>

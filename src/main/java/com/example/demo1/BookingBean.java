@@ -13,30 +13,16 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Named(value = "BookingBean")
 @RequestScoped
 public class BookingBean implements Serializable {
-    public static class Amount{
-        int size=0;
 
-        public int getSize() {
-            return size;
-        }
-
-        public void setSize(int size) {
-            this.size = size;
-        }
-    }
-    Amount holder= new Amount();
 public static class infoBooking {
-    String date = String.valueOf(LocalDate.now());
+    String date = "0000-00-00";
     String firstName;
     int id=1;
-    String lastName="nått";
+    String lastName;
 
 
     int numberOfPeople;
@@ -45,6 +31,8 @@ public static class infoBooking {
 
     int tableNumber=1;
     String time;
+
+
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -110,8 +98,12 @@ public static class infoBooking {
         this.id = id;
     }
 }
+
+
     String receivingMessage;
 infoBooking infobooking=new infoBooking();
+    public BookingBean() throws IOException, URISyntaxException, InterruptedException {
+    }
 
     public infoBooking getInfobooking() {
         return infobooking;
@@ -121,13 +113,6 @@ infoBooking infobooking=new infoBooking();
         this.infobooking = infobooking;
     }
 
-    public Amount getHolder() {
-        return holder;
-    }
-
-    public void setHolder(Amount holder) {
-        this.holder = holder;
-    }
 
 
     public String getReceivingMessage() {
@@ -138,67 +123,36 @@ infoBooking infobooking=new infoBooking();
         this.receivingMessage = receivingMessage;
     }
 
-
-
-    public void setLists() throws IOException, URISyntaxException, InterruptedException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        holder = objectMapper.readValue(getJSON(), Amount.class);
-        //holder.size=4;
-    }
-
-    public int getAvailablePlaces(){
-        return (5-holder.size);
-    }
-
-
-
-
-    public String getJSON() throws IOException, InterruptedException, URISyntaxException {
-        HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking/count?date="+infobooking.date))
-                .GET()
-                .build();
-
-        //10.82.231.15
-        HttpResponse<String> response = HttpClient
-                .newBuilder()
-                .proxy(ProxySelector.getDefault())
-                .build()
-                .send(request2, HttpResponse.BodyHandlers.ofString());
-        return response.body();
-    }
-
     public void makeBooking() throws URISyntaxException, IOException, InterruptedException {
-        if (holder.size==5){
-            receivingMessage="Ingen ledig plats";
-            return;
-        }
+
         if (verifyInputs()){
-            addBooking();
+            String.valueOf(addBooking());
+            receivingMessage="bokat!";
+            infobooking.date="0000-00-00";
             return ;
         }
         receivingMessage="inputs är ogilltiga!";
       return;
     }
 
-public boolean verifyInputs(){
+private boolean verifyInputs(){
 
 
-        if (infobooking.phoneNumber==null || infobooking.firstName==null){
+        if (infobooking.phoneNumber.length()==0 || infobooking.firstName.length()==0 || infobooking.date.equals("0000-00-00")|| infobooking.numberOfPeople==0|| infobooking.time.length()==0){
             return false;
         }
         return true;
 }
 
 
-    public HttpResponse<String> addBooking() throws URISyntaxException, IOException, InterruptedException {
+    private HttpResponse<String> addBooking() throws URISyntaxException, IOException, InterruptedException {
 
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(infobooking);
 
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking"))
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))
