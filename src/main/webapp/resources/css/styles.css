@@ -279,6 +279,13 @@ h2, h3, h4, p, label {
     }
 }
 
+.carte-add-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 1em;
+    width: fit-content;
+}
+
 .admin-carte-item {
     display: flex;
     flex-direction: row;
@@ -294,6 +301,7 @@ h2, h3, h4, p, label {
 .admin-carte-categories > div {
     margin-top: 2em;
 }
+
 
 .carte-remove {
     cursor: pointer;
@@ -361,5 +369,13 @@ h2, h3, h4, p, label {
 
     .star-name {
         display: block;
+    }
+
+    .carte-add-item {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-carte-categories {
+        grid-template-columns: 1fr;
     }
 }

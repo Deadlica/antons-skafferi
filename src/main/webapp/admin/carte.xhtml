@@ -5,30 +5,24 @@
     <h:panelGroup layout="block" styleClass="main">
         <h1>Á la carte</h1>
         <h:panelGroup layout="block">
-            <h:form>
-                <h:panelGroup layout="block" styleClass="admin-add-lunch">
-                    <h:outputLabel>Välj rätt</h:outputLabel>
-                    <h:selectOneMenu value="#{FoodItemsBean}">
-                        <f:selectItems value="#{FoodItemsBean.list}"/>
-                    </h:selectOneMenu>
-                </h:panelGroup>
-                <h:panelGroup layout="block" styleClass="admin-add-lunch">
-                    <h:outputLabel>Pris</h:outputLabel>
-                    <h:inputText/>
-                </h:panelGroup>
-                <h:panelGroup layout="block" styleClass="admin-add-lunch">
-                    <h:outputLabel>Beskrivning</h:outputLabel>
-                    <h:inputTextarea/>
-                </h:panelGroup>
-                <h:panelGroup layout="block" styleClass="admin-add-lunch">
-                    <h:outputLabel>Kategori</h:outputLabel>
-                    <h:selectOneMenu>
-                        <f:selectItem itemValue="Förrätt" itemLabel="Förrätt"/>
-                        <f:selectItem itemValue="Varmrätt" itemLabel="Varmrätt"/>
-                        <f:selectItem itemValue="Dessert" itemLabel="Dessert"/>
-                        <f:selectItem itemValue="Dryck" itemLabel="Dryck"/>
-                    </h:selectOneMenu>
-                </h:panelGroup>
+            <!-- ADD CARTE ITEM -->
+            <h:form styleClass="carte-add-item">
+                <h:outputLabel>Välj rätt</h:outputLabel>
+                <h:selectOneMenu value="#{FoodItemsBean}">
+                    <f:selectItems value="#{FoodItemsBean.list}"/>
+                </h:selectOneMenu>
+                <h:outputLabel>Pris</h:outputLabel>
+                <h:inputText/>
+                <h:outputLabel>Beskrivning</h:outputLabel>
+                <h:inputTextarea/>
+                <h:outputLabel>Kategori</h:outputLabel>
+                <h:selectOneMenu>
+                    <f:selectItem itemValue="Förrätt" itemLabel="Förrätt"/>
+                    <f:selectItem itemValue="Varmrätt" itemLabel="Varmrätt"/>
+                    <f:selectItem itemValue="Dessert" itemLabel="Dessert"/>
+                    <f:selectItem itemValue="Dryck" itemLabel="Dryck"/>
+                </h:selectOneMenu>
+                <h:commandButton value="Lägg till!"/>
             </h:form>
         </h:panelGroup>
 
