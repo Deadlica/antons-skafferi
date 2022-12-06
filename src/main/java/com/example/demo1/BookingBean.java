@@ -126,7 +126,7 @@ infoBooking infobooking=new infoBooking();
     public void makeBooking() throws URISyntaxException, IOException, InterruptedException {
 
         if (verifyInputs()){
-            String.valueOf(addBooking());
+            addBooking();
             receivingMessage="bokat!";
             infobooking.date="0000-00-00";
             return ;
@@ -152,7 +152,7 @@ private boolean verifyInputs(){
         String json = mapper.writeValueAsString(infobooking);
 
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking"))
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(json))

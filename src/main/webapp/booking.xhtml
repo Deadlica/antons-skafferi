@@ -69,7 +69,7 @@
                 <label>*telefon-nummer:<h:inputText type="tel" value="#{CalendarBean.bookingBean.infobooking.phoneNumber}"/></label>
                 <label>*Antal (1-4 annars kontakta):<h:inputText type="number" min="1" max="4" value="#{CalendarBean.bookingBean.infobooking.numberOfPeople}"/></label>
                 <label>*Ankomst tid:<h:inputText  id="appt-time" type="text" value="#{CalendarBean.bookingBean.infobooking.time}"/></label>
-                <h:commandButton value="Boka" actionListener="#{CalendarBean.bookingBean.makeBooking()}"></h:commandButton>
+                <h:commandButton value="Boka" actionListener="#{CalendarBean.ConfirmAndSubmit()}"></h:commandButton>
                 <h:outputText value="#{CalendarBean.bookingBean.receivingMessage}"/>
             </div>
 

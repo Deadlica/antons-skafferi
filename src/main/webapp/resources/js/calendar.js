@@ -57,8 +57,27 @@ loadNewDatesListners=()=>{
             event.currentTarget.classList.toggle("selected");
             prevTarget=event.currentTarget
             temp2.readOnly=false
-            console.log(document.getElementById(event.target.id).innerHTML+"????")
-            temp2.value = parseInt(yearpicker) + "-" + (month_names.indexOf(month_picker.substring(0, 3)) + 1) + "-" + document.getElementById(event.target.id).innerHTML
+
+            var selectetMonth=(month_names.indexOf(month_picker.substring(0, 3)) + 1);
+            var selectetday=document.getElementById(event.target.id).innerHTML;
+
+            if (selectetMonth<10){
+                var tempSelectetMonth= "0"+String(selectetMonth);
+            }
+            else {
+                var tempSelectetMonth= String(selectetMonth);
+
+            }
+            if (selectetday.length==1){
+                var tempSelectetday= "0"+selectetday;
+            }
+            else {
+                var tempSelectetday= selectetday;
+
+            }
+            console.log(tempSelectetMonth+"!!!!!!!!"+tempSelectetday)
+
+            temp2.value = parseInt(yearpicker) + "-" + (tempSelectetMonth) + "-" + tempSelectetday
             temp2.readOnly=true
             console.log("------"+document.getElementById(event.target.id).innerHTML)
 

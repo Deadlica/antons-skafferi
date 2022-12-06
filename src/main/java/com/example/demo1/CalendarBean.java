@@ -1,6 +1,7 @@
 package com.example.demo1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 
@@ -21,7 +22,7 @@ import java.util.List;
 
 
 @Named(value = "CalendarBean")
-@SessionScoped
+@ApplicationScoped
 public class CalendarBean implements Serializable {
 
 
@@ -94,7 +95,7 @@ BookingBean bookingBean=new BookingBean();
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-       // holdAllBookings= objectMapper.readValue(getJsonBookings(), BookingBean.infoBooking[].class);
+         holdAllBookings= objectMapper.readValue(getJsonBookings(), BookingBean.infoBooking[].class);
          startDayIndex = new Date(shownYear, shownMonth -1, 0).getDay();
        generateCalendar();
     }
@@ -111,6 +112,12 @@ BookingBean bookingBean=new BookingBean();
 
                 generateCalendar();
             }
+    }
+   public void ConfirmAndSubmit() throws URISyntaxException, IOException, InterruptedException {
+       bookingBean.makeBooking();
+       ObjectMapper objectMapper = new ObjectMapper();
+       holdAllBookings= objectMapper.readValue(getJsonBookings(), BookingBean.infoBooking[].class);
+       generateCalendar();
     }
 
     public void prevMonth(){
@@ -163,18 +170,23 @@ if (monthIndex >0 ) {
             temp.datum=42+count;
             if (startDayIndex -1<=i) {
                 temp.datum=count;
-                if (counting(shownYear +"-"+(shownMonth)+"-"+count)<1 && thisDay<count+1)
+                if (counting(shownYear,shownMonth,count)<1)
                 {
-                    temp.type = "notFull";
+                    if(thisDay>=count+1&&thisYear==shownYear&&thisMonth==shownMonth) {
+                    temp.type ="pastDay";
+                    }
+                    else {
+                        temp.type = "notFull";
+                    }
                 }
                 else {
-                    if (thisYear!= shownYear && thisMonth!= shownMonth) {
-                        temp.type = "notFull";
-
+                    if(thisDay>=count+1&&thisYear==shownYear&&thisMonth==shownMonth) {
+                        temp.type ="pastDay";
                     }
                     else {
                         temp.type = "full";
                     }
+
                 }
                 count++;
             }
@@ -206,19 +218,21 @@ if (monthIndex >0 ) {
         return month_names[shownMonth -1];
     }
 
-    private int counting(String date)  {
+    private int counting(int yearCount, int monthCount, int dayCount)  {
         int amount=0;
-       /* for (BookingBean.infoBooking var:holdAllBookings) {
-            if(var.date.equals(date)){
+        for (BookingBean.infoBooking var:holdAllBookings) {
+            String[] holder = String.valueOf(var.date).split("-", 3);
+
+            if(Integer.parseInt(holder[0]) == yearCount&&Integer.parseInt(holder[1]) == monthCount&&Integer.parseInt(holder[2]) == dayCount){
                 amount++;
             }
 
-        }*/
+        }
         return amount ;
     }
     private static String getJsonBookings() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking"))
+                .uri(new URI("http://31.209.47.252:8080/antons-skafferi-db-1.0-SNAPSHOT/api/booking"))
                 .GET()
                 .build();
 

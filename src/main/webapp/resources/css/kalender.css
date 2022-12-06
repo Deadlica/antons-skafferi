@@ -45,19 +45,25 @@
     gap: 1% 1%;
 }
 
-
-
-
-.week-day
-{
+.week-day{
     font-size: 30px;display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    cursor: pointer;
     background-color: var(--background_white);
     border-style: solid;
     border-width: thin;
+}
+.pastDay{
+    background-color: white;
+    opacity: 20%;
+}
+
+.notFull
+{
+    cursor: pointer;
+    background-color: var(--background_white);
+
 }
 
 .this-day {
@@ -69,7 +75,7 @@
 }
 
 
-.week-day:hover {
+.notFull:hover {
     background-color: var(--joel_brown);
 }
 .full{
@@ -82,7 +88,10 @@
     align-items: center;
     padding: 0 35%;
 }
+.pastDay{
 
+
+}
 .month-change {
     width: 20px;
     border-radius: 50%;
