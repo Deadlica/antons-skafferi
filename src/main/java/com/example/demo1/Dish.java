@@ -30,6 +30,21 @@ public class Dish {
         this.type = type;
     }
 
+    public Dish(int id, String name, String type) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+    }
+
+    public Dish() {
+    }
+
+    public Dish(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.type = "";
+    }
+
     @Override
     public String toString() {
         return this.name;

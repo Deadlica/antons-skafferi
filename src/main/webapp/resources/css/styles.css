@@ -286,6 +286,33 @@ h2, h3, h4, p, label {
     width: 300px;
 }
 
+.admin-carte-categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.admin-carte-categories > div {
+    margin-top: 2em;
+}
+
+.carte-remove {
+    cursor: pointer;
+}
+
+.carte-remove:hover {
+    color: red;
+}
+
+.add-food-form {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    width: fit-content;
+}
+
+.add-food-form > label {
+    padding-right: 2em;
+}
+
 .today-event {
     padding: 2% 0 5%;
 }

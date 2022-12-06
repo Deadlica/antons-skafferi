@@ -31,52 +31,51 @@
                 </h:panelGroup>
             </h:form>
         </h:panelGroup>
-        <h:panelGroup layout="block">
 
+        <div class="admin-carte-categories">
             <!-- FÖRRÄTTER -->
-            <h:panelGroup layout="block" style="margin-top:4em;">
+            <div>
                 <h2>Förrätt</h2>
                 <ui:repeat value="#{CarteBean.starters}" var="starter">
                     <h:panelGroup layout="block" styleClass="admin-carte-item">
                         <p><h:outputText value="#{starter.dish.name}" id="starter"/></p>
-                        <i class="fa-solid fa-trash"/>
+                        <i class="fa-solid fa-trash carte-remove"/>
                     </h:panelGroup>
                 </ui:repeat>
-            </h:panelGroup>
+            </div>
 
             <!-- VARMRÄTTER -->
-            <h:panelGroup layout="block">
+            <div>
                 <h2>Varmrätter</h2>
                 <ui:repeat value="#{CarteBean.mainCourses}" var="main">
                     <h:panelGroup layout="block" styleClass="admin-carte-item">
                         <p><h:outputText value="#{main.dish.name}" id="main"/></p>
-                        <i class="fa-solid fa-trash"/>
+                        <i class="fa-solid fa-trash carte-remove"/>
                     </h:panelGroup>
                 </ui:repeat>
-            </h:panelGroup>
+            </div>
 
             <!-- DESSERT -->
-            <h:panelGroup layout="block">
+            <div>
                 <h2>Dessert</h2>
                 <ui:repeat value="#{CarteBean.desserts}" var="dessert">
                     <h:panelGroup layout="block" styleClass="admin-carte-item">
                         <p><h:outputText value="#{dessert.dish.name}" id="dessert"/></p>
-                        <i class="fa-solid fa-trash"/>
+                        <i class="fa-solid fa-trash carte-remove"/>
                     </h:panelGroup>
                 </ui:repeat>
-            </h:panelGroup>
+            </div>
 
             <!-- DRYCK -->
-            <h:panelGroup layout="block">
+            <div>
                 <h2>Dryck</h2>
                 <ui:repeat value="#{CarteBean.drinks}" var="drink">
                     <h:panelGroup layout="block" styleClass="admin-carte-item">
                         <p><h:outputText value="#{drink.dish.name}" id="drink"/></p>
-                        <i class="fa-solid fa-trash"/>
+                        <i class="fa-solid fa-trash carte-remove"/>
                     </h:panelGroup>
                 </ui:repeat>
-            </h:panelGroup>
-
-        </h:panelGroup>
+            </div>
+        </div>
     </h:panelGroup>
 </ui:composition>

@@ -16,46 +16,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Named(value = "FoodItemsBean")
 @RequestScoped
 public class FoodItemsBean implements Serializable {
     private URL location = new URL();
     private String link = location.getLink();
-
-    public static class Dish {
-        private int id;
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Dish(int id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        public Dish() {
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
-    }
 
     public List<Dish> getList() {
         return list;
@@ -71,11 +38,19 @@ public class FoodItemsBean implements Serializable {
 
     private List<Dish> list;
     private String name;
+    private String category = "";
 
     public String getName() {
         return name;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     URI uri;
 
@@ -93,7 +68,7 @@ public class FoodItemsBean implements Serializable {
         this.name = name;
     }
 
-    public void addList() throws IOException, InterruptedException, URISyntaxException {
+    public void addList() throws IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         Dish[] list_arr = objectMapper.readValue(getJSON(), Dish[].class);
         setList(new ArrayList<>(Arrays.asList(list_arr)));
@@ -110,10 +85,14 @@ public class FoodItemsBean implements Serializable {
                 .build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
+
     }
 
-    public HttpResponse<String> addDish(String name) throws URISyntaxException, IOException, InterruptedException {
+    public HttpResponse<String> addDish(String name, String type) throws IOException, InterruptedException {
         Dish tempDish = new Dish(1, name);
+        if (Objects.equals(type, "")) tempDish.setType("");
+        else tempDish.setType(type);
+
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(tempDish);
         HttpClient client = HttpClient.newHttpClient();
