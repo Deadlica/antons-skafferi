@@ -217,9 +217,9 @@ public class StaffBean implements Serializable {
         }
     }
 
-    public String getFreeJSONEmployees(String date) throws IOException, InterruptedException, URISyntaxException {
+    public String getFreeJSONEmployees(String date, String url) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/available?date=" + date))
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/" + url + "/available?date=" + date))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
@@ -230,10 +230,10 @@ public class StaffBean implements Serializable {
         return response.body();
     }
 
-    public List<Employee> setFreeJSONEmployees(String date) throws IOException, URISyntaxException, InterruptedException {
+    public List<Employee> setFreeJSONEmployees(String date, String url) throws IOException, URISyntaxException, InterruptedException {
         freeEmployees.clear();
         ObjectMapper objectMapper = new ObjectMapper();
-        StaffBean.Employee[] list_arr = objectMapper.readValue(getFreeJSONEmployees(date), StaffBean.Employee[].class);
+        StaffBean.Employee[] list_arr = objectMapper.readValue(getFreeJSONEmployees(date, url), StaffBean.Employee[].class);
         List<StaffBean.Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
         for (Employee i : arr) {
             freeEmployees.add(i);

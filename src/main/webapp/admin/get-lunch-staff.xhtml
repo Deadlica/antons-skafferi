@@ -14,7 +14,7 @@
             <!--<ui:include src="working-staff.xhtml"></ui:include>-->
             <h:form class="admin-form-add-staff">
                <h:selectOneMenu><!--Hämta från ett specifikt datum-->
-                  <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date)}" var="e" itemLabel="#{e.firstName} #{e.lastName}" />
+                  <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date, 'lunch')}" var="e" itemLabel="#{e.firstName} #{e.lastName}" />
                </h:selectOneMenu>
                <h:commandButton value="Lägg till"></h:commandButton></h:form>
          </h:panelGroup>
