@@ -75,6 +75,14 @@ public class CarteBean implements Serializable {
         }
     }
 
+    public CarteItem getCarteItem() {
+        return carteItem;
+    }
+
+    public void setCarteItem(CarteItem carteItem) {
+        this.carteItem = carteItem;
+    }
+
     CarteItem carteItem = new CarteItem();
     List<CarteItem> starters = new ArrayList<>();
     List<CarteItem> mainCourses = new ArrayList<>();
