@@ -35,7 +35,7 @@
                     <f:selectItem itemValue="Dryck" itemLabel="Dryck"/>
                     <f:ajax event="valueChange" render="TEST1"/>
                 </h:selectOneMenu>
-                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem()}"/>
+                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem()}" type="submit"/>
                 <h:outputText id="TEST1" value="#{CarteBean.carteItem}"/>
             </h:form>
         </h:panelGroup>

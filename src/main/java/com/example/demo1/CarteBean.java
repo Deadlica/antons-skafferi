@@ -2,9 +2,12 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.ManagedBean;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.flow.FlowScoped;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
