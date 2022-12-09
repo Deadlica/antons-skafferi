@@ -37,6 +37,8 @@ public class Dish {
     }
 
     public Dish() {
+        this.name = "";
+        this.type = "";
     }
 
     public Dish(int id, String name) {
