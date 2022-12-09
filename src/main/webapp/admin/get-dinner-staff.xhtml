@@ -11,7 +11,6 @@
                   <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4><i class="fa-solid fa-minus"></i>
                </h:panelGroup>
             </ui:repeat>
-            <!--<ui:include src="working-staff.xhtml"></ui:include>-->
             <h:form class="admin-form-add-staff">
                <h:selectOneMenu><!--Hämta från ett specifikt datum-->
                   <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date, 'dinner')}" var="e" itemLabel="#{e.firstName} #{e.lastName}"/>
