@@ -1,7 +1,9 @@
 package com.example.demo1;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.application.FacesMessage;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -22,10 +24,10 @@ public class CarteBean implements Serializable {
 
 
     public static class CarteItem {
-        String category;
-        String description;
-        Dish dish;
-        int price;
+        String category = "";
+        String description = "";
+        Dish dish = new Dish();
+        int price = 0;
 
         public String getCategory() {
             return category;
@@ -58,11 +60,26 @@ public class CarteBean implements Serializable {
         public void setPrice(int price) {
             this.price = price;
         }
+
+        @Override
+        public String toString() {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = "";
+            try {
+                json = mapper.writeValueAsString(this);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            return json;
+        }
+
     }
 
     public CarteBean() throws IOException, InterruptedException, URISyntaxException {
         setLists();
+        setAllDishes();
     }
+
 
     URI uri;
 
@@ -84,6 +101,9 @@ public class CarteBean implements Serializable {
     }
 
     CarteItem carteItem = new CarteItem();
+
+
+    List<Dish> allDishes = new ArrayList<>();
     List<CarteItem> starters = new ArrayList<>();
     List<CarteItem> mainCourses = new ArrayList<>();
     List<CarteItem> desserts = new ArrayList<>();
@@ -146,6 +166,21 @@ public class CarteBean implements Serializable {
         }
     }
 
+    public Dish dishFromId(int id) {
+        for (Dish d : allDishes) {
+            if (d.getId() == id) {
+                carteItem.dish = d;
+                return d;
+            }
+        }
+        return null;
+    }
+
+    public void setAllDishes() throws IOException, URISyntaxException, InterruptedException {
+        FoodItemsBean fib = new FoodItemsBean();
+        allDishes = fib.getList();
+    }
+
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(uri)
@@ -172,8 +207,15 @@ public class CarteBean implements Serializable {
     }
 
 
-    public HttpResponse<String> addItem(CarteItem carteItem) throws IOException, URISyntaxException, InterruptedException {
+    public String addItem() throws IOException, URISyntaxException, InterruptedException {
         ObjectMapper mapper = new ObjectMapper();
+        carteItem.dish.setId(1);
+        carteItem.dish.setName(dishFromId(carteItem.dish.getId()).getName());
+        carteItem.dish.setType(dishFromId(carteItem.dish.getId()).getType());
+        carteItem.description = "H";
+        carteItem.price = 412;
+        carteItem.category = "Förrätt";
+
         String json = mapper.writeValueAsString(carteItem);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(uri)
@@ -188,7 +230,7 @@ public class CarteBean implements Serializable {
         desserts.clear();
         drinks.clear();
         setLists();
-        return response;
+        return json + '\n' + (String) response.body();
     }
 }
 

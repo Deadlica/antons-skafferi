@@ -8,21 +8,35 @@
             <!-- ADD CARTE ITEM -->
             <h:form styleClass="carte-add-item">
                 <h:outputLabel>Välj rätt</h:outputLabel>
-                <h:selectOneMenu value="#{CarteBean.carteItem.category}">
-                    <f:selectItems value="#{FoodItemsBean.list}"/>
+                <h:selectOneMenu value="#{CarteBean.carteItem.dish.id}">
+                    <f:selectItems value="#{FoodItemsBean.list}" var="dish"
+                                   itemValue="#{dish.id}"
+                                   itemLabel="#{dish.name}"/>
+                    <f:ajax render="TEST1" event="valueChange"/>
                 </h:selectOneMenu>
+
+
                 <h:outputLabel>Pris</h:outputLabel>
-                <h:inputText value="#{CarteBean.carteItem.price}"/>
+                <h:inputText value="#{CarteBean.carteItem.price}">
+                    <f:ajax event="valueChange" render="TEST1"/>
+                </h:inputText>
+
                 <h:outputLabel>Beskrivning</h:outputLabel>
-                <h:inputTextarea value="#{CarteBean.carteItem.description}"/>
-                <h:outputLabel value="#{CarteBean.carteItem.category}">Kategori</h:outputLabel>
-                <h:selectOneMenu>
+                <h:inputTextarea value="#{CarteBean.carteItem.description}">
+                    <f:ajax event="valueChange" render="TEST1"/>
+                </h:inputTextarea>
+
+
+                <h:outputLabel>Kategori</h:outputLabel>
+                <h:selectOneMenu value="#{CarteBean.carteItem.category}">
                     <f:selectItem itemValue="Förrätt" itemLabel="Förrätt"/>
                     <f:selectItem itemValue="Varmrätt" itemLabel="Varmrätt"/>
                     <f:selectItem itemValue="Dessert" itemLabel="Dessert"/>
                     <f:selectItem itemValue="Dryck" itemLabel="Dryck"/>
+                    <f:ajax event="valueChange" render="TEST1"/>
                 </h:selectOneMenu>
-                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem(CarteBean.carteItem)}"/>
+                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem()}"/>
+                <h:outputText id="TEST1" value="#{CarteBean.carteItem}"/>
             </h:form>
         </h:panelGroup>
 
