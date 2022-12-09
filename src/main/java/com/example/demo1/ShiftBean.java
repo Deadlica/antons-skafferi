@@ -30,7 +30,7 @@ public class ShiftBean implements Serializable {
         private String date;
         private String beginTime;
         private String endTime;
-        private StaffBean.Employee employee;
+        private Employee employee;
 
         public int getId() {
             return id;
@@ -64,11 +64,11 @@ public class ShiftBean implements Serializable {
             this.endTime = endTime;
         }
 
-        public StaffBean.Employee getEmployee() {
+        public Employee getEmployee() {
             return employee;
         }
 
-        public void setEmployee(StaffBean.Employee employee) {
+        public void setEmployee(Employee employee) {
             this.employee = employee;
         }
     }

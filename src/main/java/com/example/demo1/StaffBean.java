@@ -28,62 +28,6 @@ public class StaffBean implements Serializable {
         this.selectedDeletedEmployee = selectedDeletedEmployee;
     }
 
-    public void onItemSelectedListener(AjaxBehaviorEvent event) {
-    }
-
-    public static class Employee {
-        private String ssn;
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String phoneNumber;
-
-        public String getSsn() {
-            return ssn;
-        }
-
-        public void setSsn(String ssn) {
-            this.ssn = ssn;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPhoneNumber() {
-            return phoneNumber;
-        }
-
-        public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-        }
-/*
-        @Override
-        public String toString() {
-            return this.firstName + " " + this.lastName;
-        }*/
-    }
-
     private String ssn;
     private String firstName;
     private String lastName;
@@ -106,6 +50,16 @@ public class StaffBean implements Serializable {
     public StaffBean() throws IOException, URISyntaxException, InterruptedException {
         setJSONEmployees();
         selectedDeletedEmployee = employees.get(0);
+    }
+
+    Employee newEmployee = new Employee();
+
+    public Employee getNewEmployee() {
+        return newEmployee;
+    }
+
+    public void setNewEmployee(Employee newEmployee) {
+        this.newEmployee = newEmployee;
     }
 
     List<Employee> employees = new ArrayList<>();
@@ -173,26 +127,25 @@ public class StaffBean implements Serializable {
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"ssn\": , \"name\": \"\"}"))
+                .POST(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\""+ newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() +"\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\""+ newEmployee.getSsn() +"\"}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
         return response;
     }
 
-    public Employee deleteStaff(Employee employee) throws URISyntaxException, IOException, InterruptedException {
+    public String deleteStaff() throws URISyntaxException, IOException, InterruptedException {
         //employee = employees.get(employees.size() - 1);
-        return employee;
-        /*
+
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link +":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + employee.email + "\",\"firstName\":\""+employee.firstName+ "\",\"lastName\":\"" + employee.lastName +"\",\"phoneNumber\":\"" + employee.phoneNumber+ "\", \"ssn\":\""+ employee.ssn+"\"}"))
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + selectedDeletedEmployee.getEmail() + "\",\"firstName\":\""+ selectedDeletedEmployee.getFirstName() + "\",\"lastName\":\"" + selectedDeletedEmployee.getLastName() +"\",\"phoneNumber\":\"" + selectedDeletedEmployee.getPhoneNumber() + "\", \"ssn\":\""+ selectedDeletedEmployee.getSsn() +"\"}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
-        return response.body().toString();*/
+        return response.body();
     }
 
     public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
@@ -210,8 +163,8 @@ public class StaffBean implements Serializable {
 
     public void setJSONEmployees() throws IOException, URISyntaxException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
-        StaffBean.Employee[] list_arr = objectMapper.readValue(getJSONEmployees(), StaffBean.Employee[].class);
-        List<StaffBean.Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
+        Employee[] list_arr = objectMapper.readValue(getJSONEmployees(), Employee[].class);
+        List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
         for (Employee i : arr) {
             employees.add(i);
         }
@@ -233,8 +186,8 @@ public class StaffBean implements Serializable {
     public List<Employee> setFreeJSONEmployees(String date, String url) throws IOException, URISyntaxException, InterruptedException {
         freeEmployees.clear();
         ObjectMapper objectMapper = new ObjectMapper();
-        StaffBean.Employee[] list_arr = objectMapper.readValue(getFreeJSONEmployees(date, url), StaffBean.Employee[].class);
-        List<StaffBean.Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
+        Employee[] list_arr = objectMapper.readValue(getFreeJSONEmployees(date, url), Employee[].class);
+        List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
         for (Employee i : arr) {
             freeEmployees.add(i);
         }

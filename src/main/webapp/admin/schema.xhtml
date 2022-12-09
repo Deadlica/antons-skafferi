@@ -46,18 +46,24 @@
             <h2>Lägg till ny anställd</h2>
             <h:form class="admin-form-add-new-staff">
                 <h:outputLabel for="first_name">Förnamn</h:outputLabel>
-                <h:inputText type="text" id="first_name" value="#{StaffBean.firstName}" required="true"
-                             requiredMessage="Du måste skriva in förnamn"/>
+                <h:inputText type="text" id="first_name" value="#{StaffBean.newEmployee.firstName}"
+                             requiredMessage="Du måste skriva in förnamn">
+                    <f:validateRequired/>
+                </h:inputText>
                 <h:outputLabel for="last_name">Efternamn</h:outputLabel>
-                <h:inputText type="text" id="last_name" value="#{StaffBean.lastName}" required="true"
-                             requiredMessage="Du måste skriva in efternamn"/>
+                <h:inputText type="text" id="last_name" value="#{StaffBean.newEmployee.lastName}"
+                             requiredMessage="Du måste skriva in efternamn">
+                    <f:validateRequired/>
+                </h:inputText>
                 <h:outputLabel for="ssn">Personnummer</h:outputLabel>
-                <h:inputText type="number" id="ssn" value="#{StaffBean.ssn}" required="true"
-                             requiredMessage="Du måste skriva in personnummer" min="12" max="12"/>
+                <h:inputText type="number" id="ssn" value="#{StaffBean.newEmployee.ssn}" required="true"
+                             requiredMessage="Personnummer enligt YYYYMMDDXXXX" min="12" max="12">
+                    <f:validateLength minimum="12" maximum="12"/>
+                </h:inputText>
                 <h:outputLabel for="email">Email</h:outputLabel>
-                <h:inputText type="text" id="email" value="#{StaffBean.email}"/>
+                <h:inputText type="text" id="email" value="#{StaffBean.newEmployee.email}"/>
                 <h:outputLabel for="phone_number">Telefonnummer</h:outputLabel>
-                <h:inputText type="number" id="phone_number" value="#{StaffBean.phoneNumber}" min="10" max="10"/>
+                <h:inputText type="number" id="phone_number" value="#{StaffBean.newEmployee.phoneNumber}" min="10" max="10"/>
                 <h:commandButton action="#{StaffBean.addStaff()}" value="Lägg till"/>
             </h:form>
         </h:panelGroup>
@@ -67,7 +73,7 @@
                     <h:selectOneMenu id="deleteStaff" value="#{StaffBean.selectedDeletedEmployee}">
                         <f:selectItems value="#{StaffBean.employees}" var="e" itemLabel="#{e.firstName} #{e.lastName}"/>
                     </h:selectOneMenu>
-                    <h:commandButton value="Ta bort"/>
+                    <h:commandButton value="Ta bort" action="#{StaffBean.deleteStaff}"/>
                 </h:form>
 
             </h:panelGroup>
