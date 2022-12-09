@@ -30,15 +30,15 @@ generateCalender=(month,year)=>{
         if (index>=firstDayStart-1){
             if ((index - firstDayStart+2)==currDate.getDate()&&currDate.getMonth()==month&&currDate.getFullYear()==year)
             {
-                document.getElementById("myform:j_idt19:"+(index)+":item2").classList.add("this-day")
+                document.getElementById("myform:j_idt110:"+(index)+":item2").classList.add("this-day")
             }
             if((index - firstDayStart+2)==currDate2 && curr_month==month+1&&currDate.getFullYear()==year) {
-                document.getElementById("myform:j_idt19:"+(index)+":item2").classList.add("selected")
+                document.getElementById("myform:j_idt110:"+(index)+":item2").classList.add("selected")
                 prevTarget=document.getElementById("myform:j_idt19:"+(index)+":item2")
             }
         }
         else {
-            document.getElementById("myform:j_idt19:"+(index)+":item2").innerHTML="";
+            document.getElementById("myform:j_idt110:"+(index)+":item2").innerHTML="";
         }
     }
 

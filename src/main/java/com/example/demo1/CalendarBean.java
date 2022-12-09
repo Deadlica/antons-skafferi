@@ -170,7 +170,7 @@ public class CalendarBean implements Serializable {
             temp.datum=42+count;
             if (startDayIndex -1<=i) {
                 temp.datum=count;
-                if (counting(shownYear,shownMonth,count)<1)
+                if (counting(shownYear,shownMonth,count)<6)
                 {
                     if(thisDay>=count+1&&thisYear==shownYear&&thisMonth==shownMonth) {
                         temp.type ="pastDay";

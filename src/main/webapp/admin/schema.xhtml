@@ -4,8 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui" >
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="styles.css"/>
@@ -23,8 +22,8 @@
             <h:form>
                 <!--<h:commandButton id="decrease" action="#{DateBean.decreaseWeek()}" value="-" styleClass="click-all"></h:commandButton>-->
             </h:form>
-                <i class="fa-solid fa-angle-left"></i><h2>Vecka <h:outputText value="#{DateBean.week}" /></h2><i class="fa-solid fa-angle-right"></i>
-            <!--<h2 id="adminscheduleweek"></h2>-->
+                <!--<i class="fa-solid fa-angle-left"></i><h2>Vecka <h:outputText value="#{DateBean.week}" /></h2><i class="fa-solid fa-angle-right"></i>
+            <h2 id="adminscheduleweek"></h2>-->
             <h:form>
                 <!--<h:commandButton action="#{DateBean.increaseWeek()}" styleClass="click-all" value="+"></h:commandButton>-->
             </h:form>
