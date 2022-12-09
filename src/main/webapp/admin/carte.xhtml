@@ -40,6 +40,7 @@
             </h:form>
         </h:panelGroup>
 
+
         <div class="admin-carte-categories">
             <!-- FÖRRÄTTER -->
             <div>
@@ -47,7 +48,8 @@
                 <ui:repeat value="#{CarteBean.starters}" var="starter">
                     <h:panelGroup layout="block" styleClass="admin-carte-item">
                         <p><h:outputText value="#{starter.dish.name}" id="starter"/></p>
-                        <i class="fa-solid fa-trash carte-remove"/>
+                        <h:commandButton action="#{CarteBean.deleteItem(starter.dish.id)}"> <i
+                                class="fa-solid fa-trash carte-remove"/></h:commandButton>
                     </h:panelGroup>
                 </ui:repeat>
             </div>

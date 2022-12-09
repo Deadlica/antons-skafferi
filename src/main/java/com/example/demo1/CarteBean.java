@@ -3,7 +3,9 @@ package com.example.demo1;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -19,12 +21,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Named(value = "CarteBean")
-@RequestScoped
+@ViewScoped
 public class CarteBean implements Serializable {
 
 
     public static class CarteItem {
-        String category = "";
+        String category = "Förrätt";
         String description = "";
         Dish dish = new Dish();
         int price = 0;
@@ -166,6 +168,10 @@ public class CarteBean implements Serializable {
         }
     }
 
+    public void dishAttributesFromId(int id) {
+        carteItem.dish = dishFromId(id);
+    }
+
     public Dish dishFromId(int id) {
         for (Dish d : allDishes) {
             if (d.getId() == id) {
@@ -208,14 +214,8 @@ public class CarteBean implements Serializable {
 
 
     public String addItem() throws IOException, URISyntaxException, InterruptedException {
+        dishAttributesFromId(carteItem.dish.getId());
         ObjectMapper mapper = new ObjectMapper();
-        carteItem.dish.setId(1);
-        carteItem.dish.setName(dishFromId(carteItem.dish.getId()).getName());
-        carteItem.dish.setType(dishFromId(carteItem.dish.getId()).getType());
-        carteItem.description = "H";
-        carteItem.price = 412;
-        carteItem.category = "Förrätt";
-
         String json = mapper.writeValueAsString(carteItem);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(uri)
