@@ -48,6 +48,7 @@ public class DateBean implements Serializable {
         weekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
         weekdays.add(new Weekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY)));
         weekdays.add(new Weekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY)));
+        setIndexes();
 
         earlyweekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
@@ -56,6 +57,20 @@ public class DateBean implements Serializable {
         earlyweekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
     }
 
+    public void setIndexes(){
+        for(Weekday w : weekdays){
+            selectedShiftEmployeeDate.put(w.getDate(), "");
+        }
+    }
+    HashMap<String, String> selectedShiftEmployeeDate = new HashMap<>();
+
+    public HashMap<String, String> getSelectedShiftEmployeeDate() {
+        return selectedShiftEmployeeDate;
+    }
+
+    public void setSelectedShiftEmployeeDate(HashMap<String, String> selectedShiftEmployeeDate) {
+        this.selectedShiftEmployeeDate = selectedShiftEmployeeDate;
+    }
     public void setDate(String date) {
         this.date = date;
     }

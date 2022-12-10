@@ -50,16 +50,19 @@
                              requiredMessage="Du måste skriva in förnamn">
                     <f:validateRequired/>
                 </h:inputText>
+                <h:message for="first_name" errorStyle="color:red"/>
                 <h:outputLabel for="last_name">Efternamn</h:outputLabel>
                 <h:inputText type="text" id="last_name" value="#{StaffBean.newEmployee.lastName}"
                              requiredMessage="Du måste skriva in efternamn">
                     <f:validateRequired/>
                 </h:inputText>
+                <h:message for="last_name" errorStyle="color:red"/>
                 <h:outputLabel for="ssn">Personnummer</h:outputLabel>
-                <h:inputText type="number" id="ssn" value="#{StaffBean.newEmployee.ssn}" required="true"
-                             requiredMessage="Personnummer enligt YYYYMMDDXXXX" min="12" max="12">
+                <h:inputText id="ssn" value="#{StaffBean.newEmployee.ssn}"
+                             requiredMessage="Personnummer enligt YYYYMMDDXXXX">
                     <f:validateLength minimum="12" maximum="12"/>
                 </h:inputText>
+                <h:message for="ssn" errorStyle="color:red"/>
                 <h:outputLabel for="email">Email</h:outputLabel>
                 <h:inputText type="text" id="email" value="#{StaffBean.newEmployee.email}"/>
                 <h:outputLabel for="phone_number">Telefonnummer</h:outputLabel>
@@ -70,8 +73,8 @@
             <h:panelGroup layout="block" class="delete-staff">
                 <h2>Ta bort anställd</h2><!--Skapa möjligheten att kunna radera-->
                 <h:form class="admin-form-delete-staff" id="selectForm">
-                    <h:selectOneMenu id="deleteStaff" value="#{StaffBean.selectedDeletedEmployee}">
-                        <f:selectItems value="#{StaffBean.employees}" var="e" itemLabel="#{e.firstName} #{e.lastName}"/>
+                    <h:selectOneMenu id="deleteStaff" value="#{StaffBean.selectedDeletedEmployee.ssn}">
+                        <f:selectItems value="#{StaffBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                     </h:selectOneMenu>
                     <h:commandButton value="Ta bort" action="#{StaffBean.deleteStaff}"/>
                 </h:form>
