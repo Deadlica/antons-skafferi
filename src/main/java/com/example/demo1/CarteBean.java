@@ -203,7 +203,7 @@ public class CarteBean implements Serializable {
         return response.body();
     }
 
-    public HttpResponse<String> deleteItem(int id) throws IOException, InterruptedException {
+    public HttpResponse<String> deleteItem(int id) throws IOException, InterruptedException, URISyntaxException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(uri)
                 .version(HttpClient.Version.HTTP_2)
@@ -211,29 +211,23 @@ public class CarteBean implements Serializable {
                 .PUT(HttpRequest.BodyPublishers.ofString("{\"id\":" + id + " }"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
         return response;
     }
 
 
-    public String addItem() throws IOException, URISyntaxException, InterruptedException {
+    public HttpResponse<String> addItem() throws IOException, URISyntaxException, InterruptedException {
         dishAttributesFromId(carteItem.dish.getId());
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(carteItem);
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(uri)
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString(json))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        HttpResponse<String> response = API.doPost("carte", carteItem);
+        resetLists();
+        return response;
+    }
+
+    public void resetLists() throws IOException, URISyntaxException, InterruptedException {
         starters.clear();
         mainCourses.clear();
         desserts.clear();
         drinks.clear();
         setLists();
-        return json + '\n' + (String) response.body();
     }
 }
 

@@ -12,18 +12,15 @@
                     <f:selectItems value="#{FoodItemsBean.list}" var="dish"
                                    itemValue="#{dish.id}"
                                    itemLabel="#{dish.name}"/>
-                    <f:ajax render="TEST1" event="valueChange"/>
                 </h:selectOneMenu>
 
 
                 <h:outputLabel>Pris</h:outputLabel>
                 <h:inputText value="#{CarteBean.carteItem.price}">
-                    <f:ajax event="valueChange" render="TEST1"/>
                 </h:inputText>
 
                 <h:outputLabel>Beskrivning</h:outputLabel>
                 <h:inputTextarea value="#{CarteBean.carteItem.description}">
-                    <f:ajax event="valueChange" render="TEST1"/>
                 </h:inputTextarea>
 
 
@@ -33,10 +30,8 @@
                     <f:selectItem itemValue="Varmrätt" itemLabel="Varmrätt"/>
                     <f:selectItem itemValue="Dessert" itemLabel="Dessert"/>
                     <f:selectItem itemValue="Dryck" itemLabel="Dryck"/>
-                    <f:ajax event="valueChange" render="TEST1"/>
                 </h:selectOneMenu>
                 <h:commandButton value="Lägg till!" action="#{CarteBean.addItem()}" type="submit"/>
-                <h:outputText id="TEST1" value="#{CarteBean.carteItem}"/>
             </h:form>
         </h:panelGroup>
 
@@ -46,11 +41,14 @@
             <div>
                 <h2>Förrätt</h2>
                 <ui:repeat value="#{CarteBean.starters}" var="starter">
-                    <h:panelGroup layout="block" styleClass="admin-carte-item">
+                    <h:form id="starters" styleClass="admin-carte-item">
                         <p><h:outputText value="#{starter.dish.name}" id="starter"/></p>
-                        <h:commandButton action="#{CarteBean.deleteItem(starter.dish.id)}"> <i
-                                class="fa-solid fa-trash carte-remove"/></h:commandButton>
-                    </h:panelGroup>
+                        <h:commandButton value="Delete" type="submit"
+                                         action="#{CarteBean.deleteItem(starter.dish.id)}">
+                            <f:ajax event="click" render="starters"/>
+                        </h:commandButton>
+
+                    </h:form>
                 </ui:repeat>
             </div>
 
