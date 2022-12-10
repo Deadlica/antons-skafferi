@@ -2,12 +2,6 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.ManagedBean;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.flow.FlowScoped;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
@@ -69,7 +63,7 @@ public class CarteBean implements Serializable {
         @Override
         public String toString() {
             ObjectMapper mapper = new ObjectMapper();
-            String json = "";
+            String json;
             try {
                 json = mapper.writeValueAsString(this);
             } catch (JsonProcessingException e) {
@@ -146,7 +140,7 @@ public class CarteBean implements Serializable {
         this.drinks = drinks;
     }
 
-    public void setLists() throws IOException, InterruptedException, URISyntaxException {
+    public void setLists() throws IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         CarteItem[] list_arr = objectMapper.readValue(getJSON(), CarteItem[].class);
         List<CarteItem> arr = new ArrayList<>(Arrays.asList(list_arr));
@@ -190,7 +184,7 @@ public class CarteBean implements Serializable {
         allDishes = fib.getList();
     }
 
-    public String getJSON() throws IOException, InterruptedException, URISyntaxException {
+    public String getJSON() throws IOException, InterruptedException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(uri)
                 .GET()
@@ -203,26 +197,36 @@ public class CarteBean implements Serializable {
         return response.body();
     }
 
-    public HttpResponse<String> deleteItem(int id) throws IOException, InterruptedException, URISyntaxException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(uri)
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"id\":" + id + " }"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response;
+
+    static class idPOD {
+        int id;
+
+        public idPOD(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
     }
 
+    public HttpResponse<String> deleteItem(int id) throws IOException, InterruptedException {
+        idPOD object = new idPOD(id);
+        return API.doPut("carte", object);
+    }
 
-    public HttpResponse<String> addItem() throws IOException, URISyntaxException, InterruptedException {
+    public HttpResponse<String> addItem() throws IOException, InterruptedException {
         dishAttributesFromId(carteItem.dish.getId());
         HttpResponse<String> response = API.doPost("carte", carteItem);
         resetLists();
         return response;
     }
 
-    public void resetLists() throws IOException, URISyntaxException, InterruptedException {
+    public void resetLists() throws IOException, InterruptedException {
         starters.clear();
         mainCourses.clear();
         desserts.clear();
