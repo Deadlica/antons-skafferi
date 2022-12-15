@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <h:outputStylesheet library="css" name="styles.css"/>
+   <h:outputStylesheet library="css" name="adminschedule.css"/>
+   <h:outputScript library="js" name="adminschedule.js"/>
+   <link rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+</h:head>
+<f:view>
+   <ui:include src="nav.xhtml" />
+   <h:panelGroup class="admin-main" layout="block">
+
+      <h:panelGroup layout="block" class="schedule-header">
+         <h2>Vecka #{DateBean.week}</h2>
+      </h:panelGroup>
+
+      <h:panelGroup layout="block" class="schedule-container">
+         <h2>Lunchpersonal</h2>
+         <h:panelGroup layout="block" class="schedule-day-container" id="schedulelunch">
+            hej
+         </h:panelGroup>
+      </h:panelGroup>
+
+      <h:panelGroup layout="block" class="schedule-container">
+         <h2>Middagspersonal</h2>
+         <h:panelGroup layout="block" class="schedule-day-container" id="scheduledinner">
+            hej
+         </h:panelGroup>
+      </h:panelGroup>
+
+      <h:panelGroup layout="block" class="add-delete-staff">
+
+         <h:panelGroup layout="block" class="add-new-staff"><!--Skapa möjligheten att kunna addera-->
+            <h2>Lägg till ny anställd</h2>
+            <h:form class="admin-form-add-new-staff">
+               <h:outputLabel for="first_name">Förnamn</h:outputLabel>
+               <h:inputText type="text" id="first_name" value="#{StaffBean.newEmployee.firstName}"
+                            requiredMessage="Du måste skriva in förnamn">
+                  <f:validateRequired/>
+               </h:inputText>
+               <h:message for="first_name" errorStyle="color:red"/>
+               <h:outputLabel for="last_name">Efternamn</h:outputLabel>
+               <h:inputText type="text" id="last_name" value="#{StaffBean.newEmployee.lastName}"
+                            requiredMessage="Du måste skriva in efternamn">
+                  <f:validateRequired/>
+               </h:inputText>
+               <h:message for="last_name" errorStyle="color:red"/>
+               <h:outputLabel for="ssn">Personnummer</h:outputLabel>
+               <h:inputText id="ssn" value="#{StaffBean.newEmployee.ssn}"
+                            requiredMessage="Personnummer enligt YYYYMMDDXXXX">
+                  <f:validateLength minimum="12" maximum="12"/>
+               </h:inputText>
+               <h:message for="ssn" errorStyle="color:red"/>
+               <h:outputLabel for="email">Email</h:outputLabel>
+               <h:inputText type="text" id="email" value="#{StaffBean.newEmployee.email}"/>
+               <h:outputLabel for="phone_number">Telefonnummer</h:outputLabel>
+               <h:inputText type="number" id="phone_number" value="#{StaffBean.newEmployee.phoneNumber}" min="10" max="10"/>
+               <h:commandButton action="#{StaffBean.addStaff()}" value="Lägg till"/>
+            </h:form>
+         </h:panelGroup>
+
+         <h:panelGroup layout="block" class="delete-staff">
+            <h2>Ta bort anställd</h2><!--Skapa möjligheten att kunna radera-->
+            <h:form class="admin-form-delete-staff" id="selectForm">
+               <h:selectOneMenu id="deleteStaff" value="#{StaffBean.selectedDeletedEmployee.ssn}">
+                  <f:selectItems value="#{StaffBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
+               </h:selectOneMenu>
+               <h:commandButton value="Ta bort" action="#{StaffBean.deleteStaff}"/>
+            </h:form>
+         </h:panelGroup>
+      </h:panelGroup>
+
+   </h:panelGroup>
+   <ui:include src="footer.xhtml" />
+</f:view>
+</html>

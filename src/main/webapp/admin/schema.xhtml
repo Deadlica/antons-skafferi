@@ -4,48 +4,71 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui" >
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
 <h:head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="styles.css"/>
     <h:outputStylesheet library="css" name="adminschedule.css"/>
     <h:outputScript library="js" name="adminschedule.js"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <!--<link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>-->
 </h:head>
 
 
 <f:view>
-    <ui:include src="nav.xhtml"></ui:include>
+    <!--<ui:include src="nav.xhtml" />-->
     <h:panelGroup class="admin-main" layout="block">
         <h:panelGroup layout="block" class="schedule-header">
             <h:form>
                 <!--<h:commandButton id="decrease" action="#{DateBean.decreaseWeek()}" value="-" styleClass="click-all"></h:commandButton>-->
             </h:form>
-                <i class="fa-solid fa-angle-left"></i><h2>Vecka <h:outputText value="#{DateBean.week}" /></h2><i class="fa-solid fa-angle-right"></i>
+                <!--<i class="fa-solid fa-angle-left"></i><h2>Vecka <h:outputText value="#{DateBean.week}" /></h2><i class="fa-solid fa-angle-right"></i>-->
             <!--<h2 id="adminscheduleweek"></h2>-->
             <h:form>
-                <!--<h:commandButton action="#{DateBean.increaseWeek()}" styleClass="click-all" value="+"></h:commandButton>-->
+                <!--<h:commandButton action="#{DateBean.increaseWeek(DateBean.week)}" styleClass="click-all" value="+"></h:commandButton>-->
             </h:form>
         </h:panelGroup>
         <h:panelGroup layout="block" class="schedule-container">
             <h2>Lunchpersonal</h2>
             <h:panelGroup layout="block" class="schedule-day-container" id="schedulelunch">
-                <ui:include src="get-lunch-staff.xhtml"></ui:include>
+                <!--<ui:include src="get-lunch-staff.xhtml" />-->
             </h:panelGroup>
             </h:panelGroup>
         <h:panelGroup layout="block" class="schedule-container">
             <h2>Middagspersonal</h2>
             <h:panelGroup layout="block" class="schedule-day-container" id="scheduledinner">
-                <ui:include src="get-dinner-staff.xhtml"></ui:include>
+                <!--<ui:include src="test.xhtml" />-->
+                <!--<ui:repeat class="working-employees" value="#{DateBean.weekdays}" var="weekday">
+                    <h:panelGroup class="admin-schedule" layout="block">
+                        <h3 id="admin-schedule-date">#{weekday.text}</h3>
+                        <h:panelGroup class="admin-schedule-day" layout="block">
+                            <ui:repeat class="working-employees" value="#{ShiftBean.setJSONDinnerShift(weekday.date)}" var="shift">
+                                <h:panelGroup class="admin-schedule-workers">
+                                    <h:form>
+                                        <h:commandButton class="admin-schedule-workers" action="#{StaffBean.deleteShift(shift.employee.ssn, true, weekday.date, shift.id)}">
+                                            <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4><i class="fa-solid fa-minus" />
+                                        </h:commandButton>
+                                    </h:form>
+                                </h:panelGroup>
+                            </ui:repeat>
+                            <h:form class="admin-form-add-staff">
+                                <h:selectOneMenu value="#{weekday.selected}">
+                                    <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date, 'dinner')}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
+                                </h:selectOneMenu>
+                                <h:commandButton value="Lägg till" action="#{StaffBean.addShift(weekday.selected, true, weekday.date)}" />
+                            </h:form>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </ui:repeat>-->
             </h:panelGroup>
         </h:panelGroup>
+
         <h:panelGroup layout="block" class="add-delete-staff">
+
         <h:panelGroup layout="block" class="add-new-staff"><!--Skapa möjligheten att kunna addera-->
             <h2>Lägg till ny anställd</h2>
             <h:form class="admin-form-add-new-staff">
-                <h:outputLabel for="first_name">Förnamn</h:outputLabel>
+                <!--<h:outputLabel for="first_name">Förnamn</h:outputLabel>
                 <h:inputText type="text" id="first_name" value="#{StaffBean.newEmployee.firstName}"
                              requiredMessage="Du måste skriva in förnamn">
                     <f:validateRequired/>
@@ -67,22 +90,22 @@
                 <h:inputText type="text" id="email" value="#{StaffBean.newEmployee.email}"/>
                 <h:outputLabel for="phone_number">Telefonnummer</h:outputLabel>
                 <h:inputText type="number" id="phone_number" value="#{StaffBean.newEmployee.phoneNumber}" min="10" max="10"/>
-                <h:commandButton action="#{StaffBean.addStaff()}" value="Lägg till"/>
+                <h:commandButton action="#{StaffBean.addStaff()}" value="Lägg till"/>-->
             </h:form>
         </h:panelGroup>
             <h:panelGroup layout="block" class="delete-staff">
                 <h2>Ta bort anställd</h2><!--Skapa möjligheten att kunna radera-->
-                <h:form class="admin-form-delete-staff" id="selectForm">
+                <!--<h:form class="admin-form-delete-staff" id="selectForm">
                     <h:selectOneMenu id="deleteStaff" value="#{StaffBean.selectedDeletedEmployee.ssn}">
                         <f:selectItems value="#{StaffBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                     </h:selectOneMenu>
                     <h:commandButton value="Ta bort" action="#{StaffBean.deleteStaff}"/>
-                </h:form>
+                </h:form>-->
 
             </h:panelGroup>
         </h:panelGroup>
 
     </h:panelGroup>
-    <ui:include src="footer.xhtml"/>
+    <!--<ui:include src="footer.xhtml"/>-->
 </f:view>
 </html>

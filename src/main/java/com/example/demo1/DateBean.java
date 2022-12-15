@@ -24,10 +24,12 @@ public class DateBean implements Serializable {
     public static class Weekday {
         private final String text;
         private final String date;
+        private String selected;
 
         Weekday(String text, String date) {
             this.text = text;
             this.date = date;
+            this.selected = "199905063641";
         }
 
         public String getDate() {
@@ -36,6 +38,11 @@ public class DateBean implements Serializable {
 
         public String getText() {
             return text;
+        }
+
+        public String getSelected() { return selected; }
+        public void setSelected(String s) {
+            this.selected = s;
         }
     }
 
@@ -48,8 +55,7 @@ public class DateBean implements Serializable {
         weekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
         weekdays.add(new Weekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY)));
         weekdays.add(new Weekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY)));
-        setIndexes();
-
+        //setIndexes()
         earlyweekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY)));
@@ -64,10 +70,10 @@ public class DateBean implements Serializable {
     }
     HashMap<String, String> selectedShiftEmployeeDate = new HashMap<>();
 
+
     public HashMap<String, String> getSelectedShiftEmployeeDate() {
         return selectedShiftEmployeeDate;
     }
-
     public void setSelectedShiftEmployeeDate(HashMap<String, String> selectedShiftEmployeeDate) {
         this.selectedShiftEmployeeDate = selectedShiftEmployeeDate;
     }
@@ -87,12 +93,12 @@ public class DateBean implements Serializable {
         setWeek(week);
     }
 
-    public void increaseWeek() {
-        week = week + 1;
-        if (week > 52) {
-            week = week - 52;
+    public void increaseWeek(int week) {
+        this.week = week + 1;
+        if (this.week > 52) {
+            this.week = week - 52;
         }
-        setWeek(week);
+        //setWeek(this.week);
     }
 
     public int getCurrWeek() {

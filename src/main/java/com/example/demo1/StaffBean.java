@@ -2,8 +2,6 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -30,6 +28,7 @@ public class StaffBean implements Serializable {
         this.selectedDeletedEmployee = selectedDeletedEmployee;
     }
     private Employee selectedDeletedEmployee;
+    /*
     private Employee selectedShiftEmployee;
 
     public Employee getSelectedShiftEmployee() {
@@ -38,7 +37,7 @@ public class StaffBean implements Serializable {
 
     public void setSelectedShiftEmployee(Employee selectedShiftEmployee) {
         this.selectedShiftEmployee = selectedShiftEmployee;
-    }
+    }*/
 
     private URL location = new URL();
     private String link = location.getLink();
@@ -89,7 +88,7 @@ public class StaffBean implements Serializable {
         System.out.println(response.body());
         return response;
     }
-
+//Varöfr inte bara använda hashmap lmao?
     public Employee getEmployee(String ssn){
         for(Employee e : employees){
             if(e.getSsn().contains(ssn)){
@@ -146,7 +145,7 @@ public class StaffBean implements Serializable {
 
     public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/working"))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
