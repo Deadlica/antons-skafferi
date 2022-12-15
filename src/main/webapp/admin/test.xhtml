@@ -2,7 +2,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core" >
-   <ui:repeat class="working-employees" value="#{DateBean.weekdays}" var="weekday">
+   <ui:repeat class="working-employees" value="#{DateBean.weekdays}" varStatus="status" var="weekday">
          <h:panelGroup class="admin-schedule" layout="block">
             <h3 id="admin-schedule-date">#{weekday.text}</h3>
             <h:panelGroup class="admin-schedule-day" layout="block">
@@ -16,7 +16,10 @@
                </h:panelGroup>
             </ui:repeat>
             <h:form class="admin-form-add-staff">
-
+               <h:selectOneMenu value="#{StaffBean.selectedShiftEmployee.ssn}">
+                  <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date, 'dinner')}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
+               </h:selectOneMenu>
+               <h:commandButton value="Lägg till" action="#{StaffBean.addShift(StaffBean.selectedShiftEmployee.ssn, true, weekday.date)}" />
             </h:form>
             </h:panelGroup>
          </h:panelGroup>

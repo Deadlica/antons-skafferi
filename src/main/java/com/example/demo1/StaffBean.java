@@ -3,6 +3,7 @@ package com.example.demo1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
+import org.primefaces.context.RequestContext;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -28,7 +29,7 @@ public class StaffBean implements Serializable {
         this.selectedDeletedEmployee = selectedDeletedEmployee;
     }
     private Employee selectedDeletedEmployee;
-    /*
+
     private Employee selectedShiftEmployee;
 
     public Employee getSelectedShiftEmployee() {
@@ -37,7 +38,7 @@ public class StaffBean implements Serializable {
 
     public void setSelectedShiftEmployee(Employee selectedShiftEmployee) {
         this.selectedShiftEmployee = selectedShiftEmployee;
-    }*/
+    }
 
     private URL location = new URL();
     private String link = location.getLink();
@@ -76,18 +77,28 @@ public class StaffBean implements Serializable {
         this.employees = employees;
     }
 
-    public HttpResponse<String> addStaff() throws URISyntaxException, IOException, InterruptedException {
+    public String addStaff() throws URISyntaxException, IOException, InterruptedException {
         employees.add(newEmployee);
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\""+ newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() +"\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\""+ newEmployee.getSsn() +"\"}"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-        return response;
+        if(isRetired(newEmployee.getSsn())){
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/retired"))
+                    .version(HttpClient.Version.HTTP_2)
+                    .header("Content-Type", "application/json;charset=UTF-8")
+                    .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\"" + newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() + "\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\"" + newEmployee.getSsn() + "\"}"))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        }else {
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
+                    .version(HttpClient.Version.HTTP_2)
+                    .header("Content-Type", "application/json;charset=UTF-8")
+                    .POST(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\"" + newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() + "\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\"" + newEmployee.getSsn() + "\"}"))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        }
     }
+
 //Varöfr inte bara använda hashmap lmao?
     public Employee getEmployee(String ssn){
         for(Employee e : employees){
@@ -108,10 +119,33 @@ public class StaffBean implements Serializable {
                 .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + selectedDeletedEmployee.getEmail() + "\",\"firstName\":\""+ selectedDeletedEmployee.getFirstName() + "\",\"lastName\":\"" + selectedDeletedEmployee.getLastName() +"\",\"phoneNumber\":\"" + selectedDeletedEmployee.getPhoneNumber() + "\", \"ssn\":\""+ selectedDeletedEmployee.getSsn() +"\"}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
         return response.body();
     }
 
+    public String getRetiredEmployees() throws IOException, InterruptedException, URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/retired"))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request2, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    public boolean isRetired(String ssn) throws IOException, URISyntaxException, InterruptedException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Employee[] list_arr = objectMapper.readValue(getRetiredEmployees(), Employee[].class);
+        List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
+        for (Employee i : arr) {
+            if(i.getSsn().contains(ssn)){
+                return true;
+            }
+        }
+        return false;
+    }
     public HttpResponse<String> addShift(String ssn, boolean isLate, String date) throws URISyntaxException, IOException, InterruptedException {
         String beginTime = isLate ? "16:00:00" : "14:00:00";
         String endTime = isLate ? "23:00:00" : "14:00:00";
@@ -139,6 +173,8 @@ public class StaffBean implements Serializable {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
+        /*RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.update("form:deleteform");*/
         //return response.body();
         return "{\"beginTime\":\""+ beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\""+ emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() +"\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\""+ emp.getSsn() +"\"},\"endTime\":\"" + endTime + "\",\"id\""+ id +"}";
     }

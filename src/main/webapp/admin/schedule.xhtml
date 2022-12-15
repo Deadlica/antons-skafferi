@@ -31,7 +31,7 @@
       <h:panelGroup layout="block" class="schedule-container">
          <h2>Middagspersonal</h2>
          <h:panelGroup layout="block" class="schedule-day-container" id="scheduledinner">
-            hej
+
          </h:panelGroup>
       </h:panelGroup>
 
@@ -68,11 +68,11 @@
 
          <h:panelGroup layout="block" class="delete-staff">
             <h2>Ta bort anställd</h2><!--Skapa möjligheten att kunna radera-->
-            <h:form class="admin-form-delete-staff" id="selectForm">
+            <h:form class="admin-form-delete-staff" id="deleteform">
                <h:selectOneMenu id="deleteStaff" value="#{StaffBean.selectedDeletedEmployee.ssn}">
                   <f:selectItems value="#{StaffBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                </h:selectOneMenu>
-               <h:commandButton value="Ta bort" action="#{StaffBean.deleteStaff}"/>
+               <h:commandButton value="Ta bort" action="#{StaffBean.deleteStaff}" />
             </h:form>
          </h:panelGroup>
       </h:panelGroup>
