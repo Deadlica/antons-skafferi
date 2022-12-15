@@ -84,6 +84,10 @@ public class EventBean implements Serializable {
         return futureEvents;
     }
 
+    public String getImageName(String name, String date) {
+        return name + date;
+    }
+
     public void setFutureEvents(List<Event> futureEvents) {
         this.futureEvents = futureEvents;
     }
