@@ -17,9 +17,10 @@
                </h:panelGroup>
             </ui:repeat>
             <h:form class="admin-form-add-staff">
-               <h:selectOneMenu value="#{StaffBean.selectedShiftEmployee.ssn}"><!--Hämta från ett specifikt datum-->
+               <!--
+               <h:selectOneMenu value="#{StaffBean.selectedShiftEmployee.ssn}">
                   <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date, 'dinner')}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
-               </h:selectOneMenu>
+               </h:selectOneMenu> -->
                <h:commandButton value="Lägg till" action="#{StaffBean.addShift(StaffBean.selectedShiftEmployee.ssn, true, weekday.date)}" />
             </h:form>
          </h:panelGroup>

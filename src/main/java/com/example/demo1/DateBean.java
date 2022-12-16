@@ -1,11 +1,17 @@
 package com.example.demo1;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.ProxySelector;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
@@ -29,7 +35,6 @@ public class DateBean implements Serializable {
         Weekday(String text, String date) {
             this.text = text;
             this.date = date;
-            this.selected = "199905063641";
         }
 
         public String getDate() {
@@ -49,13 +54,17 @@ public class DateBean implements Serializable {
     DateBean() throws IOException, URISyntaxException, InterruptedException {
         week = getCurrWeek();
         weekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
+        //freeMondayNightEmployees = setFreeJSONEmployees(getDay(Calendar.WEDNESDAY), "dinner");
+        //mondayNightSelected = freeMondayNightEmployees.get(0);
+
         weekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
+
         weekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY)));
         weekdays.add(new Weekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY)));
         weekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
         weekdays.add(new Weekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY)));
         weekdays.add(new Weekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY)));
-        //setIndexes()
+
         earlyweekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY)));
@@ -63,20 +72,6 @@ public class DateBean implements Serializable {
         earlyweekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
     }
 
-    public void setIndexes(){
-        for(Weekday w : weekdays){
-            selectedShiftEmployeeDate.put(w.getDate(), "");
-        }
-    }
-    HashMap<String, String> selectedShiftEmployeeDate = new HashMap<>();
-
-
-    public HashMap<String, String> getSelectedShiftEmployeeDate() {
-        return selectedShiftEmployeeDate;
-    }
-    public void setSelectedShiftEmployeeDate(HashMap<String, String> selectedShiftEmployeeDate) {
-        this.selectedShiftEmployeeDate = selectedShiftEmployeeDate;
-    }
     public void setDate(String date) {
         this.date = date;
     }
@@ -132,7 +127,6 @@ public class DateBean implements Serializable {
     public void setWeek(int week) {
         this.week = week;
     }
-
     private int week;
 
     public List<Weekday> getWeekdays() {
@@ -142,9 +136,7 @@ public class DateBean implements Serializable {
     public void setWeekdays(List<Weekday> weekdays) {
         this.weekdays = weekdays;
     }
-
     private List<Weekday> weekdays = new ArrayList<>();
-
     private List<Weekday> earlyweekdays = new ArrayList<>();
 
     public List<Weekday> getEarlyweekdays() {
@@ -154,4 +146,30 @@ public class DateBean implements Serializable {
     public void setEarlyweekdays(List<Weekday> earlyweekdays) {
         this.earlyweekdays = earlyweekdays;
     }
+
+/*
+    public String getFreeJSONEmployees(String date, String url) throws IOException, InterruptedException, URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/" + url + "/available?date=" + date))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request2, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    public List<Employee> setFreeJSONEmployees(String date, String url) throws IOException, URISyntaxException, InterruptedException {
+        //freeEmployees.clear();
+        List<Employee> freeEmployees = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Employee[] list_arr = objectMapper.readValue(getFreeJSONEmployees(date, url), Employee[].class);
+        List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
+
+        freeEmployees.addAll(arr);
+        //setSelectedEmployee(date, url);
+        return freeEmployees;
+    }*/
 }
