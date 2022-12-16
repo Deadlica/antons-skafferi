@@ -1,7 +1,8 @@
 package com.example.demo1;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -17,15 +18,15 @@ import java.util.Arrays;
 import java.util.List;
 
 @Named(value = "CarteBean")
-@RequestScoped
+@ViewScoped
 public class CarteBean implements Serializable {
 
 
     public static class CarteItem {
-        String category;
-        String description;
-        Dish dish;
-        int price;
+        String category = "Förrätt";
+        String description = "";
+        Dish dish = new Dish();
+        int price = 0;
 
         public String getCategory() {
             return category;
@@ -58,11 +59,26 @@ public class CarteBean implements Serializable {
         public void setPrice(int price) {
             this.price = price;
         }
+
+        @Override
+        public String toString() {
+            ObjectMapper mapper = new ObjectMapper();
+            String json;
+            try {
+                json = mapper.writeValueAsString(this);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+            return json;
+        }
+
     }
 
     public CarteBean() throws IOException, InterruptedException, URISyntaxException {
         setLists();
+        setAllDishes();
     }
+
 
     URI uri;
 
@@ -84,6 +100,9 @@ public class CarteBean implements Serializable {
     }
 
     CarteItem carteItem = new CarteItem();
+
+
+    List<Dish> allDishes = new ArrayList<>();
     List<CarteItem> starters = new ArrayList<>();
     List<CarteItem> mainCourses = new ArrayList<>();
     List<CarteItem> desserts = new ArrayList<>();
@@ -121,7 +140,7 @@ public class CarteBean implements Serializable {
         this.drinks = drinks;
     }
 
-    public void setLists() throws IOException, InterruptedException, URISyntaxException {
+    public void setLists() throws IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         CarteItem[] list_arr = objectMapper.readValue(getJSON(), CarteItem[].class);
         List<CarteItem> arr = new ArrayList<>(Arrays.asList(list_arr));
@@ -146,7 +165,26 @@ public class CarteBean implements Serializable {
         }
     }
 
-    public String getJSON() throws IOException, InterruptedException, URISyntaxException {
+    public void dishAttributesFromId(int id) {
+        carteItem.dish = dishFromId(id);
+    }
+
+    public Dish dishFromId(int id) {
+        for (Dish d : allDishes) {
+            if (d.getId() == id) {
+                carteItem.dish = d;
+                return d;
+            }
+        }
+        return null;
+    }
+
+    public void setAllDishes() throws IOException, URISyntaxException, InterruptedException {
+        FoodItemsBean fib = new FoodItemsBean();
+        allDishes = fib.getList();
+    }
+
+    public String getJSON() throws IOException, InterruptedException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(uri)
                 .GET()
@@ -159,36 +197,41 @@ public class CarteBean implements Serializable {
         return response.body();
     }
 
+
+    static class idPOD {
+        int id;
+
+        public idPOD(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+    }
+
     public HttpResponse<String> deleteItem(int id) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(uri)
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"id\":" + id + " }"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        idPOD object = new idPOD(id);
+        return API.doPut("carte", object);
+    }
+
+    public HttpResponse<String> addItem() throws IOException, InterruptedException {
+        dishAttributesFromId(carteItem.dish.getId());
+        HttpResponse<String> response = API.doPost("carte", carteItem);
+        resetLists();
         return response;
     }
 
-
-    public HttpResponse<String> addItem(CarteItem carteItem) throws IOException, URISyntaxException, InterruptedException {
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(carteItem);
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(uri)
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString(json))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+    public void resetLists() throws IOException, InterruptedException {
         starters.clear();
         mainCourses.clear();
         desserts.clear();
         drinks.clear();
         setLists();
-        return response;
     }
 }
 
