@@ -1,22 +1,27 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://java.sun.com/jstl/core" >
    <ui:repeat class="working-employees" value="#{DateBean.weekdays}" var="weekday">
       <h:panelGroup class="admin-schedule" layout="block">
          <h3 id="admin-schedule-date">#{weekday.text}</h3>
          <h:panelGroup class="admin-schedule-day" layout="block">
             <ui:repeat class="working-employees" value="#{ShiftBean.setJSONDinnerShift(weekday.date)}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
                <h:panelGroup class="admin-schedule-workers">
-                  <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4><i class="fa-solid fa-minus"></i>
+                  <h:form>
+                     <h:commandButton class="admin-schedule-workers" action="#{StaffBean.deleteShift(shift.employee.ssn, true, weekday.date, shift.id)}">
+                        <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4><i class="fa-solid fa-minus"></i>
+                     </h:commandButton>
+                  </h:form>
                </h:panelGroup>
             </ui:repeat>
-            <!--<ui:include src="working-staff.xhtml"></ui:include>-->
             <h:form class="admin-form-add-staff">
-               <h:selectOneMenu><!--Hämta från ett specifikt datum-->
-                  <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date)}" var="e" itemLabel="#{e.firstName} #{e.lastName}"/>
+               <h:selectOneMenu value="#{StaffBean.selectedShiftEmployee.ssn}">
+                  <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date, 'dinner')}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                </h:selectOneMenu>
-               <h:commandButton value="Lägg till"></h:commandButton></h:form>
+               <h:commandButton value="Lägg till" action="#{StaffBean.addShift(StaffBean.selectedShiftEmployee.ssn, true, weekday.date)}" />
+            </h:form>
          </h:panelGroup>
       </h:panelGroup>
    </ui:repeat>
