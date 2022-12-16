@@ -2,6 +2,8 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -118,6 +120,9 @@ public class StaffBean implements Serializable {
                 .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + selectedDeletedEmployee.getEmail() + "\",\"firstName\":\"" + selectedDeletedEmployee.getFirstName() + "\",\"lastName\":\"" + selectedDeletedEmployee.getLastName() + "\",\"phoneNumber\":\"" + selectedDeletedEmployee.getPhoneNumber() + "\", \"ssn\":\"" + selectedDeletedEmployee.getSsn() + "\"}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
         return response.body();
     }
 
@@ -146,8 +151,8 @@ public class StaffBean implements Serializable {
         return false;
     }
 
-    public HttpResponse<String> addShift(String ssn, boolean isLate, String date) throws URISyntaxException, IOException, InterruptedException {
-        String beginTime = isLate ? "16:00:00" : "14:00:00";
+    public String addShift(String ssn, boolean isLate, String date) throws URISyntaxException, IOException, InterruptedException {
+        String beginTime = isLate ? "16:00:00" : "11:00:00";
         String endTime = isLate ? "23:00:00" : "14:00:00";
         Employee emp = getEmployee(ssn);
         HttpClient client = HttpClient.newHttpClient();
@@ -156,11 +161,15 @@ public class StaffBean implements Serializable {
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":1}"))
                 .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+        return response.body();
+        //return "";
     }
 
     public String deleteShift(String ssn, boolean isLate, String date, int id) throws URISyntaxException, IOException, InterruptedException {
-        String beginTime = isLate ? "16:00:00" : "14:00:00";
+        String beginTime = isLate ? "16:00:00" : "11:00:00";
         String endTime = isLate ? "23:00:00" : "14:00:00";
         Employee emp = getEmployee(ssn);
         HttpClient client = HttpClient.newHttpClient();
@@ -171,7 +180,9 @@ public class StaffBean implements Serializable {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
-
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+        ec.getSessionMap().clear();
         return "{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\"" + id + "}";
     }
 

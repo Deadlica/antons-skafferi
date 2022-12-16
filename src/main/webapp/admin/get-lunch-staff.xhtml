@@ -9,14 +9,16 @@
          <h:panelGroup class="admin-schedule-day" layout="block">
             <ui:repeat class="working-employees" value="#{ShiftBean.setJSONLunchShift(weekday.date)}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
                <h:panelGroup class="admin-schedule-workers">
-                  <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4><i class="fa-solid fa-minus"></i>
+                  <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4>
+                  <h:commandButton action="#{StaffBean.deleteShift(shift.employee.ssn, false, weekday.date, shift.id)}" value="Ta bort" />
                </h:panelGroup>
             </ui:repeat>
-            <h:form class="admin-form-add-staff">
-               <h:selectOneMenu value="#{StaffBean.selectedShiftEmployee.ssn}">
-                  <f:selectItems value="#{StaffBean.setFreeJSONEmployees(weekday.date, 'lunch')}" var="e" itemLabel="#{e.firstName} #{e.lastName}" />
+            <h:panelGroup class="admin-form-add-staff" layout="block" rendered="#{not weekday.freeLunchEmployees.isEmpty()}">
+               <h:selectOneMenu value="#{weekday.selected}">
+                  <f:selectItems value="#{weekday.freeLunchEmployees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}" />
                </h:selectOneMenu>
-               <h:commandButton value="Lägg till"></h:commandButton></h:form>
+               <h:commandButton value="Lägg till"  action="#{StaffBean.addShift(weekday.selected, false, weekday.date)}" />
+            </h:panelGroup>
          </h:panelGroup>
       </h:panelGroup>
    </ui:repeat>
