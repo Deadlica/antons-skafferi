@@ -13,27 +13,28 @@
    <link rel="stylesheet"
          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 </h:head>
-<f:view>
+<f:view transient="true">
    <ui:include src="nav.xhtml" />
    <h:panelGroup class="admin-main" layout="block">
-
-      <h:panelGroup layout="block" class="schedule-header">
-         <h2>Vecka #{DateBean.week}</h2>
-      </h:panelGroup>
-
-      <h:panelGroup layout="block" class="schedule-container">
-         <h2>Lunchpersonal</h2>
-         <h:panelGroup layout="block" class="schedule-day-container" id="schedulelunch">
-            <ui:include src="get-lunch-staff.xhtml" />
+      <h:form id="schedule">
+         <h:panelGroup layout="block" class="schedule-header">
+            <h:commandButton action="#{DateBean.decreaseWeek()}" value="Föregående"/> <h2>Vecka #{DateBean.week}</h2> <h:commandButton action="#{DateBean.increaseWeek()}" value="Nästkommande"/>
          </h:panelGroup>
-      </h:panelGroup>
 
-      <h:panelGroup layout="block" class="schedule-container">
-         <h2>Middagspersonal</h2>
-         <h:panelGroup layout="block" class="schedule-day-container" id="scheduledinner">
-            <ui:include src="get-dinner-staff.xhtml" />
+         <h:panelGroup layout="block" class="schedule-container">
+            <h2>Lunchpersonal</h2>
+            <h:panelGroup layout="block" class="schedule-day-container" id="schedulelunch">
+               <ui:include src="get-lunch-staff.xhtml" />
+            </h:panelGroup>
          </h:panelGroup>
-      </h:panelGroup>
+
+         <h:panelGroup layout="block" class="schedule-container">
+            <h2>Middagspersonal</h2>
+            <h:panelGroup layout="block" class="schedule-day-container" id="scheduledinner">
+                  <ui:include src="get-dinner-staff.xhtml" />
+            </h:panelGroup>
+         </h:panelGroup>
+      </h:form>
 
       <h:panelGroup layout="block" class="add-delete-staff">
 

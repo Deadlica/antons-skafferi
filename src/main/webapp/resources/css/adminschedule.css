@@ -2,15 +2,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 2%;
+    justify-content: center;
 }
 
-.schedule-header *{
-    margin-right: 2%;
-}
-
-.schedule-header i{
-    cursor: pointer;
+.schedule-header input[type="submit"]{
+    padding: 1%;
+    font-size: larger;
+    margin: 1%;
 }
 
 .schedule-container{
@@ -27,8 +25,8 @@
 }
 
 .admin-schedule{
-    width: 15%;
-    margin: 2%;
+    width: 16%;
+    margin: 1%;
 }
 
 .admin-schedule-day{
@@ -62,7 +60,7 @@ input[type="submit"]:hover{
     color: black;
 }
 
-.admin-schedule-workers form{
+.admin-schedule-workers{
     background: white;
     display: flex;
     flex-direction: row;
