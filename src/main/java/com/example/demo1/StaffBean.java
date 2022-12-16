@@ -3,7 +3,6 @@ package com.example.demo1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
-import org.primefaces.context.RequestContext;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,6 +24,7 @@ public class StaffBean implements Serializable {
     public void setSelectedDeletedEmployee(Employee selectedDeletedEmployee) {
         this.selectedDeletedEmployee = selectedDeletedEmployee;
     }
+
     private Employee selectedDeletedEmployee;
 
     private Employee selectedShiftEmployee;
@@ -36,6 +36,7 @@ public class StaffBean implements Serializable {
     public void setSelectedShiftEmployee(Employee selectedShiftEmployee) {
         this.selectedShiftEmployee = selectedShiftEmployee;
     }
+
     private URL location = new URL();
     private String link = location.getLink();
 
@@ -44,7 +45,9 @@ public class StaffBean implements Serializable {
         selectedDeletedEmployee = employees.get(0);
 
     }
+
     Employee newEmployee = new Employee();
+
     public Employee getNewEmployee() {
         return newEmployee;
     }
@@ -76,7 +79,7 @@ public class StaffBean implements Serializable {
     public String addStaff() throws URISyntaxException, IOException, InterruptedException {
         employees.add(newEmployee);
         HttpClient client = HttpClient.newHttpClient();
-        if(isRetired(newEmployee.getSsn())){
+        if (isRetired(newEmployee.getSsn())) {
             HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/retired"))
                     .version(HttpClient.Version.HTTP_2)
                     .header("Content-Type", "application/json;charset=UTF-8")
@@ -84,7 +87,7 @@ public class StaffBean implements Serializable {
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
-        }else {
+        } else {
             HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
                     .version(HttpClient.Version.HTTP_2)
                     .header("Content-Type", "application/json;charset=UTF-8")
@@ -95,10 +98,10 @@ public class StaffBean implements Serializable {
         }
     }
 
-//Varöfr inte bara använda hashmap lmao?
-    public Employee getEmployee(String ssn){
-        for(Employee e : employees){
-            if(e.getSsn().contains(ssn)){
+    //Varöfr inte bara använda hashmap lmao?
+    public Employee getEmployee(String ssn) {
+        for (Employee e : employees) {
+            if (e.getSsn().contains(ssn)) {
                 return e;
             }
         }
@@ -109,10 +112,10 @@ public class StaffBean implements Serializable {
         //employee = employees.get(employees.size() - 1);
         selectedDeletedEmployee = getEmployee(selectedDeletedEmployee.getSsn());
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link +":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + selectedDeletedEmployee.getEmail() + "\",\"firstName\":\""+ selectedDeletedEmployee.getFirstName() + "\",\"lastName\":\"" + selectedDeletedEmployee.getLastName() +"\",\"phoneNumber\":\"" + selectedDeletedEmployee.getPhoneNumber() + "\", \"ssn\":\""+ selectedDeletedEmployee.getSsn() +"\"}"))
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + selectedDeletedEmployee.getEmail() + "\",\"firstName\":\"" + selectedDeletedEmployee.getFirstName() + "\",\"lastName\":\"" + selectedDeletedEmployee.getLastName() + "\",\"phoneNumber\":\"" + selectedDeletedEmployee.getPhoneNumber() + "\", \"ssn\":\"" + selectedDeletedEmployee.getSsn() + "\"}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
@@ -136,21 +139,22 @@ public class StaffBean implements Serializable {
         Employee[] list_arr = objectMapper.readValue(getRetiredEmployees(), Employee[].class);
         List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
         for (Employee i : arr) {
-            if(i.getSsn().contains(ssn)){
+            if (i.getSsn().contains(ssn)) {
                 return true;
             }
         }
         return false;
     }
+
     public HttpResponse<String> addShift(String ssn, boolean isLate, String date) throws URISyntaxException, IOException, InterruptedException {
         String beginTime = isLate ? "16:00:00" : "14:00:00";
         String endTime = isLate ? "23:00:00" : "14:00:00";
         Employee emp = getEmployee(ssn);
-                HttpClient client = HttpClient.newHttpClient();
+        HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\""+ beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\""+ emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() +"\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\""+ emp.getSsn() +"\"},\"endTime\":\"" + endTime + "\",\"id\":1}"))
+                .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":1}"))
                 .build();
         return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
@@ -163,12 +167,12 @@ public class StaffBean implements Serializable {
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\""+ beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\""+ emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() +"\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\""+ emp.getSsn() +"\"},\"endTime\":\"" + endTime + "\",\"id\":"+ id +"}"))
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":" + id + "}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
 
-        return "{\"beginTime\":\""+ beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\""+ emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() +"\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\""+ emp.getSsn() +"\"},\"endTime\":\"" + endTime + "\",\"id\""+ id +"}";
+        return "{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\"" + id + "}";
     }
 
     public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
