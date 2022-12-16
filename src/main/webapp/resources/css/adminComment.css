@@ -1,0 +1,18 @@
+
+.review-display{
+display: flex;
+    border-style: solid;
+}
+.window{
+    border-style: solid;
+    width: 40%;
+    height: 250px;
+    overflow: hidden;
+    overflow-y:scroll;
+}
+
+.comment{
+    display: block;
+    margin-left: 2%;
+
+}

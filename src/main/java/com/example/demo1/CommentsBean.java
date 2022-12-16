@@ -96,6 +96,16 @@ public class CommentsBean {
     }
 
 String response;
+    URI uri;
+
+    {
+        try {
+            uri = new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/review");
+            //uri = new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public URL getLocation() {
         return location;
@@ -119,6 +129,17 @@ String response;
 
     public void setLocation(URL location) {
         this.location = location;
+    }
+
+   public void removeComment(int id) throws URISyntaxException, IOException, InterruptedException {
+       for (Comment i : holdAllReviews) {
+           if (i.id==id){
+               response= String.valueOf(removeReview(i));
+               ObjectMapper objectMapper = new ObjectMapper();
+               holdAllReviews= objectMapper.readValue(getJsonReview(), Comment[].class);
+
+           }
+       }
     }
 
     public void comfirmReview() throws URISyntaxException, IOException, InterruptedException {
@@ -149,6 +170,23 @@ String response;
         return response;
     }
 
+
+    private HttpResponse<String> removeReview(Comment removeComment) throws URISyntaxException, IOException, InterruptedException  {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(removeComment);
+
+        HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder(uri)
+                    .version(HttpClient.Version.HTTP_2)
+                    .header("Content-Type", "application/json;charset=UTF-8")
+                    .PUT(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
+            return response;
+
+
+    }
 
 
 
