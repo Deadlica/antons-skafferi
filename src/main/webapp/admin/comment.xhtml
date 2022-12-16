@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+<h:outputStylesheet library="css" name="adminComment.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+</head>
+<f:view>
+   <h:panelGroup layout="block" styleClass="main">
+<h1>Edit comments</h1>
+   <div class="window">
+      <h:form>
+      <ui:repeat value="#{CommentsBean.holdAllReviews}" var="item">
+         <div class="review-display">
+         <h:commandButton value="remove" actionListener="#{CommentsBean.removeComment(item.id)}"></h:commandButton>
+         <div class="comment">
+         <h3><h:outputText value="#{item.firstName} #{item.ranking}/5"/></h3>
+         <h5><h:outputText value="#{item.text}"/></h5>
+         </div>
+
+         </div>
+         <hr/><br/>
+      </ui:repeat>
+      </h:form>
+   </div>
+
+   </h:panelGroup>
+</f:view>
+</html>
