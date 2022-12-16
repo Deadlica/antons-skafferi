@@ -72,6 +72,15 @@ public class EventBean implements Serializable {
         }
     }
 
+    Event eventItem = new Event();
+
+    public Event getEventItem() {
+        return eventItem;
+    }
+
+    public void setEventItem(Event eventItem) {
+        this.eventItem = eventItem;
+    }
 
     public EventBean() throws IOException, URISyntaxException, InterruptedException {
         setLists();
