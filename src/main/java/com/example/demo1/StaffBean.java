@@ -154,7 +154,12 @@ public class StaffBean implements Serializable {
     public String addShift(String ssn, boolean isLate, String date) throws URISyntaxException, IOException, InterruptedException {
         String beginTime = isLate ? "16:00:00" : "11:00:00";
         String endTime = isLate ? "23:00:00" : "14:00:00";
+        if(isWeekend(date)){
+            endTime = "01:00:00";
+        }
+
         Employee emp = getEmployee(ssn);
+
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
                 .version(HttpClient.Version.HTTP_2)
@@ -164,6 +169,7 @@ public class StaffBean implements Serializable {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+        ec.getSessionMap().clear();
         return response.body();
         //return "";
     }
@@ -171,6 +177,10 @@ public class StaffBean implements Serializable {
     public String deleteShift(String ssn, boolean isLate, String date, int id) throws URISyntaxException, IOException, InterruptedException {
         String beginTime = isLate ? "16:00:00" : "11:00:00";
         String endTime = isLate ? "23:00:00" : "14:00:00";
+        if(isWeekend(date)){
+            endTime = "01:00:00";
+        }
+
         Employee emp = getEmployee(ssn);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
@@ -186,6 +196,14 @@ public class StaffBean implements Serializable {
         return "{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\"" + id + "}";
     }
 
+    public boolean isWeekend(String date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Integer.parseInt(date.substring(0,4)),Integer.parseInt(date.substring(5,7)) - 1, Integer.parseInt(date.substring(8,10)));
+        if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
+            return true;
+        }
+        return false;
+    }
     public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/working"))

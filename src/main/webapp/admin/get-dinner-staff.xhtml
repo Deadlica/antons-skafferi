@@ -9,7 +9,7 @@
             <ui:repeat class="working-employees" value="#{ShiftBean.setJSONDinnerShift(weekday.date)}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
                <h:panelGroup class="admin-schedule-workers">
                   <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4>
-                  <h:commandButton action="#{StaffBean.deleteShift(shift.employee.ssn, true, weekday.date, shift.id)}" value="Ta bort" />
+                  <h:commandButton title="Ta bort pass" action="#{StaffBean.deleteShift(shift.employee.ssn, true, weekday.date, shift.id)}" value="✖" />
                </h:panelGroup>
             </ui:repeat>
             <h:panelGroup class="admin-form-add-staff" layout="block">

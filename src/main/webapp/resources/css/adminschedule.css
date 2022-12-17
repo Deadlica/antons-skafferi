@@ -9,6 +9,8 @@
     padding: 1%;
     font-size: larger;
     margin: 1%;
+    background: transparent;
+    color: var(--joel_brown);
 }
 
 .schedule-container{
@@ -18,10 +20,17 @@
     background: white;
 }
 
+.schedule-container-title{
+    text-align: center;
+    padding: 1%;
+    text-decoration: underline;
+}
+
 .schedule-day-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .admin-schedule{
@@ -69,6 +78,17 @@ input[type="submit"]:hover{
     margin-bottom: 2%;
     align-items: center;
 }
+.admin-schedule-workers input[type="submit"]{
+    font-size: large;
+    padding: 2%;
+    background: transparent;
+    color: var(--joel_brown);
+}
+
+.admin-schedule-workers input[type="submit"]:hover{
+    color: red;
+}
+
 
 .admin-form-add-new-staff{
     display: flex;

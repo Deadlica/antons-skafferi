@@ -101,6 +101,7 @@ public class DateBean implements Serializable {
     }
 
     DateBean() throws IOException, URISyntaxException, InterruptedException {
+        year = getCurrYear();
         week = getCurrWeek();
         setLunchShift();
         setDinnerShift();
@@ -134,6 +135,7 @@ public class DateBean implements Serializable {
         this.week -= 1;
         if (this.week < 1) {
             this.week += 52;
+            this.year -= 1;
         }
         setLunchShift();
         setDinnerShift();
@@ -143,6 +145,7 @@ public class DateBean implements Serializable {
         this.week += 1;
         if (this.week > 52) {
             this.week -= 52;
+            this.year += 1;
         }
         setLunchShift();
         setDinnerShift();
@@ -174,8 +177,12 @@ public class DateBean implements Serializable {
         return date.get(weekFields.weekOfWeekBasedYear());
     }
 
+    public int getCurrYear(){
+        return Calendar.getInstance().get(Calendar.YEAR);
+    }
     public String getText(int day) {
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
         c.set(Calendar.WEEK_OF_YEAR, week);
         c.set(Calendar.DAY_OF_WEEK, day);
         Date date = c.getTime();
@@ -185,6 +192,7 @@ public class DateBean implements Serializable {
 
     public String getDay(int day) {
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
         c.set(Calendar.WEEK_OF_YEAR, week);
         c.set(Calendar.DAY_OF_WEEK, day);
         Date date = c.getTime();
@@ -203,6 +211,7 @@ public class DateBean implements Serializable {
     }
     private int week;
 
+    private int year;
     public List<Weekday> getWeekdays() {
         return weekdays;
     }
@@ -219,5 +228,13 @@ public class DateBean implements Serializable {
 
     public void setEarlyweekdays(List<Weekday> earlyweekdays) {
         this.earlyweekdays = earlyweekdays;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }
