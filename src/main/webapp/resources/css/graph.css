@@ -1,0 +1,28 @@
+.graph {
+    display: flex;
+    height: 80vh;
+    width: 100%;
+}
+
+.graph > div { /*Bar Wrapper*/
+    display: flex;
+    flex: 1;
+    padding: 0.1%;
+    align-items: flex-end;
+}
+
+.graph > div > span { /*Bar*/
+    background-color: lightblue;
+    flex: 1;
+    position: relative;
+}
+
+.title { /*Title*/
+    position: absolute;
+    bottom: -30px;
+}
+
+.cost {
+    display: flex;
+    justify-content: center;
+}
