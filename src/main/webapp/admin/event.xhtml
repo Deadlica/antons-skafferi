@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="sv"
+      xml:lang="sv">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="styles.css"/>
+    <h:outputScript library="js" name="admin.js"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+</h:head>
+
+<h:body>
+    <f:view>
+        <ui:include src="nav.xhtml"/>
+        <h1>Event</h1>
+        <h:panelGroup layout="block">
+            <!-- ADD EVENT -->
+            <h:form styleClass="carte-add-item">
+                <h:outputLabel>Titel</h:outputLabel>
+                <h:inputText value="#{EventBean.eventItem.NAME}"/>
+                <h:outputLabel>Pris</h:outputLabel>
+                <h:inputText value="#{EventBean.eventItem.PRICE}"/>
+                <h:outputLabel>Beskrivning</h:outputLabel>
+                <h:inputTextarea value="#{EventBean.eventItem.DESCRIPTION}"/>
+                <h:outputLabel>Photo</h:outputLabel>
+                <input type="file" id="myFile" name="filename"/>
+                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem(CarteBean.carteItem)}"/>
+            </h:form>
+        </h:panelGroup>
+
+
+        <div class="all-event">
+            <ui:repeat value="#{EventBean.todayEvents}" var="item">
+                <h:panelGroup class="admin-events" id="item">
+                    <h:graphicImage class="event-image"
+                                    value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
+                    <div class="event-main">
+                        <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
+                        <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
+                        <p><h:outputText value="#{item.DESCRIPTION}"/></p>
+                        <p><h:outputText value="#{item.date}"/></p>
+                    </div>
+                    <div class="event-delete"></div>
+                </h:panelGroup>
+            </ui:repeat>
+            <ui:repeat value="#{EventBean.futureEvents}" var="item">
+                <h:panelGroup class="admin-events" id="item">
+                    <div class="event-main">
+                        <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
+                        <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
+                        <p><h:outputText value="#{item.DESCRIPTION}"/></p>
+                        <p><h:outputText value="#{item.date}"/></p>
+                    </div>
+                    <h:graphicImage class="event-image"
+                                    value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
+                </h:panelGroup>
+            </ui:repeat>
+        </div>
+        <ui:include src="footer.xhtml"/>
+    </f:view>
+</h:body>
+</html>

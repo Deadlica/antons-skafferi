@@ -2,15 +2,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 2%;
+    justify-content: center;
 }
 
-.schedule-header *{
-    margin-right: 2%;
-}
-
-.schedule-header i{
-    cursor: pointer;
+.schedule-header input[type="submit"]{
+    padding: 1%;
+    font-size: larger;
+    margin: 1%;
+    background: transparent;
+    color: var(--joel_brown);
 }
 
 .schedule-container{
@@ -20,15 +20,22 @@
     background: white;
 }
 
+.schedule-container-title{
+    text-align: center;
+    padding: 1%;
+    text-decoration: underline;
+}
+
 .schedule-day-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .admin-schedule{
-    width: 15%;
-    margin: 2%;
+    width: 16%;
+    margin: 1%;
 }
 
 .admin-schedule-day{
@@ -69,14 +76,19 @@ input[type="submit"]:hover{
     justify-content: space-between;
     padding: 3%;
     margin-bottom: 2%;
-    cursor: pointer;
     align-items: center;
 }
-
-.admin-schedule-workers:hover{
-    color: whitesmoke;
-    background: #7D5A3E;
+.admin-schedule-workers input[type="submit"]{
+    font-size: large;
+    padding: 2%;
+    background: transparent;
+    color: var(--joel_brown);
 }
+
+.admin-schedule-workers input[type="submit"]:hover{
+    color: red;
+}
+
 
 .admin-form-add-new-staff{
     display: flex;

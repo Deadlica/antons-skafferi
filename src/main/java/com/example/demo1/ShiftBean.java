@@ -14,6 +14,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Named(value = "ShiftBean")
@@ -23,6 +24,7 @@ public class ShiftBean implements Serializable {
     private String link = location.getLink();
 
     public ShiftBean() throws IOException, URISyntaxException, InterruptedException {
+
     }
 
     public static class Shift {
@@ -30,7 +32,7 @@ public class ShiftBean implements Serializable {
         private String date;
         private String beginTime;
         private String endTime;
-        private StaffBean.Employee employee;
+        private Employee employee;
 
         public int getId() {
             return id;
@@ -64,11 +66,11 @@ public class ShiftBean implements Serializable {
             this.endTime = endTime;
         }
 
-        public StaffBean.Employee getEmployee() {
+        public Employee getEmployee() {
             return employee;
         }
 
-        public void setEmployee(StaffBean.Employee employee) {
+        public void setEmployee(Employee employee) {
             this.employee = employee;
         }
     }
@@ -91,7 +93,21 @@ public class ShiftBean implements Serializable {
     public void setDinnerShift(List<Shift> dinnerShift) {
         this.dinnerShift = dinnerShift;
     }
-
+/*
+    public HttpResponse<String> addShift(String ssn, boolean isLate, String date) throws URISyntaxException, IOException, InterruptedException {
+        String beginTime = isLate ? "16:00:00" : "14:00:00";
+        String endTime = isLate ? "23:00:00" : "14:00:00";
+        Employee emp = isLate ?
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\""+ beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\""+ emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() +"\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\""+ emp.getSsn() +"\"},\"endTime\":\"" + endTime + "\",\"id\":1}"))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return response;
+    }*/
     public String getJSONLunchShift(String date) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/lunch?date=" + date))
