@@ -1,20 +1,45 @@
-.graph {
+.center_screen {
     display: flex;
-    height: 80vh;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 60vh;
+}
+
+.graph_month {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    padding-top: 40px;
+}
+
+.graph {
+    border-bottom: solid 3px;
+    border-left: solid 3px;
+    height: 60vh;
+    width: 80%;
+    display: flex;
+    background: linear-gradient(to top, black 0, transparent 1%);
+    background-size: 100% 100px;
+    background-color: whitesmoke;
 }
 
 .graph > div { /*Bar Wrapper*/
     display: flex;
     flex: 1;
-    padding: 0.1%;
+    padding: 0.1% 0 0 0.2%;
     align-items: flex-end;
 }
 
 .graph > div > span { /*Bar*/
-    background-color: lightblue;
+    background-color: dodgerblue;
     flex: 1;
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .title { /*Title*/

@@ -1,6 +1,7 @@
 "use strict";
 
-const dateFormatMap = new Map();
+const dateStringToInt = new Map();
+const dateIntToString = new Map();
 const dates = new Map();
 
 const data_url = "http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/orders/sales?";
@@ -10,7 +11,8 @@ let orders = [];
 let maxValue = 0;
 
 document.addEventListener("DOMContentLoaded", function () {
-    initMap();
+    initMaps();
+    setMonthTitle();
     generateDateParameters();
     generateGraph();
 });
@@ -18,21 +20,28 @@ document.addEventListener("DOMContentLoaded", function () {
 function createBar(date, amount) {
     let item = document.createElement("div");
     let bar = document.createElement("span");
-    let cost = document.createElement("span");
     let title = document.createElement("span");
 
     const height = amount / maxValue * 100;
 
     bar.style = `height: ${height}%`;
 
-    if(amount > 0) {
+    if(amount > 0) { //Adds price tag as long as orders were sold
+        let cost = document.createElement("span");
         cost.innerText = amount.toString() + "kr";
         cost.setAttribute("class", "cost")
+        bar.append(cost);
     }
     title.innerText = date.split("-").at(2);
     title.setAttribute("class", "title");
+    if(title.innerText === "01") { //Aligns the 1st bar next to y-axis
+        item.style.paddingLeft = "0";
+    }
+    if(title.innerText.at(0) === "0") {
+        title.innerText = title.innerText.at(1);
+    }
 
-    bar.append(cost);
+
     bar.append(title);
     item.append(bar);
 
@@ -44,7 +53,6 @@ async function generateGraph() {
     getDaysInMonth();
     getSalesInMonth();
     maxValue = findMapMax(dates);
-    console.log(Number(maxValue));
     const graph = document.getElementById("graph");
     dates.forEach(function (value, key) {
         graph.append(createBar(key, value));
@@ -90,24 +98,37 @@ function getDate(day) {
     let firstDay = new Date(date.getFullYear(), date.getMonth() + whichMonth, day);
     const dateInfo = firstDay.toString().split(" ");
     const year = dateInfo.at(3);
-    const month = dateFormatMap.get(dateInfo.at(1));
+    const month = dateStringToInt.get(dateInfo.at(1));
     date = dateInfo.at(2);
     return year + "-" + month + "-" + date;
 }
 
-function initMap() {
-    dateFormatMap.set("Jan", "01");
-    dateFormatMap.set("Feb", "02");
-    dateFormatMap.set("Mar", "03");
-    dateFormatMap.set("Apr", "04");
-    dateFormatMap.set("May", "05");
-    dateFormatMap.set("Jun", "06");
-    dateFormatMap.set("Jul", "07");
-    dateFormatMap.set("Aug", "08");
-    dateFormatMap.set("Sep", "09");
-    dateFormatMap.set("Oct", "10");
-    dateFormatMap.set("Nov", "11");
-    dateFormatMap.set("Dec", "12");
+function initMaps() {
+    dateStringToInt.set("Jan", "01");
+    dateStringToInt.set("Feb", "02");
+    dateStringToInt.set("Mar", "03");
+    dateStringToInt.set("Apr", "04");
+    dateStringToInt.set("May", "05");
+    dateStringToInt.set("Jun", "06");
+    dateStringToInt.set("Jul", "07");
+    dateStringToInt.set("Aug", "08");
+    dateStringToInt.set("Sep", "09");
+    dateStringToInt.set("Oct", "10");
+    dateStringToInt.set("Nov", "11");
+    dateStringToInt.set("Dec", "12");
+
+    dateIntToString.set(0, "Januari");
+    dateIntToString.set(1, "Februari");
+    dateIntToString.set(2, "Mars");
+    dateIntToString.set(3, "April");
+    dateIntToString.set(4, "Maj");
+    dateIntToString.set(5, "Juni");
+    dateIntToString.set(6, "Juli");
+    dateIntToString.set(7, "Augusti");
+    dateIntToString.set(8, "September");
+    dateIntToString.set(9, "Oktober");
+    dateIntToString.set(10, "November");
+    dateIntToString.set(11, "December");
 }
 
 function fetchSales() {
@@ -131,8 +152,14 @@ function findMapMax(map) {
 function reset() {
     startDate = "";
     endDate = "";
-    dateFormatMap.clear();
+    dateStringToInt.clear();
+    dateIntToString.clear();
     dates.clear();
     orders = [];
     maxValue = 0;
+}
+
+function setMonthTitle() {
+    let date = new Date();
+    document.getElementById("month").innerText = dateIntToString.get(date.getMonth());
 }
