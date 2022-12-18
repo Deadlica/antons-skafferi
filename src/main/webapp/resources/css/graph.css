@@ -6,7 +6,19 @@
     min-height: 60vh;
 }
 
-.graph_month {
+.center_screen > p {
+    transform: rotate(-90deg);
+    font-size: 30px;
+}
+
+.days {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    padding-top: 35px;
+}
+
+.graph_title {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,6 +26,30 @@
     font-size: 40px;
     font-weight: bold;
     padding-top: 40px;
+}
+
+.graph_title > button {
+    margin: 0 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.month_arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin: 5px 5px;
+}
+
+.next {
+    transform: rotate(-45deg);
+}
+
+.prev {
+    transform: rotate(135deg);
 }
 
 .graph {
@@ -30,7 +66,7 @@
 .graph > div { /*Bar Wrapper*/
     display: flex;
     flex: 1;
-    padding: 0.1% 0 0 0.2%;
+    padding: 0 0 0 0.2%;
     align-items: flex-end;
 }
 
@@ -50,4 +86,16 @@
 .cost {
     display: flex;
     justify-content: center;
+}
+
+.total_sales {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 20px 0 5px 0;
+}
+
+@media only screen and (max-width: 800px){ /*Mobile layout*/
+
 }

@@ -5,14 +5,22 @@ const dateIntToString = new Map();
 const dates = new Map();
 
 const data_url = "http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/orders/sales?";
+let selectedMonth = new Date()
 let startDate = "";
 let endDate = "";
 let orders = [];
 let maxValue = 0;
+let totalSales = 0;
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     initMaps();
     setMonthTitle();
+    document.getElementById("right_arrow").addEventListener("click", function() { // Load next month event
+        loadNextMonth();
+    })
+    document.getElementById("left_arrow").addEventListener("click", function() { // Load previous month event
+        loadPrevMonth();
+    })
     generateDateParameters();
     generateGraph();
 });
@@ -28,7 +36,7 @@ function createBar(date, amount) {
 
     if(amount > 0) { //Adds price tag as long as orders were sold
         let cost = document.createElement("span");
-        cost.innerText = amount.toString() + "kr";
+        cost.innerText = amount.toString();
         cost.setAttribute("class", "cost")
         bar.append(cost);
     }
@@ -56,7 +64,10 @@ async function generateGraph() {
     const graph = document.getElementById("graph");
     dates.forEach(function (value, key) {
         graph.append(createBar(key, value));
+        totalSales += value
     })
+    let p = document.getElementById("total_sales_text")
+    p.innerText = "Total försäljning under månaden: " + totalSales.toString() + "kr";
 }
 
 function getDaysInMonth() {
@@ -94,12 +105,11 @@ function getDate(day) {
     if(day === 0) {
         whichMonth = 1;
     }
-    let date = new Date();
-    let firstDay = new Date(date.getFullYear(), date.getMonth() + whichMonth, day);
+    let firstDay = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + whichMonth, day);
     const dateInfo = firstDay.toString().split(" ");
     const year = dateInfo.at(3);
     const month = dateStringToInt.get(dateInfo.at(1));
-    date = dateInfo.at(2);
+    const date = dateInfo.at(2);
     return year + "-" + month + "-" + date;
 }
 
@@ -152,14 +162,30 @@ function findMapMax(map) {
 function reset() {
     startDate = "";
     endDate = "";
-    dateStringToInt.clear();
-    dateIntToString.clear();
     dates.clear();
     orders = [];
     maxValue = 0;
+    totalSales = 0;
+    document.getElementById("graph").innerHTML = "";
 }
 
 function setMonthTitle() {
-    let date = new Date();
-    document.getElementById("month").innerText = dateIntToString.get(date.getMonth());
+    document.getElementById("month").innerText =
+        dateIntToString.get(selectedMonth.getMonth()) + " " + selectedMonth.getFullYear();
+}
+
+function loadNextMonth() {
+    selectedMonth = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() + 1);
+    reset();
+    generateDateParameters();
+    setMonthTitle()
+    generateGraph()
+}
+
+function loadPrevMonth() {
+    selectedMonth = new Date(selectedMonth.getFullYear(), selectedMonth.getMonth() - 1);
+    reset();
+    generateDateParameters();
+    setMonthTitle();
+    generateGraph();
 }
