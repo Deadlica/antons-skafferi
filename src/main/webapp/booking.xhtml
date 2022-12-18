@@ -3,7 +3,6 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
     <div class="main" id="booking_loc">
         <h1>BOKA BORD</h1>
 
@@ -17,7 +16,15 @@
                     <div class="month-picker">
                             <h:panelGroup id="prev-month" class="month-change"   layout="block">
 
-                                <h:commandButton actionListener="#{CalendarBean.prevMonth()}" value="◀"></h:commandButton>
+                                <h:commandButton actionListener="#{CalendarBean.prevMonth()}" value="◀">
+                                    <script type="text/javascript">
+                                        function call_Update_Month_AjaxRequest(data) {
+                                            if (data.status == "success")
+                                                changeMonth();
+                                        }
+                                    </script>
+                                    <f:ajax onevent="call_Update_Month_AjaxRequest" execute="inputText" render="myform"/>
+                                </h:commandButton>
 
                             </h:panelGroup>
                         <div class="month">
@@ -27,7 +34,15 @@
 
                             <h:panelGroup id="next-month" class="month-change"   layout="block">
 
-                            <h:commandButton actionListener="#{CalendarBean.nextMonth()}" value="▶"></h:commandButton>
+                                <h:commandButton id="next_Month" actionListener="#{CalendarBean.nextMonth()}" value="▶">
+                                    <script type="text/javascript">
+                                        function call_Update_Month_AjaxRequest(data) {
+                                            if (data.status == "success")
+                                                changeMonth();
+                                        }
+                                    </script>
+                                    <f:ajax onevent="call_Update_Month_AjaxRequest" execute="inputText" render="myform"/>
+                                </h:commandButton>
 
                             </h:panelGroup>
                     </div>
@@ -64,12 +79,20 @@
 
 
             <div class="booking-inputs">
-                <label> *Förnamn: <h:inputText value="#{CalendarBean.bookingBean.infobooking.firstName}"/></label>
-                <label> *Efternamn: <h:inputText value="#{CalendarBean.bookingBean.infobooking.lastName}"/></label>
-                <label>*telefon-nummer:<h:inputText type="tel" value="#{CalendarBean.bookingBean.infobooking.phoneNumber}"/></label>
-                <label>*Antal (1-4 annars kontakta):<h:inputText type="number" min="1" max="4" value="#{CalendarBean.bookingBean.infobooking.numberOfPeople}"/></label>
+                <label> *Förnamn: <h:inputText id="first_Name" value="#{CalendarBean.bookingBean.infobooking.firstName}"/></label>
+                <label> *Efternamn: <h:inputText id="last_Name" value="#{CalendarBean.bookingBean.infobooking.lastName}"/></label>
+                <label>*telefon-nummer:<h:inputText id="tel_number" type="tel" value="#{CalendarBean.bookingBean.infobooking.phoneNumber}"/></label>
+                <label>*Antal (1-4 annars kontakta):<h:inputText id="amount" type="number" min="1" max="4" value="#{CalendarBean.bookingBean.infobooking.numberOfPeople}"/></label>
                 <label>*Ankomst tid:<h:inputText  id="appt-time" type="text" value="#{CalendarBean.bookingBean.infobooking.time}"/></label>
-                <h:commandButton value="Boka" actionListener="#{CalendarBean.ConfirmAndSubmit()}"></h:commandButton>
+                <h:commandButton value="Boka" actionListener="#{CalendarBean.ConfirmAndSubmit()}">
+                    <script type="text/javascript">
+                        function call_Update_Month_AjaxRequest(data) {
+                            if (data.status == "success")
+                                changeMonth();
+                        }
+                    </script>
+                    <f:ajax onevent="call_Update_Month_AjaxRequest" execute="first_Name last_Name tel_number amount inputText appt-time" render="myform"/>
+                </h:commandButton>
                 <h:outputText value="#{CalendarBean.bookingBean.receivingMessage}"/>
             </div>
 

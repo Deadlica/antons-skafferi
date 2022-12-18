@@ -30,8 +30,15 @@
           <h3>Kommentar:</h3>
             <h:inputTextarea name="review-name-input" id="review_comment" class="review-name-input"
                           value="#{CommentsBean.comment.text}"/>
-            <h:commandButton actionListener="#{CommentsBean.comfirmReview()}" value="Send"></h:commandButton>
-        </h:form>
+            <h:commandButton actionListener="#{CommentsBean.comfirmReview()}" value="Send">
+                <script type="text/javascript">
+                    function call_New_Comment_AjaxRequest(data) {
+                        if (data.status == "success")
+                            new_Comment();
+                    }
+                </script>
+                <f:ajax onevent="call_New_Comment_AjaxRequest" execute="ranking review_name review_comment" render="@form"/>
+            </h:commandButton>
         <br/>
         <h2>Kommentarer:</h2>
 
@@ -40,6 +47,8 @@
             <h5><h:outputText value="#{item.text}"/></h5>
             <hr/><br/>
         </ui:repeat>
+        </h:form>
+
     </div>
     <h:outputScript library="js" name="review.js"/>
 
