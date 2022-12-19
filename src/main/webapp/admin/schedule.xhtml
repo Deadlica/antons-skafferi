@@ -68,7 +68,7 @@
          </h:panelGroup>
 
          <h:panelGroup layout="block" class="delete-staff">
-            <h2>Ta bort anställd</h2><!--Skapa möjligheten att kunna radera-->
+            <h2>Ta bort anställd</h2>
             <h:form class="admin-form-delete-staff" id="deleteform">
                <h:selectOneMenu id="deleteStaff" value="#{StaffBean.selectedDeletedEmployee.ssn}">
                   <f:selectItems value="#{StaffBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
@@ -78,6 +78,12 @@
          </h:panelGroup>
       </h:panelGroup>
 
+   </h:panelGroup>
+   <h:panelGroup layout="block" styleClass="staff">
+      <h2>Anställda</h2>
+      <h:form styleClass="all-staff-form">
+            <ui:include src="staff.xhtml" />
+      </h:form>
    </h:panelGroup>
    <ui:include src="footer.xhtml" />
 </f:view>

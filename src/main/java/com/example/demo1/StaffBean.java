@@ -78,16 +78,24 @@ public class StaffBean implements Serializable {
         this.employees = employees;
     }
 
+    public String updateStaff(String ssn, String firstName, String lastName, String email, String phoneNumber){
+
+        return "";
+    }
+
     public String addStaff() throws URISyntaxException, IOException, InterruptedException {
         employees.add(newEmployee);
         HttpClient client = HttpClient.newHttpClient();
         if (isRetired(newEmployee.getSsn())) {
-            HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/retired"))
+            HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/unretire"))
                     .version(HttpClient.Version.HTTP_2)
                     .header("Content-Type", "application/json;charset=UTF-8")
                     .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\"" + newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() + "\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\"" + newEmployee.getSsn() + "\"}"))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+            ec.getSessionMap().clear();
             return response.body();
         } else {
             HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
@@ -96,6 +104,9 @@ public class StaffBean implements Serializable {
                     .POST(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\"" + newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() + "\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\"" + newEmployee.getSsn() + "\"}"))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+            ec.getSessionMap().clear();
             return response.body();
         }
     }

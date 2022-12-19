@@ -120,3 +120,43 @@ input[type="submit"]:hover{
     display: block;
     background: white;
 }
+
+.staff{
+    padding: 5%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+}
+
+
+.all-staff-form{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 2%;
+}
+
+.all-staff{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.all-staff input[type="submit"]{
+    width: 100%;
+}
+
+.all-staff input[type="text"]{
+    color: grey;
+}
+
+.all-staff input[type="text"]:focus{
+    color: black;
+}
+
+.all-staff *{
+    margin-bottom: 3%;
+}
