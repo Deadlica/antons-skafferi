@@ -5,9 +5,9 @@
                 xmlns:c="http://java.sun.com/jstl/core" >
     <ui:repeat value="#{StaffBean.employees}" var="employee">
         <h:panelGroup layout="block" styleClass="all-staff">
+            <h3><h:outputText value="#{employee.ssn}" /></h3>
             <h:inputText value="#{employee.firstName}" />
             <h:inputText value="#{employee.lastName}" />
-            <h:inputText value="#{employee.ssn}" />
             <h:inputText value="#{employee.email}" />
             <h:inputText value="#{employee.phoneNumber}" />
             <h:commandButton value="Spara" onclick="#{StaffBean.updateStaff(employee.ssn, employee.firstName, employee.lastName, employee.email, employee.phoneNumber)}"/>
