@@ -28,7 +28,7 @@ public class FoodItemsBean implements Serializable {
 
     {
         try {
-            uri = new URI("http://" + API.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
+            uri = new URI(API.link + "dish");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }

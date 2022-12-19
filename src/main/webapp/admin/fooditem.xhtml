@@ -14,13 +14,15 @@
                 <h:outputLabel for="category">Kategori (frivillig)</h:outputLabel>
                 <h:inputText type="text" id="category" value="#{FoodItemsBean.category}"/>
 
-                <h:commandButton action="#{FoodItemsBean.addDish(FoodItemsBean.name, FoodItemsBean.category)}"
-                                 value="Lägg till"/>
+                <h:commandButton value="Lägg till">
+                    <f:ajax event="click" execute="@form" render="@form :carte-admin :remove-dish"
+                            listener="#{FoodItemsBean.addDish(FoodItemsBean.name, FoodItemsBean.category)}"/>
+                </h:commandButton>
             </h:form>
         </div>
         <div>
             <h1>Ta bort en Maträtt</h1>
-            <h:form>
+            <h:form id="remove-dish">
                 <h:selectOneMenu value="#{FoodItemsBean.id}">
                     <f:selectItems value="#{FoodItemsBean.list}" var="dish" itemValue="#{dish.id}"
                                    itemLabel="#{dish.name}"/>
