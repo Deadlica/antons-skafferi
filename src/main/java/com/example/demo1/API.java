@@ -10,7 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class API {
-    private static final URI link; // Home
+    public static final URI link; // Home
 
     static {
         try {

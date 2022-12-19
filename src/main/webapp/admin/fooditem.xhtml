@@ -3,18 +3,33 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <div class="main">
-        <h1>Lägg till en Maträtt</h1>
-        <h:form styleClass="add-food-form">
-            <h:outputLabel for="food_name">Namn</h:outputLabel>
-            <h:inputText type="text" id="food_name" value="#{FoodItemsBean.name}" required="true"
-                         requiredMessage="Du måste skriva in ett namn"/>
+    <div class="main" style="display: flex; align-items: flex-start; justify-content: space-around">
+        <div>
+            <h1>Lägg till en Maträtt</h1>
+            <h:form styleClass="add-food-form">
+                <h:outputLabel for="food_name">Namn</h:outputLabel>
+                <h:inputText type="text" id="food_name" value="#{FoodItemsBean.name}" required="true"
+                             requiredMessage="Du måste skriva in ett namn"/>
 
-            <h:outputLabel for="category">Kategori (frivillig)</h:outputLabel>
-            <h:inputText type="text" id="category" value="#{FoodItemsBean.category}"/>
+                <h:outputLabel for="category">Kategori (frivillig)</h:outputLabel>
+                <h:inputText type="text" id="category" value="#{FoodItemsBean.category}"/>
 
-            <h:commandButton action="#{FoodItemsBean.addDish(FoodItemsBean.name, FoodItemsBean.category)}"
-                             value="Lägg till"/>
-        </h:form>
+                <h:commandButton action="#{FoodItemsBean.addDish(FoodItemsBean.name, FoodItemsBean.category)}"
+                                 value="Lägg till"/>
+            </h:form>
+        </div>
+        <div>
+            <h1>Ta bort en Maträtt</h1>
+            <h:form>
+                <h:selectOneMenu value="#{FoodItemsBean.id}">
+                    <f:selectItems value="#{FoodItemsBean.list}" var="dish" itemValue="#{dish.id}"
+                                   itemLabel="#{dish.name}"/>
+                </h:selectOneMenu>
+                <h:commandButton value="Ta bort">
+                    <f:ajax event="click" execute="@form" render="@form :carte-admin"
+                            listener="#{FoodItemsBean.putItem(FoodItemsBean.id)}"/>
+                </h:commandButton>
+            </h:form>
+        </div>
     </div>
 </ui:composition>
