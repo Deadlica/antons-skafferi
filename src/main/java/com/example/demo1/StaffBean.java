@@ -78,9 +78,16 @@ public class StaffBean implements Serializable {
         this.employees = employees;
     }
 
-    public String updateStaff(String ssn, String firstName, String lastName, String email, String phoneNumber){
-
-        return "";
+    public String updateStaff(String ssn, String firstName, String lastName, String email, String phoneNumber) throws URISyntaxException, IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/update"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}"))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
+        //return response.body();
     }
 
     public String addStaff() throws URISyntaxException, IOException, InterruptedException {
@@ -178,9 +185,9 @@ public class StaffBean implements Serializable {
                 .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":1}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        /*ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
-        ec.getSessionMap().clear();
+        ec.getSessionMap().clear();*/
         return response.body();
         //return "";
     }
