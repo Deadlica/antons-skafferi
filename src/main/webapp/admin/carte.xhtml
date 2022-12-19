@@ -2,7 +2,7 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:panelGroup layout="block" styleClass="main">
+    <h:panelGroup layout="block" id="carte-admin" styleClass="main">
         <h1>Á la carte</h1>
         <h:panelGroup layout="block">
             <!-- ADD CARTE ITEM -->
@@ -31,7 +31,10 @@
                     <f:selectItem itemValue="Dessert" itemLabel="Dessert"/>
                     <f:selectItem itemValue="Dryck" itemLabel="Dryck"/>
                 </h:selectOneMenu>
-                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem()}" type="submit"/>
+                <h:commandButton value="Lägg till!">
+                    <f:ajax execute="@form" render="@form :starters :mains :desserts :drinks"
+                            listener="#{CarteBean.addItem()}"/>
+                </h:commandButton>
             </h:form>
         </h:panelGroup>
 
