@@ -20,39 +20,22 @@ import java.util.Objects;
 @Named(value = "FoodItemsBean")
 @RequestScoped
 public class FoodItemsBean implements Serializable {
-    public List<Dish> getList() {
-        return list;
-    }
-
-    public void setList(List<Dish> list) {
-        this.list = list;
-    }
-
-    public FoodItemsBean() throws IOException, InterruptedException {
-        addList();
-    }
-
     private List<Dish> list;
     private String name;
     private String category = "";
-
     private int id;
-
-
     private final URI uri;
 
     {
         try {
             uri = new URI("http://" + API.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
-            //uri = new URI("http://10.82.231.15:8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    public void setName(String name) {
-        this.name = name;
+    public FoodItemsBean() throws IOException, InterruptedException {
+        addList();
     }
 
     public void addList() throws IOException, InterruptedException {
@@ -61,19 +44,6 @@ public class FoodItemsBean implements Serializable {
         setList(new ArrayList<>(Arrays.asList(list_arr)));
     }
 
-    public String getJSON() throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                .GET()
-                .build();
-        HttpResponse<String> response = HttpClient
-                .newBuilder()
-                .proxy(ProxySelector.getDefault())
-                .build()
-                .send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
-
-    }
 
     public HttpResponse<String> addDish(String name, String type) throws IOException, InterruptedException {
         Dish tempDish = new Dish(1, name);
@@ -97,9 +67,22 @@ public class FoodItemsBean implements Serializable {
         return response;
     }
 
-    //-----------------------------------------------------------------------------------------------
-    //Getters and setters
+    public String getJSON() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
 
+    }
+
+    //-----------------------------------------------------------------------------------------------
+    //Getters and Setters
     public int getId() {
         return id;
     }
@@ -112,11 +95,23 @@ public class FoodItemsBean implements Serializable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public List<Dish> getList() {
+        return list;
+    }
+
+    public void setList(List<Dish> list) {
+        this.list = list;
     }
 }
