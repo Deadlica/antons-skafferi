@@ -22,7 +22,6 @@ public class API {
         }
     }
 
-    //this.link = "31.209.47.252"; //Can
     public static HttpResponse<String> doPost(String apiEndpoint, Object obj) throws IOException, InterruptedException {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(obj);
