@@ -6,10 +6,10 @@
         <h1>Á la carte</h1>
         <h:panelGroup layout="block">
             <!-- ADD CARTE ITEM -->
-            <h:form styleClass="carte-add-item">
+            <h:form styleClass="carte-add-item" id="carte-add-item">
                 <h:outputLabel>Välj rätt</h:outputLabel>
                 <h:selectOneMenu value="#{CarteBean.carteItem.dish.id}">
-                    <f:selectItems value="#{FoodItemsBean.list}" var="dish"
+                    <f:selectItems value="#{CarteBean.unusedDishes}" var="dish"
                                    itemValue="#{dish.id}"
                                    itemLabel="#{dish.name}"/>
                 </h:selectOneMenu>
@@ -51,7 +51,7 @@
                                 <i class="fa-solid fa-trash-can carte-remove"/>
                                 <f:ajax event="click" execute="starters"
                                         listener="#{CarteBean.deleteItem(starter.dish.id)}"
-                                        render="starters"/>
+                                        render="starters :carte-add-item"/>
                             </h:commandLink>
 
                         </h:form>
@@ -69,7 +69,7 @@
                                 <i class="fa-solid fa-trash-can carte-remove"/>
                                 <f:ajax event="click" execute="mains"
                                         listener="#{CarteBean.deleteItem(main.dish.id)}"
-                                        render="mains"/>
+                                        render="mains :carte-add-item"/>
                             </h:commandLink>
                         </h:form>
                     </ui:repeat>
@@ -87,7 +87,7 @@
                                 <i class="fa-solid fa-trash-can carte-remove"/>
                                 <f:ajax event="click" execute="desserts"
                                         listener="#{CarteBean.deleteItem(dessert.dish.id)}"
-                                        render="desserts"/>
+                                        render="desserts :carte-add-item"/>
                             </h:commandLink>
                         </h:form>
                     </ui:repeat>
@@ -105,7 +105,7 @@
                                 <i class="fa-solid fa-trash-can carte-remove"/>
                                 <f:ajax event="click" execute="drinks"
                                         listener="#{CarteBean.deleteItem(drink.dish.id)}"
-                                        render="drinks"/>
+                                        render="drinks :carte-add-item"/>
                             </h:commandLink>
                         </h:form>
                     </ui:repeat>
