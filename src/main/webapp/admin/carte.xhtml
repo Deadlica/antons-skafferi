@@ -47,11 +47,12 @@
                     <ui:repeat value="#{CarteBean.starters}" var="starter">
                         <h:form id="starter_form" styleClass="admin-carte-item">
                             <p><h:outputText value="#{starter.dish.name}" id="starter"/></p>
-                            <h:commandButton value="Delete">
+                            <h:commandLink>
+                                <i class="fa-solid fa-trash-can carte-remove"/>
                                 <f:ajax event="click" execute="starters"
                                         listener="#{CarteBean.deleteItem(starter.dish.id)}"
                                         render="starters"/>
-                            </h:commandButton>
+                            </h:commandLink>
 
                         </h:form>
                     </ui:repeat>
@@ -64,11 +65,12 @@
                     <ui:repeat value="#{CarteBean.mainCourses}" var="main">
                         <h:form id="main_form" styleClass="admin-carte-item">
                             <p><h:outputText value="#{main.dish.name}" id="main"/></p>
-                            <h:commandButton value="Delete">
+                            <h:commandLink>
+                                <i class="fa-solid fa-trash-can carte-remove"/>
                                 <f:ajax event="click" execute="mains"
                                         listener="#{CarteBean.deleteItem(main.dish.id)}"
                                         render="mains"/>
-                            </h:commandButton>
+                            </h:commandLink>
                         </h:form>
                     </ui:repeat>
                 </h:panelGroup>
@@ -81,11 +83,12 @@
                     <ui:repeat value="#{CarteBean.desserts}" var="dessert">
                         <h:form id="dessert_form" styleClass="admin-carte-item">
                             <p><h:outputText value="#{dessert.dish.name}" id="dessert"/></p>
-                            <h:commandButton value="Delete">
+                            <h:commandLink>
+                                <i class="fa-solid fa-trash-can carte-remove"/>
                                 <f:ajax event="click" execute="desserts"
                                         listener="#{CarteBean.deleteItem(dessert.dish.id)}"
                                         render="desserts"/>
-                            </h:commandButton>
+                            </h:commandLink>
                         </h:form>
                     </ui:repeat>
                 </h:panelGroup>
@@ -98,11 +101,12 @@
                     <ui:repeat value="#{CarteBean.drinks}" var="drink">
                         <h:form id="drink_form" styleClass="admin-carte-item">
                             <p><h:outputText value="#{drink.dish.name}" id="drink"/></p>
-                            <h:commandButton value="Delete">
+                            <h:commandLink>
+                                <i class="fa-solid fa-trash-can carte-remove"/>
                                 <f:ajax event="click" execute="drinks"
                                         listener="#{CarteBean.deleteItem(drink.dish.id)}"
                                         render="drinks"/>
-                            </h:commandButton>
+                            </h:commandLink>
                         </h:form>
                     </ui:repeat>
                 </h:panelGroup>
