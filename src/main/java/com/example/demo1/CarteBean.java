@@ -214,9 +214,23 @@ public class CarteBean implements Serializable {
         }
     }
 
+    public void deleteId(int id, List<CarteItem> list) {
+        for (CarteItem i : list) {
+            if (i.dish.getId() == id) {
+                list.remove(i);
+                break;
+            }
+        }
+    }
+
     public HttpResponse<String> deleteItem(int id) throws IOException, InterruptedException {
         idPOD object = new idPOD(id);
-        return API.doPut("carte", object);
+        HttpResponse<String> response = API.doPut("carte", object);
+        deleteId(id, starters);
+        deleteId(id, mainCourses);
+        deleteId(id, desserts);
+        deleteId(id, drinks);
+        return response;
     }
 
     public HttpResponse<String> addItem() throws IOException, InterruptedException {
