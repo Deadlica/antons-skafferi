@@ -81,13 +81,15 @@ public class StaffBean implements Serializable {
     public String updateStaff(String ssn, String firstName, String lastName, String email, String phoneNumber) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/update"))
-                .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
-        //return response.body();
+        //return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+        ec.getSessionMap().clear();
+        return response.body();
     }
 
     public String addStaff() throws URISyntaxException, IOException, InterruptedException {
@@ -185,9 +187,9 @@ public class StaffBean implements Serializable {
                 .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":1}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        /*ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
-        ec.getSessionMap().clear();*/
+        ec.getSessionMap().clear();
         return response.body();
         //return "";
     }
@@ -241,58 +243,4 @@ public class StaffBean implements Serializable {
         List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
         employees.addAll(arr);
     }
-
-    public String getFreeJSONEmployees(String date, String url) throws IOException, InterruptedException, URISyntaxException {
-        HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/" + url + "/available?date=" + date))
-                .GET()
-                .build();
-        HttpResponse<String> response = HttpClient
-                .newBuilder()
-                .proxy(ProxySelector.getDefault())
-                .build()
-                .send(request2, HttpResponse.BodyHandlers.ofString());
-        return response.body();
-    }
-
-    public List<Employee> setFreeJSONEmployees(String date, String url) throws IOException, URISyntaxException, InterruptedException {
-        freeEmployees.clear();
-        ObjectMapper objectMapper = new ObjectMapper();
-        Employee[] list_arr = objectMapper.readValue(getFreeJSONEmployees(date, url), Employee[].class);
-        List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
-
-        freeEmployees.addAll(arr);
-        //setSelectedEmployee(date, url);
-
-        return freeEmployees;
-    }
-
-    /*
-    public void setSelectedEmployee(String date, String url){
-        Calendar cal = Calendar.getInstance();
-        cal.set(Integer.parseInt(date.substring(0,4)), Integer.parseInt(date.substring(5,7)) - 1, Integer.parseInt(date.substring(8,10)));
-        switch (cal.get(Calendar.DAY_OF_WEEK)){
-            case Calendar.MONDAY:
-                mondayNightSelected = freeEmployees.get(0);
-                break;
-            case Calendar.TUESDAY:
-                tuesdayNightSelected = freeEmployees.get(0).getSsn();
-                break;
-            case Calendar.WEDNESDAY:
-                wednesdayNightSelected = freeEmployees.get(0).getSsn();
-                break;
-            case Calendar.THURSDAY:
-                thursdayNightSelected = freeEmployees.get(0).getSsn();
-                break;
-            case Calendar.FRIDAY:
-                fridayNightSelected = freeEmployees.get(0).getSsn();
-                break;
-            case Calendar.SATURDAY:
-                saturdayNightSelected = freeEmployees.get(0).getSsn();
-                break;
-            case Calendar.SUNDAY:
-                sundayNightSelected = freeEmployees.get(0).getSsn();
-                break;
-        }
-    }*/
 }

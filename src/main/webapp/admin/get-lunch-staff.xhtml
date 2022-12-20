@@ -7,7 +7,7 @@
       <h:panelGroup class="admin-schedule" layout="block">
          <h3 id="admin-schedule-date">#{weekday.text}</h3>
          <h:panelGroup class="admin-schedule-day" layout="block">
-            <ui:repeat class="working-employees" value="#{ShiftBean.setJSONLunchShift(weekday.date)}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
+            <ui:repeat class="working-employees" value="#{weekday.lunchShift}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
                <h:panelGroup class="admin-schedule-workers">
                   <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4>
                   <h:commandButton title="Ta bort pass" action="#{StaffBean.deleteShift(shift.employee.ssn, false, weekday.date, shift.id)}" value="✖" />

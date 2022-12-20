@@ -22,6 +22,8 @@ import java.util.*;
 @SessionScoped
 @Named(value = "DateBean")
 public class DateBean implements Serializable {
+    private URL location = new URL();
+    private String link = location.getLink();
 
     public String getDate() {
         return date;
@@ -32,16 +34,71 @@ public class DateBean implements Serializable {
         private String link = location.getLink();
         private final String text;
         private final String date;
+
+        public List<ShiftBean.Shift> getLunchShift() {
+            return lunchShift;
+        }
+
+        public void setLunchShift(List<ShiftBean.Shift> lunchShift) {
+            this.lunchShift = lunchShift;
+        }
+
+        public List<ShiftBean.Shift> getDinnerShift() {
+            return dinnerShift;
+        }
+
+        public void setDinnerShift(List<ShiftBean.Shift> dinnerShift) {
+            this.dinnerShift = dinnerShift;
+        }
+
         private String selected;
 
-        private List<Employee> freeDinnerEmployees;
-        private List<Employee> freeLunchEmployees;
+        private List<Employee> freeDinnerEmployees = new ArrayList<>();
+        private List<Employee> freeLunchEmployees = new ArrayList<>();
+
+        private List<ShiftBean.Shift> lunchShift = new ArrayList<>();
+        private List<ShiftBean.Shift> dinnerShift = new ArrayList<>();
 
         Weekday(String text, String date) throws URISyntaxException, IOException, InterruptedException {
             this.text = text;
             this.date = date;
-            freeDinnerEmployees = setFreeJSONEmployees(date, "dinner");
-            freeLunchEmployees = setFreeJSONEmployees(date, "lunch");
+        }
+
+        private void setFreeEmployees(boolean isDinner, List<Employee> employees){
+            if(isDinner){
+                freeDinnerEmployees.clear();
+                for(Employee e : employees){
+                    boolean isFree = true;
+                    for(ShiftBean.Shift s : dinnerShift){
+                        if(e.getSsn().contains(s.getEmployee().getSsn())){
+                            isFree = false;
+                            break;
+                        }else{
+                            isFree = true;
+                        }
+                    }
+                    if(isFree){
+                        freeDinnerEmployees.add(e);
+                    }
+                }
+            }else{
+                freeLunchEmployees.clear();
+                for(Employee e : employees){
+                    boolean isFree = true;
+                    for(ShiftBean.Shift s : lunchShift){
+                        if(e.getSsn().contains(s.getEmployee().getSsn())){
+                            isFree = false;
+                            break;
+                        }else{
+                            isFree = true;
+                        }
+                    }
+                    if(isFree){
+                        freeLunchEmployees.add(e);
+                    }
+                }
+            }
+
         }
 
         public String getDate() {
@@ -73,36 +130,21 @@ public class DateBean implements Serializable {
             this.selected = s;
         }
 
-        public String getFreeJSONEmployees(String date, String url) throws IOException, InterruptedException, URISyntaxException {
-            HttpRequest request2 = HttpRequest.newBuilder()
-                    .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/" + url + "/available?date=" + date))
-                    .GET()
-                    .build();
-            HttpResponse<String> response = HttpClient
-                    .newBuilder()
-                    .proxy(ProxySelector.getDefault())
-                    .build()
-                    .send(request2, HttpResponse.BodyHandlers.ofString());
-            return response.body();
+        public void pushLunchShift(ShiftBean.Shift shift){
+            lunchShift.add(shift);
         }
 
-        public List<Employee> setFreeJSONEmployees(String date, String url) throws IOException, URISyntaxException, InterruptedException {
-            List<Employee> freeEmployees = new ArrayList<>();
-            ObjectMapper objectMapper = new ObjectMapper();
-            Employee[] list_arr = objectMapper.readValue(getFreeJSONEmployees(date, url), Employee[].class);
-            List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
-
-            freeEmployees.addAll(arr);
-
-            return freeEmployees;
+        public void pushDinnerShift(ShiftBean.Shift shift){
+            dinnerShift.add(shift);
         }
     }
 
     DateBean() throws IOException, URISyntaxException, InterruptedException {
         year = getCurrYear();
         week = getCurrWeek();
-        setLunchShift();
-        setDinnerShift();
+        setShiftBetween(getDay(Calendar.MONDAY), getDay(Calendar.SUNDAY));
+        setJSONEmployees();
+        setShift();
     }
 
     public void setDate(String date) {
@@ -119,8 +161,8 @@ public class DateBean implements Serializable {
             this.week += 52;
             this.year -= 1;
         }
-        setLunchShift();
-        setDinnerShift();
+        setShiftBetween(getDay(Calendar.MONDAY), getDay(Calendar.SUNDAY));
+        setShift();
     }
 
     public void increaseWeek() throws URISyntaxException, IOException, InterruptedException {
@@ -129,11 +171,53 @@ public class DateBean implements Serializable {
             this.week -= 52;
             this.year += 1;
         }
-        setLunchShift();
-        setDinnerShift();
+        setShiftBetween(getDay(Calendar.MONDAY), getDay(Calendar.SUNDAY));
+        setShift();
     }
 
-    public void setDinnerShift() throws URISyntaxException, IOException, InterruptedException {
+    public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/working"))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request2, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    public void setJSONEmployees() throws IOException, URISyntaxException, InterruptedException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Employee[] list_arr = objectMapper.readValue(getJSONEmployees(), Employee[].class);
+        List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
+        employees.addAll(arr);
+    }
+
+    List<Employee> employees = new ArrayList<>();
+
+    public String fetchShiftBetween(String startDate, String stopDate) throws IOException, InterruptedException, URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/range?startDate=" + startDate + "&endDate=" + stopDate))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request2, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+    public void setShiftBetween(String startDate, String stopDate) throws IOException, URISyntaxException, InterruptedException {
+        shift.clear();
+        ObjectMapper objectMapper = new ObjectMapper();
+        ShiftBean.Shift[] list_arr = objectMapper.readValue(fetchShiftBetween(startDate, stopDate), ShiftBean.Shift[].class);
+        List<ShiftBean.Shift> arr = new ArrayList<>(Arrays.asList(list_arr));
+        shift.addAll(arr);
+    }
+    List<ShiftBean.Shift> shift = new ArrayList<>();
+    public void setShift() throws URISyntaxException, IOException, InterruptedException {
         weekdays.clear();
         weekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
         weekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
@@ -142,15 +226,57 @@ public class DateBean implements Serializable {
         weekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
         weekdays.add(new Weekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY)));
         weekdays.add(new Weekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY)));
-    }
 
-    public void setLunchShift() throws URISyntaxException, IOException, InterruptedException {
         earlyweekdays.clear();
         earlyweekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY)));
         earlyweekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY)));
+
+        for(ShiftBean.Shift s : shift){
+            if(s.getDate().contains(getDay(Calendar.MONDAY))){
+                if(Integer.parseInt(s.getBeginTime().substring(0,2)) < 16){
+                    earlyweekdays.get(0).pushLunchShift(s);
+                }else{
+                    weekdays.get(0).pushDinnerShift(s);
+                }
+            }else if(s.getDate().contains(getDay(Calendar.TUESDAY))){
+                if(Integer.parseInt(s.getBeginTime().substring(0,2)) < 16){
+                    earlyweekdays.get(1).pushLunchShift(s);
+                }else{
+                    weekdays.get(1).pushDinnerShift(s);
+                }
+            }else if(s.getDate().contains(getDay(Calendar.WEDNESDAY))){
+                if(Integer.parseInt(s.getBeginTime().substring(0,2)) < 16){
+                    earlyweekdays.get(2).pushLunchShift(s);
+                }else{
+                    weekdays.get(2).pushDinnerShift(s);
+                }
+            }else if (s.getDate().contains(getDay(Calendar.THURSDAY))) {
+                if(Integer.parseInt(s.getBeginTime().substring(0,2)) < 16){
+                    earlyweekdays.get(3).pushLunchShift(s);
+                }else{
+                    weekdays.get(3).pushDinnerShift(s);
+                }
+            }else if(s.getDate().contains(getDay(Calendar.FRIDAY))){
+                if(Integer.parseInt(s.getBeginTime().substring(0,2)) < 16){
+                    earlyweekdays.get(4).pushLunchShift(s);
+                }else{
+                    weekdays.get(4).pushDinnerShift(s);
+                }
+            }else if(s.getDate().contains(getDay(Calendar.SATURDAY))){
+                weekdays.get(5).pushDinnerShift(s);
+            }else if(s.getDate().contains(getDay(Calendar.SUNDAY))){
+                weekdays.get(6).pushDinnerShift(s);
+            }
+        }
+        for(Weekday w : weekdays){
+            w.setFreeEmployees(true, employees);
+        }
+        for(Weekday w : earlyweekdays){
+            w.setFreeEmployees(false, employees);
+        }
     }
 
     public int getCurrWeek() {
