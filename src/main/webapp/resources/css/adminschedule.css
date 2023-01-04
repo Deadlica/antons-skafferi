@@ -128,6 +128,7 @@ input[type="submit"]:hover{
     flex-direction: column;
     align-items: center;
     background: white;
+    margin-bottom: 2%;
 }
 
 
@@ -141,23 +142,32 @@ input[type="submit"]:hover{
 }
 
 .all-staff{
+    padding: 2%;
+    margin-top: 1%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    background: var(--background_white);
 }
 
-.all-staff input[type="submit"]{
-    width: 100%;
+.edit-staff{
+    display: flex;
+    flex-direction: column;
 }
 
-.all-staff input[type="text"]{
+.edit-staff-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-staff-form input[type="text"]{
     color: grey;
 }
 
-.all-staff input[type="text"]:focus{
+.edit-staff-form input[type="text"]:focus{
     color: black;
 }
 
-.all-staff *{
+.all-staff *, .edit-staff *{
     margin-bottom: 3%;
 }

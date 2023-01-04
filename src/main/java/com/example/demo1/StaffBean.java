@@ -2,8 +2,11 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.component.UIOutput;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.AjaxBehaviorEvent;
+import jakarta.faces.event.ValueChangeEvent;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -29,6 +32,16 @@ public class StaffBean implements Serializable {
 
     private Employee selectedDeletedEmployee;
 
+    private Employee selectedEditedEmployee;
+
+    public Employee getSelectedEditedEmployee() {
+        return selectedEditedEmployee;
+    }
+
+    public void setSelectedEditedEmployee(Employee selectedEditedEmployee) {
+        this.selectedEditedEmployee = selectedEditedEmployee;
+    }
+
     private Employee selectedShiftEmployee;
 
     public Employee getSelectedShiftEmployee() {
@@ -45,7 +58,7 @@ public class StaffBean implements Serializable {
     public StaffBean() throws IOException, URISyntaxException, InterruptedException {
         setJSONEmployees();
         selectedDeletedEmployee = employees.get(0);
-
+        selectedEditedEmployee = employees.get(0);
     }
 
     Employee newEmployee = new Employee();
@@ -77,7 +90,20 @@ public class StaffBean implements Serializable {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
-
+/*
+    public String updateStaff(Employee e) throws URISyntaxException, IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/update"))
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + e.getEmail() + "\",\"firstName\":\"" + e.getFirstName() + "\",\"lastName\":\"" + e.getLastName() + "\",\"phoneNumber\":\"" + e.getPhoneNumber() + "\", \"ssn\":\"" + e.getSsn() + "\"}"))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        //return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
+        //ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        //ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+        //ec.getSessionMap().clear();
+        return response.body();
+    }
     public String updateStaff(String ssn, String firstName, String lastName, String email, String phoneNumber) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/update"))
@@ -86,10 +112,29 @@ public class StaffBean implements Serializable {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         //return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
+        //ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        //ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+        //ec.getSessionMap().clear();
+        return response.body();
+    }*/
+
+    public String updateStaff() throws URISyntaxException, IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/update"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + selectedEditedEmployee.getEmail() + "\",\"firstName\":\"" + selectedEditedEmployee.getFirstName() + "\",\"lastName\":\"" + selectedEditedEmployee.getLastName() + "\",\"phoneNumber\":\"" + selectedEditedEmployee.getPhoneNumber() + "\", \"ssn\":\"" + selectedEditedEmployee.getSsn() + "\"}"))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        //return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
         ec.getSessionMap().clear();
         return response.body();
+    }
+
+    public void updateListener(ValueChangeEvent valueChangeEvent){
+        selectedEditedEmployee = getEmployee(valueChangeEvent.getNewValue().toString());
     }
 
     public String addStaff() throws URISyntaxException, IOException, InterruptedException {
