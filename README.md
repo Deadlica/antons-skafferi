@@ -16,6 +16,7 @@ Supports functionality for
 - Adding and removing lunches
 - Adding and removing from the menus
 - Adding and removing employees
+- Adding and removing shifts of an employee
 - Setting and changing work scheduling
 - Adding and removing events
 - Adding and removing comments
