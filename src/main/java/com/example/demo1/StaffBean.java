@@ -219,7 +219,7 @@ public class StaffBean implements Serializable {
     public String addShift(String ssn, boolean isLate, String date) throws URISyntaxException, IOException, InterruptedException {
         String beginTime = isLate ? "16:00:00" : "11:00:00";
         String endTime = isLate ? "23:00:00" : "14:00:00";
-        if(isWeekend(date)){
+        if(isWeekend(date) && isLate){
             endTime = "01:00:00";
         }
 
@@ -242,7 +242,7 @@ public class StaffBean implements Serializable {
     public String deleteShift(String ssn, boolean isLate, String date, int id) throws URISyntaxException, IOException, InterruptedException {
         String beginTime = isLate ? "16:00:00" : "11:00:00";
         String endTime = isLate ? "23:00:00" : "14:00:00";
-        if(isWeekend(date)){
+        if(isWeekend(date) && isLate){
             endTime = "01:00:00";
         }
 
