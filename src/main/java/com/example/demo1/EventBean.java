@@ -3,11 +3,14 @@ package com.example.demo1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.Part;
 import jakarta.validation.Path;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.ProxySelector;
 import java.net.URI;
@@ -17,6 +20,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +29,7 @@ import java.util.List;
 
 @Named(value = "EventBean")
 @RequestScoped
+@MultipartConfig(location = "src/main/webapp/resources/images/UPLOAD_DIRECTORY")
 public class EventBean implements Serializable {
     private URL location = new URL();
     private String link = location.getLink();
@@ -33,8 +38,14 @@ public class EventBean implements Serializable {
         return eventImage;
     }
 
-    public void setImage(Part image) {
+    public void setImage(Part image) throws IOException {
         eventImage = image;
+        //String uploadPath = "/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/UPLOAD_DIRECTORY/";
+        //File uploadDir = new File(uploadPath);
+        //if (!uploadDir.exists()) uploadDir.mkdir();
+        String fileName = eventItem.NAME + eventItem.Date + ".jpg";
+        eventImage.write(fileName);
+        Files.copy(Paths.get(System.getProperty("com.sun.aas.instanceRoot") + "/generated/jsp/antons-skafferi-1.0-SNAPSHOT/" + fileName), Paths.get("/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/" + fileName), StandardCopyOption.REPLACE_EXISTING);
     }
 
     Part eventImage;
