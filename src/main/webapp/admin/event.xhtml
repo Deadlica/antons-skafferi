@@ -28,9 +28,13 @@
                 <h:inputText value="#{EventBean.eventItem.PRICE}"/>
                 <h:outputLabel>Beskrivning</h:outputLabel>
                 <h:inputTextarea value="#{EventBean.eventItem.DESCRIPTION}"/>
+                <h:outputLabel>Date</h:outputLabel>
+                <h:inputTextarea value="#{EventBean.eventItem.date}"/>
                 <h:outputLabel>Photo</h:outputLabel>
                 <input type="file" id="myFile" name="filename"/>
-                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem(CarteBean.carteItem)}"/>
+                <h:outputLabel>#{EventBean.response}</h:outputLabel>
+
+                <h:commandButton value="Lägg till!" action="#{EventBean.addNewEvent}"/>
             </h:form>
         </h:panelGroup>
 

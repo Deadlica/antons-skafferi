@@ -132,7 +132,7 @@ public class EventBean implements Serializable {
 
     public String getJSON() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event"))
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event/upcoming"))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
@@ -142,4 +142,76 @@ public class EventBean implements Serializable {
                 .send(request2, HttpResponse.BodyHandlers.ofString());
         return response.body();
     }
+    String response;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
+    public void addNewEvent() throws URISyntaxException, IOException, InterruptedException {
+        response= String.valueOf(addEvent())+ " "+eventItem.NAME+" "+eventItem.Date+" "+eventItem.DESCRIPTION;
+    }
+    private HttpResponse<String> addEvent() throws URISyntaxException, IOException, InterruptedException {
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(eventItem);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return response;
+    }
+    public void removeEvent(int id) throws URISyntaxException, IOException, InterruptedException {
+        for (Event i : todayEvents) {
+            if (i.id==id){
+                response= String.valueOf(removeEvent(i));
+                ObjectMapper objectMapper = new ObjectMapper();
+            }
+        }
+        for (Event i : futureEvents) {
+            if (i.id==id){
+                response= String.valueOf(removeEvent(i));
+                ObjectMapper objectMapper = new ObjectMapper();
+            }
+        }
+
+
+    }
+
+    private HttpResponse<String> removeEvent(Event removeEvent) throws URISyntaxException, IOException, InterruptedException  {
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(removeEvent);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .PUT(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return response;
+
+
+    }
 }
+
+
