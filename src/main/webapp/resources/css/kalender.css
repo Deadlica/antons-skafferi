@@ -101,6 +101,10 @@
     align-items: center;
 }
 
+.pastDay{
+    background-color: white;
+    opacity: 20%;
+}
 
 .booking-inputs {
     display: grid;

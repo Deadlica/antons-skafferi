@@ -4,22 +4,43 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <div class="main last" id="grade_loc">
         <h1>Betyg och Kommentarer</h1>
-        <form class="review-form" action="">
-            <label for="review_name">Namn</label>
-            <div class="star-name">
-                <input type="text" name="review-name-input" id="review_name" class="review-name-input"
-                       placeholder="Namn"/>
+        <br/>
+        <h2>Skapa kommentar</h2>
+<br/>
+        <h:form class="review-form" >
+            <h3>Namn:</h3>
+            <h:inputText type="text" name="review-name-input" id="review_name" class="review-name-input"
+                         placeholder="Namn" value="#{CommentsBean.comment.firstName}"/>
+            <div class="star-name" id="stars">
+                <br/>
+                <h3>Rate:</h3>
+
                 <div class="stars">
-                    <input type="radio" name="rating" value="5" id="5"/><label for="5">☆</label>
-                    <input type="radio" name="rating" value="4" id="4"/><label for="4">☆</label>
-                    <input type="radio" name="rating" value="3" id="3"/><label for="3">☆</label>
-                    <input type="radio" name="rating" value="2" id="2"/><label for="2">☆</label>
-                    <input type="radio" name="rating" value="1" id="1"/><label for="1">☆</label>
+                    <input type="radio" name="rating"  id="5"/><label for="5">☆</label>
+                    <input type="radio" name="rating"  id="4"/><label for="4">☆</label>
+                    <input type="radio" name="rating"  id="3"/><label for="3">☆</label>
+                    <input type="radio" name="rating" id="2"/><label for="2">☆</label>
+                    <input type="radio" name="rating"  id="1"/><label for="1">☆</label>
+
+                    <h:inputText id="ranking" value="#{CommentsBean.comment.ranking}"/>
+
+
                 </div>
             </div>
-            <label for="review_comment">Kommentar</label>
-            <textarea name="review-comment" id="review_comment" cols="70" rows="3" placeholder="Kommentar..."/>
-        </form>
+          <h3>Kommentar:</h3>
+            <h:inputTextarea name="review-name-input" id="review_comment" class="review-name-input"
+                          value="#{CommentsBean.comment.text}"/>
+            <h:commandButton actionListener="#{CommentsBean.comfirmReview()}" value="Send"></h:commandButton>
+        </h:form>
+        <br/>
+        <h2>Kommentarer:</h2>
+
+        <ui:repeat value="#{CommentsBean.holdAllReviews}" var="item">
+            <h3><h:outputText value="#{item.firstName} #{item.ranking}/5"/></h3>
+            <h5><h:outputText value="#{item.text}"/></h5>
+            <hr/><br/>
+        </ui:repeat>
     </div>
+    <h:outputScript library="js" name="review.js"/>
 
 </ui:composition>

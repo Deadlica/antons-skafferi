@@ -30,13 +30,9 @@ public class Dish {
         this.type = type;
     }
 
-    public Dish(int id, String name, String type) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-    }
-
     public Dish() {
+        this.name = "";
+        this.type = "";
     }
 
     public Dish(int id, String name) {
