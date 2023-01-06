@@ -1,0 +1,27 @@
+.event-add {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 30%;
+    margin-left: 30%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow: 28px 28px 56px #bebebe,
+    -28px -28px 56px #ffffff;
+}
+
+.event-add * {
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-bottom: 1.5%;
+}
+
+.admin-event-title {
+    margin-top: 5%;
+}
+
+.admin-event-add-button {
+    margin-bottom: 3.5%;
+}

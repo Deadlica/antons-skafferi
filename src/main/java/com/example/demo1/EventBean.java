@@ -3,7 +3,10 @@ package com.example.demo1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
+import jakarta.servlet.http.Part;
+import jakarta.validation.Path;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.ProxySelector;
@@ -12,6 +15,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,14 +29,24 @@ public class EventBean implements Serializable {
     private URL location = new URL();
     private String link = location.getLink();
 
+    public Part getImage() {
+        return eventImage;
+    }
+
+    public void setImage(Part image) {
+        eventImage = image;
+    }
+
+    Part eventImage;
+
     public static class Event {
         int id;
         String NAME;
         String DESCRIPTION;
-        String Date;
+        String Date = "2023-01-07";
         int PRICE;
 
-        int getId() {
+        public int getId() {
             return id;
         }
 
@@ -142,7 +157,8 @@ public class EventBean implements Serializable {
                 .send(request2, HttpResponse.BodyHandlers.ofString());
         return response.body();
     }
-    String response;
+
+    String response = new String();
 
     public String getLink() {
         return link;
@@ -161,8 +177,9 @@ public class EventBean implements Serializable {
     }
 
     public void addNewEvent() throws URISyntaxException, IOException, InterruptedException {
-        response= String.valueOf(addEvent())+ " "+eventItem.NAME+" "+eventItem.Date+" "+eventItem.DESCRIPTION;
+        response = String.valueOf(addEvent()) + " " + eventItem.NAME + " " + eventItem.Date + " " + eventItem.DESCRIPTION + " " + eventImage;
     }
+
     private HttpResponse<String> addEvent() throws URISyntaxException, IOException, InterruptedException {
 
 
@@ -179,16 +196,17 @@ public class EventBean implements Serializable {
         System.out.println(response.body());
         return response;
     }
+
     public void removeEvent(int id) throws URISyntaxException, IOException, InterruptedException {
         for (Event i : todayEvents) {
-            if (i.id==id){
-                response= String.valueOf(removeEvent(i));
+            if (i.id == id) {
+                response = String.valueOf(removeEvent(i));
                 ObjectMapper objectMapper = new ObjectMapper();
             }
         }
         for (Event i : futureEvents) {
-            if (i.id==id){
-                response= String.valueOf(removeEvent(i));
+            if (i.id == id) {
+                response = String.valueOf(removeEvent(i));
                 ObjectMapper objectMapper = new ObjectMapper();
             }
         }
@@ -196,7 +214,7 @@ public class EventBean implements Serializable {
 
     }
 
-    private HttpResponse<String> removeEvent(Event removeEvent) throws URISyntaxException, IOException, InterruptedException  {
+    private HttpResponse<String> removeEvent(Event removeEvent) throws URISyntaxException, IOException, InterruptedException {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(removeEvent);
 
