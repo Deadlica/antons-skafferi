@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="sv"
+      xml:lang="sv">
+<h:head>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <h:outputStylesheet library="css" name="styles.css"/>
+   <h:outputScript library="js" name="admin.js"/>
+   <link rel="stylesheet"
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+</h:head>
+
+<h:body>
+   <f:view>
+      <ui:include src="nav.xhtml"/>
+      <h1>Event</h1>
+      <h:panelGroup layout="block">
+         <!-- ADD EVENT -->
+         <h:form styleClass="carte-add-item" enctype="multipart/form-data">
+            <h:outputLabel>Titel</h:outputLabel>
+            <h:inputText value="#{EventBean.eventItem.NAME}"/>
+            <h:outputLabel>Datum</h:outputLabel>
+            <h:inputText type="date" value="#{EventBean.eventItem.date}" >
+               <f:convertDateTime pattern="yyyy-MM-dd"/>
+            </h:inputText>
+            <h:outputLabel>Pris</h:outputLabel>
+            <h:inputText value="#{EventBean.eventItem.PRICE}" >
+               <f:convertNumber />
+            </h:inputText>
+            <h:outputLabel>Beskrivning</h:outputLabel>
+            <h:inputTextarea value="#{EventBean.eventItem.DESCRIPTION}"/>
+            <h:outputLabel>Bild</h:outputLabel>
+            <h:inputFile id="picture" value="#{EventBean.uploadedFile}" />
+            <h:commandButton value="Lägg till!" action="#{EventBean.addEvent()}"/>
+         </h:form>
+      </h:panelGroup>
+
+      <div class="all-event">
+         <ui:repeat value="#{EventBean.todayEvents}" var="item">
+            <h:panelGroup class="admin-events" >
+               <div class="event-main">
+                  <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
+                  <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
+                  <p><h:outputText value="#{item.DESCRIPTION}"/></p>
+                  <p><h:outputText value="#{item.date}"/></p>
+                  <h:commandButton value="Ta bort" action="#{EventBean.removeEvent(item.id)}"/>
+               </div>
+            </h:panelGroup>
+         </ui:repeat>
+         <ui:repeat value="#{EventBean.futureEvents}" var="item">
+            <h:panelGroup class="admin-events" id="item">
+               <div class="event-main">
+                  <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
+                  <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
+                  <p><h:outputText value="#{item.DESCRIPTION}"/></p>
+                  <p><h:outputText value="#{item.date}"/></p>
+                  <h:commandButton value="Ta bort" action="#{EventBean.removeEvent(item.id)}"/>
+               </div>
+            </h:panelGroup>
+         </ui:repeat>
+      </div>
+      <ui:include src="footer.xhtml"/>
+   </f:view>
+</h:body>
+</html>

@@ -27,7 +27,7 @@
             <h2>KOMMANDE EVENT</h2>
             <div class="comming-events">
                 <ui:repeat value="#{EventBean.futureEvents}" var="item">
-                    <h:panelGroup class="events" id="item">
+                    <h:panelGroup class="events" >
                         <h2 class="events"><h:outputText value="#{item.NAME}"/></h2>
                         <hr class="break-point"/>
                         <h2><h:outputText value="#{item.PRICE}"/> :-</h2>

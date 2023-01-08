@@ -3,8 +3,10 @@ package com.example.demo1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
+import jakarta.servlet.http.Part;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.ProxySelector;
 import java.net.URI;
@@ -12,7 +14,10 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,6 +26,9 @@ import java.util.List;
 @Named(value = "EventBean")
 @RequestScoped
 public class EventBean implements Serializable {
+
+    //Angelica path
+    String path = "C:\\Users\\angel\\OneDrive\\Dokument\\DT142G Applikationsutveckling i Java\\antons-skafferi\\src\\main\\webapp\\resources\\images\\";
     private URL location = new URL();
     private String link = location.getLink();
 
@@ -72,6 +80,8 @@ public class EventBean implements Serializable {
         }
     }
 
+    private Part uploadedFile;
+    private String fileName;
     Event eventItem = new Event();
 
     public Event getEventItem() {
@@ -84,6 +94,22 @@ public class EventBean implements Serializable {
 
     public EventBean() throws IOException, URISyntaxException, InterruptedException {
         setLists();
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public Part getUploadedFile() {
+        return uploadedFile;
+    }
+
+    public void setUploadedFile(Part uploadedFile) {
+        this.uploadedFile = uploadedFile;
     }
 
     List<Event> futureEvents = new ArrayList<>();
@@ -104,8 +130,6 @@ public class EventBean implements Serializable {
     public void setTodayEvents(List<Event> todayEvents) {
         this.todayEvents = todayEvents;
     }
-
-
     public void setLists() throws IOException, URISyntaxException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         Event[] list_arr = objectMapper.readValue(getJSON(), Event[].class);
@@ -119,7 +143,11 @@ public class EventBean implements Serializable {
             if (i.Date.equals(formatter.format(date))) {
                 todayEvents.add(i);
             } else {
-                futureEvents.add(i);
+                LocalDate localDate = LocalDate.parse(i.Date);
+                LocalDate now = LocalDate.now();
+                if(now.isBefore(localDate)) {
+                    futureEvents.add(i);
+                }
             }
 
         }
@@ -137,5 +165,24 @@ public class EventBean implements Serializable {
                 .build()
                 .send(request2, HttpResponse.BodyHandlers.ofString());
         return response.body();
+    }
+
+    public String addEvent() throws IOException {
+        fileName = uploadedFile.getSubmittedFileName();
+        InputStream inputStream = uploadedFile.getInputStream();
+
+        Files.copy(inputStream, Paths.get(path + fileName));
+
+        //Make HTTP request
+        return "";
+    }
+
+    public String removeEvent(int id) throws IOException {
+        //Find filename corresponding with id
+
+        Files.delete(Paths.get(path + fileName));
+
+        //Make HTTP request
+        return "";
     }
 }

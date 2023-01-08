@@ -30,14 +30,14 @@
                 <h:inputTextarea value="#{EventBean.eventItem.DESCRIPTION}"/>
                 <h:outputLabel>Photo</h:outputLabel>
                 <input type="file" id="myFile" name="filename"/>
-                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem(CarteBean.carteItem)}"/>
+                <h:commandButton value="Lägg till!" />
             </h:form>
         </h:panelGroup>
 
 
         <div class="all-event">
             <ui:repeat value="#{EventBean.todayEvents}" var="item">
-                <h:panelGroup class="admin-events" id="item">
+                <h:panelGroup class="admin-events" >
                     <h:graphicImage class="event-image"
                                     value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
                     <div class="event-main">
