@@ -3,31 +3,52 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:panelGroup class="admin-day">
-        <h3>date</h3>
+        <h3><h:outputText value="#{date}"/></h3>
         <hr/>
         <h:panelGroup class="admin-daily-lunch">
             <h:panelGroup class="admin-added-item">
-                <p>Kryddigt Renskav</p>
-                <i class="fa-solid fa-minus"/>
+                <ui:repeat value="#{list}" var="lunchItem">
+                    <h:form>
+                        <p><h:outputText value="#{lunchItem.dish.name}"/></p>
+                        <h:commandLink>
+                            <i class="fa-solid fa-trash-can carte-remove"/>
+                            <f:ajax event="click" execute="starters"
+                                    listener="#{LunchBean.putItem(lunchItem, list)}"
+                                    render="admin-added-item"/>
+                        </h:commandLink>
+
+                    </h:form>
+                </ui:repeat>
             </h:panelGroup>
         </h:panelGroup>
+
+
         <h:form>
             <div>
-                <label>Rätt</label>
-                <h:selectOneMenu value="#{FoodItemsBean}">
-                    <f:selectItems value="#{FoodItemsBean.list}"/>
+                <label>Lägg till</label>
+                <h:selectOneMenu value="#{LunchBean.lunchItem.dish.id}">
+                    <f:selectItems value="#{FoodItemsBean.list}" var="dish" itemValue="#{dish.id}"
+                                   itemLabel="#{dish.name}">
+                    </f:selectItems>
                 </h:selectOneMenu>
             </div>
+
+
             <div>
                 <label>Pris</label>
-                <h:inputText required="true" size='3'/>
+                <h:inputText required="true" size='3' value="#{LunchBean.lunchItem.price}"/>
             </div>
+
+
             <h:panelGroup layout="block">
                 <p><h:outputLabel for="desc">Beskrivning</h:outputLabel></p>
-                <h:inputTextarea required="true" id="desc"/>
+                <h:inputTextarea id="desc" value="#{LunchBean.lunchItem.description}"/>
             </h:panelGroup>
+
+
             <h:panelGroup layout="block" styleClass="admin-add-lunch" style="flex-direction: row-reverse">
-                <h:commandButton value="Spara"/>
+                <h:commandButton value="Lägg till!" action="#{LunchBean.postItem(date)}">
+                </h:commandButton>
             </h:panelGroup>
         </h:form>
     </h:panelGroup>

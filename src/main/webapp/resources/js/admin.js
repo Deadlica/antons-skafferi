@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     setWeeks()
-    setWeekDates()
+    // setWeekDates()
 });
 
 function getMondayOfCurrentWeek() {

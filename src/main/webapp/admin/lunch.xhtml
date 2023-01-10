@@ -8,23 +8,50 @@
             <h1>Dagens Lunch</h1>
             <h2 id="header_w1">Vecka 47</h2>
             <div class="admin-week" id="week1">
-                <ui:include src="lunch-day.xhtml"/>
-                <ui:include src="lunch-day.xhtml"/>
-                <ui:include src="lunch-day.xhtml"/>
-                <ui:include src="lunch-day.xhtml"/>
-                <ui:include src="lunch-day.xhtml"/>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[0]}"/>
+                    <ui:param name="list" value="#{LunchBean.monday}"/>
+                </ui:include>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[1]}"/>
+                    <ui:param name="list" value="#{LunchBean.tuesday}"/>
+                </ui:include>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[2]}"/>
+                    <ui:param name="list" value="#{LunchBean.wednesday}"/>
+                </ui:include>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[3]}"/>
+                    <ui:param name="list" value="#{LunchBean.thursday}"/>
+                </ui:include>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[4]}"/>
+                    <ui:param name="list" value="#{LunchBean.friday}"/>
+                </ui:include>
             </div>
             <h2 id="header_w2">Vecka 48</h2>
             <div class="admin-week" id="week2">
-                <ui:include src="lunch-day.xhtml"/>
-                <ui:include src="lunch-day.xhtml"/>
-                <ui:include src="lunch-day.xhtml"/>
-                <ui:include src="lunch-day.xhtml"/>
-                <ui:include src="lunch-day.xhtml"/>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[5]}"/>
+                    <ui:param name="list" value="#{LunchBean.nextMonday}"/>
+                </ui:include>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[6]}"/>
+                    <ui:param name="list" value="#{LunchBean.nextTuesday}"/>
+                </ui:include>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[7]}"/>
+                    <ui:param name="list" value="#{LunchBean.nextWednesday}"/>
+                </ui:include>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[8]}"/>
+                    <ui:param name="list" value="#{LunchBean.nextThursday}"/>
+                </ui:include>
+                <ui:include src="lunch-day.xhtml">
+                    <ui:param name="date" value="#{LunchBean.dates[9]}"/>
+                    <ui:param name="list" value="#{LunchBean.nextFriday}"/>
+                </ui:include>
             </div>
         </div>
-
-
     </div>
-
 </ui:composition>
