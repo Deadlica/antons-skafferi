@@ -11,8 +11,16 @@
                 <h:inputText type="text" id="food_name" value="#{FoodItemsBean.name}" required="true"
                              requiredMessage="Du måste skriva in ett namn"/>
 
-                <h:outputLabel for="category">Kategori (frivillig)</h:outputLabel>
-                <h:inputText type="text" id="category" value="#{FoodItemsBean.category}"/>
+                <h:outputLabel for="category">Välj kategori: </h:outputLabel>
+                <h:selectOneMenu value="#{FoodItemsBean.selectedCategory}" valueChangeListener="#{FoodItemsBean.updateListener}">
+                    <f:selectItems value="#{FoodItemsBean.categories}" />
+                    <f:ajax execute="@form" render="@form" />
+                </h:selectOneMenu>
+
+                <h:panelGroup layout="block" rendered="#{not FoodItemsBean.isOldCategory()}">
+                    <h:outputLabel for="category">Kategori (frivillig)</h:outputLabel>
+                    <h:inputText type="text" id="category" value="#{FoodItemsBean.category}"/>
+                </h:panelGroup>
 
                 <h:commandButton value="Lägg till">
                     <f:ajax event="click" execute="@form" render="@form :carte-admin :remove-dish"

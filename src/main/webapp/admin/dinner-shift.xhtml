@@ -12,7 +12,7 @@
                   <h:commandButton title="Ta bort pass" action="#{ShiftBean.deleteShift(shift.employee.ssn, true, weekday.date, shift.id)}" value="✖" />
                </h:panelGroup>
             </ui:repeat>
-            <h:panelGroup class="admin-form-add-staff" layout="block">
+            <h:panelGroup class="admin-form-add-staff" layout="block" rendered="#{not weekday.freeDinnerEmployees.isEmpty()}">
                <h:selectOneMenu value="#{weekday.selected}">
                   <f:selectItems value="#{weekday.freeDinnerEmployees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                </h:selectOneMenu>
