@@ -25,14 +25,14 @@
          <h:panelGroup layout="block" class="schedule-container">
             <h2 class="schedule-container-title">Lunchpersonal (11:00-14:00)</h2>
             <h:panelGroup layout="block" class="schedule-day-container" id="schedulelunch">
-               <ui:include src="get-lunch-staff.xhtml" />
+               <ui:include src="lunch-shift.xhtml" />
             </h:panelGroup>
          </h:panelGroup>
 
          <h:panelGroup layout="block" class="schedule-container">
             <h2 class="schedule-container-title">Middagspersonal (16:00-23:00)/(16:00-01:00)</h2>
             <h:panelGroup layout="block" class="schedule-day-container" id="scheduledinner">
-                  <ui:include src="get-dinner-staff.xhtml" />
+                  <ui:include src="dinner-shift.xhtml" />
             </h:panelGroup>
          </h:panelGroup>
       </h:form>
@@ -61,7 +61,7 @@
                   <f:validateRequired/>
                </h:inputText>
                <h:message for="last_name" errorStyle="color:red"/>
-               <h:outputLabel for="ssn">Personnummer</h:outputLabel>
+               <h:outputLabel for="ssn">Personnummer (YYYYMMDDXXXX)</h:outputLabel>
                <h:inputText id="ssn" value="#{ShiftBean.newEmployee.ssn}"
                             requiredMessage="Personnummer enligt YYYYMMDDXXXX">
                   <f:validateLength minimum="12" maximum="12"/>
