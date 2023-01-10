@@ -7,15 +7,15 @@
       <h:panelGroup class="admin-schedule" layout="block">
          <h3 id="admin-schedule-date">#{weekday.text}</h3>
          <h:panelGroup class="admin-schedule-day" layout="block">
-            <ui:repeat class="working-employees" value="#{weekday.lunchShift}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
+            <ui:repeat class="working-employees" value="#{weekday.shifts}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
                <h:panelGroup class="admin-schedule-workers">
                   <h4><h:outputText value="#{shift.employee.firstName} #{shift.employee.lastName}" id="shift"/></h4>
                   <h:commandButton title="Ta bort pass" action="#{ShiftBean.deleteShift(shift.employee.ssn, false, weekday.date, shift.id)}" value="✖" />
                </h:panelGroup>
             </ui:repeat>
-            <h:panelGroup class="admin-form-add-staff" layout="block" rendered="#{not weekday.freeLunchEmployees.isEmpty()}">
+            <h:panelGroup class="admin-form-add-staff" layout="block" rendered="#{not weekday.freeEmployees.isEmpty()}">
                <h:selectOneMenu value="#{weekday.selected}">
-                  <f:selectItems value="#{weekday.freeLunchEmployees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}" />
+                  <f:selectItems value="#{weekday.freeEmployees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}" />
                </h:selectOneMenu>
                <h:commandButton value="Lägg till"  action="#{ShiftBean.addShift(weekday.selected, false, weekday.date)}" />
             </h:panelGroup>
