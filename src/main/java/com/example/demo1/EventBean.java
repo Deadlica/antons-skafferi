@@ -149,6 +149,8 @@ public class EventBean implements Serializable {
 
 
     public void setLists() throws IOException, URISyntaxException, InterruptedException {
+        todayEvents.clear();
+        futureEvents.clear();
         ObjectMapper objectMapper = new ObjectMapper();
         Event[] list_arr = objectMapper.readValue(getFUTURE(), Event[].class);
         Event[] list_arr2 = objectMapper.readValue(getALL(), Event[].class);
@@ -216,6 +218,7 @@ public class EventBean implements Serializable {
 
     public void addNewEvent() throws URISyntaxException, IOException, InterruptedException {
         response += String.valueOf(addEvent()) + " " + eventItem.NAME + " " + eventItem.Date + " " + eventItem.DESCRIPTION + " " + eventImage;
+        setLists();
     }
 
     private HttpResponse<String> addEvent() throws URISyntaxException, IOException, InterruptedException {
