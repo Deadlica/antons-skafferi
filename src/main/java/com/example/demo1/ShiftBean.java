@@ -192,8 +192,9 @@ public class ShiftBean implements Serializable {
         this.date = date;
     }
 
-    public String getNow() {
-        return new Date().toString();
+    public Calendar getNow() {
+        Calendar c = Calendar.getInstance();
+        return c;
     }
 
     public void decreaseWeek() throws URISyntaxException, IOException, InterruptedException {
@@ -336,7 +337,8 @@ public class ShiftBean implements Serializable {
         c.set(Calendar.DAY_OF_WEEK, day);
         Date date = c.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d/M");
-        return dateFormat.format(date);
+        SimpleDateFormat todayFormat = new SimpleDateFormat("d/M");
+        return getNow().get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_MONTH) ? "Idag " + todayFormat.format(date) : dateFormat.format(date);
     }
 
     public String getDay(int day) {
