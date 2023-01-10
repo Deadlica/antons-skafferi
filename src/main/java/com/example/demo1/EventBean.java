@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Part;
 import jakarta.validation.Path;
 
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
+@WebServlet(name = "UploadServlet", urlPatterns = {"../pictures"})
 @Named(value = "EventBean")
 @RequestScoped
 @MultipartConfig(location = "src/main/webapp/resources/images/UPLOAD_DIRECTORY")
@@ -44,7 +45,7 @@ public class EventBean implements Serializable {
         eventImage = image;
         String fileName = eventItem.NAME + eventItem.Date + ".jpg";
         eventImage.write(fileName);
-        Files.copy(Paths.get(System.getProperty("com.sun.aas.instanceRoot") + "/generated/jsp/antons-skafferi-1.0-SNAPSHOT/" + fileName), Paths.get("/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/" + fileName), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(Paths.get(System.getProperty("com.sun.aas.instanceRoot") + "/generated/jsp/antons-skafferi-1.0-SNAPSHOT/" + fileName), Paths.get("C:\\Users\\angel\\OneDrive\\Bilder\\" + fileName), StandardCopyOption.REPLACE_EXISTING);
     }
 
     Part eventImage;
