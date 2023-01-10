@@ -40,9 +40,6 @@ public class EventBean implements Serializable {
 
     public void setImage(Part image) throws IOException {
         eventImage = image;
-        //String uploadPath = "/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/UPLOAD_DIRECTORY/";
-        //File uploadDir = new File(uploadPath);
-        //if (!uploadDir.exists()) uploadDir.mkdir();
         String fileName = eventItem.NAME + eventItem.Date + ".jpg";
         eventImage.write(fileName);
         Files.copy(Paths.get(System.getProperty("com.sun.aas.instanceRoot") + "/generated/jsp/antons-skafferi-1.0-SNAPSHOT/" + fileName), Paths.get("/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/" + fileName), StandardCopyOption.REPLACE_EXISTING);
@@ -221,8 +218,8 @@ public class EventBean implements Serializable {
                 ObjectMapper objectMapper = new ObjectMapper();
             }
         }
-
-
+        File eventImageFile = new File("../resources/images/" + eventItem.NAME + eventItem.Date + ".jpg");
+        eventImageFile.delete();
     }
 
     private HttpResponse<String> removeEvent(Event removeEvent) throws URISyntaxException, IOException, InterruptedException {

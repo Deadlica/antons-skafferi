@@ -20,8 +20,13 @@
 
 .admin-event-title {
     margin-top: 5%;
+    text-align: center;
 }
 
 .admin-event-add-button {
     margin-bottom: 3.5%;
+}
+
+.all-event {
+    margin-left: 20%;
 }

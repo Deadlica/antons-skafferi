@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="styles.css"/>
     <h:outputStylesheet library="css" name="adminEvent.css"/>
+    <h:outputStylesheet library="css" name="event.css"/>
     <h:outputScript library="js" name="admin.js"/>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
@@ -51,7 +52,8 @@
                             <p><h:outputText value="#{item.DESCRIPTION}"/></p>
                             <p><h:outputText value="#{item.date}"/></p>
                         </div>
-                        <div class="event-delete"></div>
+                        <h:graphicImage class="event-image"
+                                        value="../resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
                         <h:commandButton value="remove"
                                          actionListener="#{EventBean.removeEvent(item.id)}"></h:commandButton>
                     </h:panelGroup>
@@ -65,7 +67,7 @@
                             <p><h:outputText value="#{item.date}"/></p>
                         </div>
                         <h:graphicImage class="event-image"
-                                        value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
+                                        value="../resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
                         <h:commandButton value="remove"
                                          actionListener="#{EventBean.removeEvent(item.id)}"></h:commandButton>
                     </h:panelGroup>
