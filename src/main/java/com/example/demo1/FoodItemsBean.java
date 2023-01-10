@@ -25,7 +25,6 @@ import java.util.Objects;
 public class FoodItemsBean implements Serializable {
     private List<Dish> list;
     private List<String> categories = new ArrayList<>();
-
     String selectedCategory;
     private String name;
     private String category = "";
@@ -52,7 +51,7 @@ public class FoodItemsBean implements Serializable {
     }
 
     public void putCategories(){
-        categories.add("Ny kategori...");
+        categories.add("Ny sort...");
         for(Dish d : list){
             if(!d.getType().isEmpty()){
                 if(!categories.contains(d.getType())){
@@ -64,7 +63,7 @@ public class FoodItemsBean implements Serializable {
     }
 
     public boolean isOldCategory(){
-        return !selectedCategory.contains("Ny kategori...");
+        return !selectedCategory.contains("Ny sort...");
     }
 
     public void updateListener(ValueChangeEvent valueChangeEvent){

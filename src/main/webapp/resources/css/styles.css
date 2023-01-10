@@ -109,6 +109,37 @@ h2, h3, h4, p, label {
     color: black;
 }
 
+.open-hours{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1%;
+    margin: 1%;
+    margin-left: 4%;
+    background: var(--joel_brown);
+    opacity: 90%;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+
+.open-hours-column{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.open-hours-times{
+    display: flex;
+    flex-direction: column;
+}
+
+.open-hours h3, .open-hours h4{
+    text-align: center;
+}
+
 .header-img {
     background: url("#{resource['images/food.png']}") center;
     background-size: cover;
