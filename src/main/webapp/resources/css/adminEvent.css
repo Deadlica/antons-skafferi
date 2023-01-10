@@ -29,4 +29,61 @@
 
 .all-event {
     margin-left: 20%;
+    margin-right: 20%;
+}
+
+.event-all-components {
+    display: flex;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-radius: 48px;
+    background: #e0e0e0;
+    margin-bottom: 2%;
+    justify-content: space-between;
+}
+
+.event-information {
+    display: flex;
+    justify-content: space-between;
+}
+
+.event-remove-button {
+    appearance: none;
+    background-color: transparent;
+    border: 0.125em solid #1A1A1A;
+    border-radius: 0.9375em;
+    box-sizing: border-box;
+    color: #3B3B3B;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    min-height: 3.75em;
+    min-width: 0;
+    outline: none;
+    padding: 0.3em 1.1em;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+}
+
+
+.event-remove-button:hover {
+    color: #fff;
+    background-color: red;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+
+.event-remove-button:active {
+    box-shadow: none;
+    transform: translateY(0);
 }

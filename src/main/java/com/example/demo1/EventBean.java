@@ -22,6 +22,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -47,11 +49,15 @@ public class EventBean implements Serializable {
 
     Part eventImage;
 
+
     public static class Event {
+        LocalDate dateObj = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String todaysDate = dateObj.format(formatter);
         int id;
         String NAME;
         String DESCRIPTION;
-        String Date = "2023-01-07";
+        String Date = todaysDate;
         int PRICE;
 
         public int getId() {
@@ -109,6 +115,7 @@ public class EventBean implements Serializable {
         setLists();
     }
 
+    List<Event> allEvents = new ArrayList<>();
     List<Event> futureEvents = new ArrayList<>();
     List<Event> todayEvents = new ArrayList<>();
 
@@ -124,6 +131,14 @@ public class EventBean implements Serializable {
         this.futureEvents = futureEvents;
     }
 
+    public List<Event> getAllEvents() {
+        return allEvents;
+    }
+
+    public void setAllEvents(List<Event> allEvents) {
+        this.allEvents = allEvents;
+    }
+
     public List<Event> getTodayEvents() {
         return todayEvents;
     }
@@ -135,8 +150,10 @@ public class EventBean implements Serializable {
 
     public void setLists() throws IOException, URISyntaxException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Event[] list_arr = objectMapper.readValue(getJSON(), Event[].class);
+        Event[] list_arr = objectMapper.readValue(getFUTURE(), Event[].class);
+        Event[] list_arr2 = objectMapper.readValue(getALL(), Event[].class);
         List<Event> arr = new ArrayList<>(Arrays.asList(list_arr));
+        allEvents = new ArrayList<>(Arrays.asList(list_arr2));
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -153,9 +170,22 @@ public class EventBean implements Serializable {
 
     }
 
-    public String getJSON() throws IOException, InterruptedException, URISyntaxException {
+    public String getFUTURE() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event/upcoming"))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request2, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    public String getALL() throws IOException, InterruptedException, URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event"))
                 .GET()
                 .build();
         HttpResponse<String> response = HttpClient
@@ -185,7 +215,7 @@ public class EventBean implements Serializable {
     }
 
     public void addNewEvent() throws URISyntaxException, IOException, InterruptedException {
-        response = String.valueOf(addEvent()) + " " + eventItem.NAME + " " + eventItem.Date + " " + eventItem.DESCRIPTION + " " + eventImage;
+        response += String.valueOf(addEvent()) + " " + eventItem.NAME + " " + eventItem.Date + " " + eventItem.DESCRIPTION + " " + eventImage;
     }
 
     private HttpResponse<String> addEvent() throws URISyntaxException, IOException, InterruptedException {
@@ -206,20 +236,19 @@ public class EventBean implements Serializable {
     }
 
     public void removeEvent(int id) throws URISyntaxException, IOException, InterruptedException {
-        for (Event i : todayEvents) {
+        String temp = "";
+        for (Event i : allEvents) {
             if (i.id == id) {
                 response = String.valueOf(removeEvent(i));
                 ObjectMapper objectMapper = new ObjectMapper();
+                temp = i.NAME + i.Date;
             }
         }
-        for (Event i : futureEvents) {
-            if (i.id == id) {
-                response = String.valueOf(removeEvent(i));
-                ObjectMapper objectMapper = new ObjectMapper();
-            }
+
+        File eventImageFile = new File("/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/" + temp + ".jpg");
+        if (eventImageFile.exists()) {
+            eventImageFile.delete();
         }
-        File eventImageFile = new File("../resources/images/" + eventItem.NAME + eventItem.Date + ".jpg");
-        eventImageFile.delete();
     }
 
     private HttpResponse<String> removeEvent(Event removeEvent) throws URISyntaxException, IOException, InterruptedException {

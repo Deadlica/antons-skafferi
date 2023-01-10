@@ -42,34 +42,22 @@
 
         <div class="all-event">
             <h:form>
-                <ui:repeat value="#{EventBean.todayEvents}" var="item">
+                <ui:repeat value="#{EventBean.allEvents}" var="item">
                     <h:panelGroup class="admin-events" id="item">
-                        <h:graphicImage class="event-image"
-                                        value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
-                        <div class="event-main">
-                            <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
-                            <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
-                            <p><h:outputText value="#{item.DESCRIPTION}"/></p>
-                            <p><h:outputText value="#{item.date}"/></p>
+                        <div class="event-all-components">
+                            <div class="event-information">
+                                <div class="event-first-components">
+                                    <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
+                                    <p><h:outputText value="#{item.DESCRIPTION}"/></p>
+                                </div>
+                                <div class="event-second-components">
+                                    <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
+                                    <p><h:outputText value="#{item.date}"/></p>
+                                </div>
+                            </div>
+                            <h:commandButton class="event-remove-button" value="remove"
+                                             actionListener="#{EventBean.removeEvent(item.id)}"></h:commandButton>
                         </div>
-                        <h:graphicImage class="event-image"
-                                        value="../resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
-                        <h:commandButton value="remove"
-                                         actionListener="#{EventBean.removeEvent(item.id)}"></h:commandButton>
-                    </h:panelGroup>
-                </ui:repeat>
-                <ui:repeat value="#{EventBean.futureEvents}" var="item">
-                    <h:panelGroup class="admin-events" id="item">
-                        <div class="event-main">
-                            <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
-                            <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
-                            <p><h:outputText value="#{item.DESCRIPTION}"/></p>
-                            <p><h:outputText value="#{item.date}"/></p>
-                        </div>
-                        <h:graphicImage class="event-image"
-                                        value="../resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
-                        <h:commandButton value="remove"
-                                         actionListener="#{EventBean.removeEvent(item.id)}"></h:commandButton>
                     </h:panelGroup>
                 </ui:repeat>
             </h:form>
