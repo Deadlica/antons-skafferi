@@ -10,7 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class API {
-    private static final URI link; // Home
+    public static final URI link; // Home
 
     static {
         try {
@@ -22,7 +22,6 @@ public class API {
         }
     }
 
-    //this.link = "31.209.47.252"; //Can
     public static HttpResponse<String> doPost(String apiEndpoint, Object obj) throws IOException, InterruptedException {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(obj);

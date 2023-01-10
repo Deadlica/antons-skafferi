@@ -20,7 +20,24 @@ import java.util.List;
 @Named(value = "CarteBean")
 @ViewScoped
 public class CarteBean implements Serializable {
+    CarteItem carteItem = new CarteItem();
+    List<Dish> allDishes = new ArrayList<>();
 
+
+    List<Dish> unusedDishes = new ArrayList<>();
+    List<CarteItem> starters = new ArrayList<>();
+    List<CarteItem> mainCourses = new ArrayList<>();
+    List<CarteItem> desserts = new ArrayList<>();
+    List<CarteItem> drinks = new ArrayList<>();
+    URI uri;
+
+    {
+        try {
+            uri = new URI("http://" + new URL().getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static class CarteItem {
         String category = "Förrätt";
@@ -77,68 +94,9 @@ public class CarteBean implements Serializable {
     public CarteBean() throws IOException, InterruptedException, URISyntaxException {
         setLists();
         setAllDishes();
+        APIUnusedDishes();
     }
 
-
-    URI uri;
-
-    {
-        try {
-            // uri = new URI("http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
-            uri = new URI("http://" + new URL().getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/carte");
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public CarteItem getCarteItem() {
-        return carteItem;
-    }
-
-    public void setCarteItem(CarteItem carteItem) {
-        this.carteItem = carteItem;
-    }
-
-    CarteItem carteItem = new CarteItem();
-
-
-    List<Dish> allDishes = new ArrayList<>();
-    List<CarteItem> starters = new ArrayList<>();
-    List<CarteItem> mainCourses = new ArrayList<>();
-    List<CarteItem> desserts = new ArrayList<>();
-    List<CarteItem> drinks = new ArrayList<>();
-
-    public List<CarteItem> getStarters() {
-        return starters;
-    }
-
-    public void setStarters(List<CarteItem> starters) {
-        this.starters = starters;
-    }
-
-    public List<CarteItem> getMainCourses() {
-        return mainCourses;
-    }
-
-    public void setMainCourses(List<CarteItem> mainCourses) {
-        this.mainCourses = mainCourses;
-    }
-
-    public List<CarteItem> getDesserts() {
-        return desserts;
-    }
-
-    public void setDesserts(List<CarteItem> desserts) {
-        this.desserts = desserts;
-    }
-
-    public List<CarteItem> getDrinks() {
-        return drinks;
-    }
-
-    public void setDrinks(List<CarteItem> drinks) {
-        this.drinks = drinks;
-    }
 
     public void setLists() throws IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -179,10 +137,6 @@ public class CarteBean implements Serializable {
         return null;
     }
 
-    public void setAllDishes() throws IOException, URISyntaxException, InterruptedException {
-        FoodItemsBean fib = new FoodItemsBean();
-        allDishes = fib.getList();
-    }
 
     public String getJSON() throws IOException, InterruptedException {
         HttpRequest request2 = HttpRequest.newBuilder()
@@ -214,13 +168,49 @@ public class CarteBean implements Serializable {
         }
     }
 
+    public void deleteId(int id, List<CarteItem> list) {
+        for (CarteItem i : list) {
+            if (i.dish.getId() == id) {
+                list.remove(i);
+                break;
+            }
+        }
+    }
+
+    public void APIUnusedDishes() throws IOException, InterruptedException, URISyntaxException {
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(new URI("http://" + new URL().getLink() + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/dish/available"))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient
+                .newBuilder()
+                .proxy(ProxySelector.getDefault())
+                .build()
+                .send(request2, HttpResponse.BodyHandlers.ofString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        Dish[] list_arr = objectMapper.readValue(response.body(), Dish[].class);
+        unusedDishes = new ArrayList<>(Arrays.asList(list_arr));
+    }
+
     public HttpResponse<String> deleteItem(int id) throws IOException, InterruptedException {
         idPOD object = new idPOD(id);
-        return API.doPut("carte", object);
+        unusedDishes.add(dishFromId(id));
+        HttpResponse<String> response = API.doPut("carte", object);
+        deleteId(id, starters);
+        deleteId(id, mainCourses);
+        deleteId(id, desserts);
+        deleteId(id, drinks);
+        return response;
     }
 
     public HttpResponse<String> addItem() throws IOException, InterruptedException {
         dishAttributesFromId(carteItem.dish.getId());
+        for (Dish d : unusedDishes) {
+            if (d.getId() == carteItem.dish.getId()) {
+                unusedDishes.remove(d);
+                break;
+            }
+        }
         HttpResponse<String> response = API.doPost("carte", carteItem);
         resetLists();
         return response;
@@ -233,5 +223,65 @@ public class CarteBean implements Serializable {
         drinks.clear();
         setLists();
     }
+
+    //-----------------Getters and Setters-----------------//
+    public List<Dish> getUnusedDishes() {
+        return unusedDishes;
+    }
+
+    public void setUnusedDishes(List<Dish> unusedDishes) {
+        this.unusedDishes = unusedDishes;
+    }
+
+    public List<Dish> getAllDishes() {
+        return allDishes;
+    }
+
+    public void setAllDishes() throws IOException, InterruptedException {
+        FoodItemsBean fib = new FoodItemsBean();
+        allDishes = fib.getList();
+    }
+
+    public CarteItem getCarteItem() {
+        return carteItem;
+    }
+
+    public void setCarteItem(CarteItem carteItem) {
+        this.carteItem = carteItem;
+    }
+
+    public List<CarteItem> getStarters() {
+        return starters;
+    }
+
+    public void setStarters(List<CarteItem> starters) {
+        this.starters = starters;
+    }
+
+    public List<CarteItem> getMainCourses() {
+        return mainCourses;
+    }
+
+    public void setMainCourses(List<CarteItem> mainCourses) {
+        this.mainCourses = mainCourses;
+    }
+
+    public List<CarteItem> getDesserts() {
+        return desserts;
+    }
+
+    public void setDesserts(List<CarteItem> desserts) {
+        this.desserts = desserts;
+    }
+
+    public List<CarteItem> getDrinks() {
+        return drinks;
+    }
+
+    public void setDrinks(List<CarteItem> drinks) {
+        this.drinks = drinks;
+    }
+
+
 }
 

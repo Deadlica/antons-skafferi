@@ -1,0 +1,12 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:repeat value="#{ShiftBean.employees}" var="e">
+        <h:panelGroup layout="block" styleClass="all-staff">
+            <h3><h:outputText id="firstName" value="#{e.firstName} " /><h:outputText id="lastName" value="#{e.lastName}" /></h3>
+            <p><h:outputText id="ssn" value="#{e.ssn}" /></p>
+            <p><h:outputText id="email" value="#{e.email}" /></p>
+            <p><h:outputText id="phoneNumber" value="#{e.phoneNumber}" /></p>
+        </h:panelGroup>
+    </ui:repeat>
+</ui:composition>

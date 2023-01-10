@@ -129,7 +129,7 @@ public class BookingBean implements Serializable {
 
             if (verifyInputs()) {
                 addBooking();
-                receivingMessage = "bokat!";
+                receivingMessage = "bokat namn:"+infobooking.firstName+" "+infobooking.lastName+" datum:"+infobooking.date;
                 infobooking.date = "0000-00-00";
                 return;
             }

@@ -105,6 +105,9 @@
     background-color: white;
     opacity: 20%;
 }
+.full{
+    background-color: red;
+}
 
 .booking-inputs {
     display: grid;
