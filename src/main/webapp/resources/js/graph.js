@@ -63,11 +63,13 @@ async function generateGraph() {
     maxValue = findMapMax(dates);
     const graph = document.getElementById("graph");
     dates.forEach(function (value, key) {
-        graph.append(createBar(key, value));
-        totalSales += value
+        graph.append(createBar(key, value))
+        totalSales += parseInt(value)
     })
     let p = document.getElementById("total_sales_text")
     p.innerText = "Total försäljning under månaden: " + totalSales.toString() + "kr";
+
+
 }
 
 function getDaysInMonth() {
