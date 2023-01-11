@@ -6,7 +6,7 @@
     <div class="admin-main">
         <div class="admin-lunch">
             <h1>Dagens Lunch</h1>
-            <h2 id="header_w1">Vecka 47</h2>
+            <h2 id="header_w1" style="padding-bottom: 1em; font-size: xx-large">Vecka 47</h2>
             <div class="admin-week" id="week1">
                 <ui:include src="lunch-day.xhtml">
                     <ui:param name="date" value="#{LunchBean.dates[0]}"/>
@@ -29,7 +29,7 @@
                     <ui:param name="list" value="#{LunchBean.friday}"/>
                 </ui:include>
             </div>
-            <h2 id="header_w2">Vecka 48</h2>
+            <h2 id="header_w2" style="padding: 1em 0; font-size: xx-large">Vecka 48</h2>
             <div class="admin-week" id="week2">
                 <ui:include src="lunch-day.xhtml">
                     <ui:param name="date" value="#{LunchBean.dates[5]}"/>

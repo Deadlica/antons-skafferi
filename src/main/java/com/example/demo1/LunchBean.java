@@ -16,10 +16,12 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Named(value = "LunchBean")
@@ -127,6 +129,11 @@ public class LunchBean implements Serializable {
             }
         }
         return null;
+    }
+
+    public String getWeekdayFromDate(String date) {
+        String day = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("sv", "SE"));
+        return day.substring(0, 1).toUpperCase() + day.substring(1);
     }
 
     public void setLists() throws IOException, URISyntaxException, InterruptedException {

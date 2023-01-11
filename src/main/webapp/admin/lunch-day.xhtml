@@ -3,12 +3,13 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:panelGroup class="admin-day">
-        <h3><h:outputText value="#{date}"/></h3>
+        <h3 style="font-size: x-large"><h:outputText value="#{LunchBean.getWeekdayFromDate(date)}"/></h3>
         <hr/>
+        <h4 style="font-weight: bolder; font-size: 1.2em">Tillagda Rätter</h4>
         <h:panelGroup class="admin-daily-lunch">
             <h:panelGroup class="admin-added-item">
                 <ui:repeat value="#{list}" var="lunchItem">
-                    <h:form>
+                    <h:form style="display: flex; width: 100%; justify-content: space-between">
                         <p><h:outputText value="#{lunchItem.dish.name}"/></p>
                         <h:commandLink>
                             <i class="fa-solid fa-trash-can carte-remove"/>
@@ -22,10 +23,11 @@
             </h:panelGroup>
         </h:panelGroup>
 
+        <h:form style="padding-top: 1em">
+            <h4 style="font-weight: bolder; font-size: 1.2em">Lägg till</h4>
 
-        <h:form>
             <div>
-                <label>Lägg till</label>
+                <label>Välj Rätt</label><br/>
                 <h:selectOneMenu value="#{LunchBean.lunchItem.dish.id}">
                     <f:selectItems value="#{FoodItemsBean.list}" var="dish" itemValue="#{dish.id}"
                                    itemLabel="#{dish.name}">
@@ -35,7 +37,7 @@
 
 
             <div>
-                <label>Pris</label>
+                <label>Pris</label><br/>
                 <h:inputText required="true" size='3' value="#{LunchBean.lunchItem.price}"/>
             </div>
 
@@ -45,11 +47,13 @@
                 <h:inputTextarea id="desc" value="#{LunchBean.lunchItem.description}"/>
             </h:panelGroup>
 
-
-            <h:panelGroup layout="block" styleClass="admin-add-lunch" style="flex-direction: row-reverse">
-                <h:commandButton value="Lägg till!" action="#{LunchBean.postItem(date)}">
+            <div style="display: flex; flex-direction: row-reverse">
+                <h:commandButton
+                        style="background: var(--joel_brown); border: none; padding: 5%; font-family: Cormorant, serif; color: white; cursor: pointer;"
+                        value="Lägg till!"
+                        action="#{LunchBean.postItem(date)}">
                 </h:commandButton>
-            </h:panelGroup>
+            </div>
         </h:form>
     </h:panelGroup>
 </ui:composition>
