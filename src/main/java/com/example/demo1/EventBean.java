@@ -42,9 +42,11 @@ public class EventBean implements Serializable {
 
     public void setImage(Part image) throws IOException {
         eventImage = image;
-        String fileName = eventItem.NAME + eventItem.Date + ".jpg";
-        eventImage.write(fileName);
-        Files.copy(Paths.get(System.getProperty("com.sun.aas.instanceRoot") + "/generated/jsp/antons-skafferi-1.0-SNAPSHOT/" + fileName), Paths.get("/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/" + fileName), StandardCopyOption.REPLACE_EXISTING);
+        if (!(eventImage == null)) {
+            String fileName = eventItem.NAME + eventItem.Date + ".jpg";
+            eventImage.write(fileName);
+            Files.copy(Paths.get(System.getProperty("com.sun.aas.instanceRoot") + "/generated/jsp/antons-skafferi-1.0-SNAPSHOT/" + fileName), Paths.get("/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/" + fileName), StandardCopyOption.REPLACE_EXISTING);
+        }
     }
 
     Part eventImage;

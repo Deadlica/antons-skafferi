@@ -10,7 +10,6 @@
             <h2 class="sub-title" id="sub-title-today-event">Dagens events</h2>
             <hr class="navigation-line-break"/>
             <ui:repeat value="#{EventBean.todayEvents}" var="item">
-
                 <h:panelGroup class="events" id="item">
                     <div class="event-main">
                         <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
@@ -21,8 +20,8 @@
                     <h:graphicImage class="event-image"
                                     value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
                 </h:panelGroup>
+                <hr class="navigation-line-break-inner"/>
             </ui:repeat>
-            <hr class="navigation-line-break-inner"/>
         </div>
 
 
