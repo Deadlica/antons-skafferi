@@ -47,7 +47,6 @@ public class BookingBean implements Serializable {
         @Inject
         CalendarBean calendarBean;
         public void makeBooking() throws URISyntaxException, IOException, InterruptedException {
-            calendarBean.newBookingMade();
             receivingMessage="Error: ";
             if (verifyInputs()) {
                 receivingMessage = "bokat namn:"+infobooking.firstName+" "+infobooking.lastName+" datum:"+infobooking.date+" time:"+infobooking.time;
@@ -60,12 +59,14 @@ public class BookingBean implements Serializable {
 
                 if (!((String) jsonMap.get("firstName")).equals("Booking has been made!"))
                 {
-                    receivingMessage="Error: Ett fel uppstod refresha sidan!";
+                    receivingMessage="Error: datum fullbokat!";
                 }
 
 
                 infobooking.date = "0000-00-00";
             }
+            calendarBean.newBookingMade();
+
         }
 
         private boolean verifyInputs() {
