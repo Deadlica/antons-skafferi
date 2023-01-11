@@ -10,6 +10,8 @@
 <h:head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="styles.css"/>
+    <h:outputStylesheet library="css" name="adminEvent.css"/>
+    <h:outputStylesheet library="css" name="event.css"/>
     <h:outputScript library="js" name="admin.js"/>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
@@ -18,49 +20,49 @@
 <h:body>
     <f:view>
         <ui:include src="nav.xhtml"/>
-        <h1>Event</h1>
         <h:panelGroup layout="block">
             <!-- ADD EVENT -->
-            <h:form styleClass="carte-add-item">
+            <h:form styleClass="carte-add-item" class="event-add" enctype="multipart/form-data">
+                <h1 class="admin-event-title">ADD AN EVENT</h1>
                 <h:outputLabel>Titel</h:outputLabel>
-                <h:inputText value="#{EventBean.eventItem.NAME}"/>
+                <h:inputText id="given-event-name" value="#{EventBean.eventItem.NAME}"/>
                 <h:outputLabel>Pris</h:outputLabel>
-                <h:inputText value="#{EventBean.eventItem.PRICE}"/>
+                <h:inputText id="given-event-price" value="#{EventBean.eventItem.PRICE}"/>
                 <h:outputLabel>Beskrivning</h:outputLabel>
-                <h:inputTextarea value="#{EventBean.eventItem.DESCRIPTION}"/>
+                <h:inputTextarea id="given-event-description" value="#{EventBean.eventItem.DESCRIPTION}"/>
+                <h:outputLabel>Date</h:outputLabel>
+                <h:inputTextarea id="given-event-date" value="#{EventBean.eventItem.date}"/>
                 <h:outputLabel>Photo</h:outputLabel>
-                <input type="file" id="myFile" name="filename"/>
-                <h:commandButton value="Lägg till!" action="#{CarteBean.addItem(CarteBean.carteItem)}"/>
+                <h:inputFile id="given-event-image" value="#{EventBean.image}"></h:inputFile>
+                <h:commandButton value="Lägg till!" action="#{EventBean.addNewEvent()}" class="admin-event-add-button">
+
+                </h:commandButton>
+                <h:outputLabel>#{EventBean.response}</h:outputLabel>
             </h:form>
         </h:panelGroup>
 
 
         <div class="all-event">
-            <ui:repeat value="#{EventBean.todayEvents}" var="item">
-                <h:panelGroup class="admin-events" id="item">
-                    <h:graphicImage class="event-image"
-                                    value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
-                    <div class="event-main">
-                        <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
-                        <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
-                        <p><h:outputText value="#{item.DESCRIPTION}"/></p>
-                        <p><h:outputText value="#{item.date}"/></p>
-                    </div>
-                    <div class="event-delete"></div>
-                </h:panelGroup>
-            </ui:repeat>
-            <ui:repeat value="#{EventBean.futureEvents}" var="item">
-                <h:panelGroup class="admin-events" id="item">
-                    <div class="event-main">
-                        <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
-                        <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
-                        <p><h:outputText value="#{item.DESCRIPTION}"/></p>
-                        <p><h:outputText value="#{item.date}"/></p>
-                    </div>
-                    <h:graphicImage class="event-image"
-                                    value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
-                </h:panelGroup>
-            </ui:repeat>
+            <h:form id="events-form">
+                <ui:repeat id="testing" value="#{EventBean.allEvents}" var="item">
+                    <h:panelGroup class="admin-events" id="item">
+                        <div class="event-all-components">
+                            <div class="event-information">
+                                <h2 class="event-name">NAMN: <h:outputText id="event-name-id" value="#{item.NAME}"/>
+                                </h2>
+                                <h2>BESKRIVNING: <h:outputText id="event-description-id" value="#{item.DESCRIPTION}"/>
+                                </h2>
+                                <h2>PRIS: <h:outputText id="event-price-id" value="#{item.PRICE}"/> :-</h2>
+                                <h2>DATUM: <h:outputText id="event-date-id" value="#{item.date}"/></h2>
+                            </div>
+                            <h:commandButton class="event-remove-button" value="remove"
+                                             actionListener="#{EventBean.removeEvent(item.id)}">
+                                <f:ajax execute="@form" render="@form"/>
+                            </h:commandButton>
+                        </div>
+                    </h:panelGroup>
+                </ui:repeat>
+            </h:form>
         </div>
         <ui:include src="footer.xhtml"/>
     </f:view>
