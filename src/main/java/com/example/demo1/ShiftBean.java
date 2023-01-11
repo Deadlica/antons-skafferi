@@ -5,6 +5,7 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.ValueChangeEvent;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -152,6 +153,7 @@ public class ShiftBean implements Serializable {
     private String date;
     private int week;
     private int year;
+    private long newSSN;
     private Employee selectedDeletedEmployee;
     private Employee selectedEditedEmployee;
     Employee newEmployee = new Employee();
@@ -503,6 +505,7 @@ public class ShiftBean implements Serializable {
     }
 
     public String addStaff() throws URISyntaxException, IOException, InterruptedException {
+        newEmployee.setSsn(String.valueOf(newSSN));
         employees.add(newEmployee);
         HttpClient client = HttpClient.newHttpClient();
         if (isRetired(newEmployee.getSsn())) {
@@ -583,5 +586,13 @@ public class ShiftBean implements Serializable {
     }
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public long getNewSSN() {
+        return newSSN;
+    }
+
+    public void setNewSSN(long newSSN) {
+        this.newSSN = newSSN;
     }
 }

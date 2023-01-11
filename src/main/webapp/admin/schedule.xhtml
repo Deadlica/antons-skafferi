@@ -62,7 +62,7 @@
                </h:inputText>
                <h:message for="last_name" errorStyle="color:red"/>
                <h:outputLabel for="ssn">Personnummer (YYYYMMDDXXXX)</h:outputLabel>
-               <h:inputText id="ssn" value="#{ShiftBean.newEmployee.ssn}"
+               <h:inputText id="ssn" value="#{ShiftBean.newSSN}"
                             requiredMessage="Personnummer enligt YYYYMMDDXXXX">
                   <f:validateLength minimum="12" maximum="12"/>
                </h:inputText>
