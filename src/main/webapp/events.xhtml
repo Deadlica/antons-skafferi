@@ -4,38 +4,46 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
-
     <div class="main" id="event_loc">
-<h1>EVENT</h1>
+        <h1 class="title" id="title-event">EVENTS</h1>
         <div class="today-event">
+            <h2 class="sub-title" id="sub-title-today-event">Dagens events</h2>
+            <hr class="navigation-line-break"/>
             <ui:repeat value="#{EventBean.todayEvents}" var="item">
 
                 <h:panelGroup class="events" id="item">
-                    <h2 class="events"><h:outputText value="#{item.NAME}"/></h2>
-                    <hr class="break-point"/>
-                    <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
-                    <p><h:outputText value="#{item.DESCRIPTION}"/></p>
-                    <p><h:outputText value="#{item.date}"/></p>
-                </h:panelGroup>
-            </ui:repeat>
-            <img src="#{resource['images/random.png']}"/>
-            </div>
-
-
-
-        <div class="comming-event">
-            <h2>KOMMANDE EVENT</h2>
-            <div class="comming-events">
-                <ui:repeat value="#{EventBean.futureEvents}" var="item">
-                    <h:panelGroup class="events" id="item">
-                        <h2 class="events"><h:outputText value="#{item.NAME}"/></h2>
-                        <hr class="break-point"/>
+                    <div class="event-main">
+                        <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
                         <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
                         <p><h:outputText value="#{item.DESCRIPTION}"/></p>
                         <p><h:outputText value="#{item.date}"/></p>
-                    </h:panelGroup>
-                </ui:repeat>
+                    </div>
+                    <h:graphicImage class="event-image"
+                                    value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
+                </h:panelGroup>
+            </ui:repeat>
+            <hr class="navigation-line-break-inner"/>
         </div>
-    </div>
+
+
+        <div class="comming-event">
+            <div class="comming-events">
+                <h2 class="sub-title" id="sub-title-coming-event">Kommande events</h2>
+                <hr class="navigation-line-break"/>
+                <ui:repeat value="#{EventBean.futureEvents}" var="item">
+                    <h:panelGroup class="events" id="item">
+                        <div class="event-main">
+                            <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
+                            <h2><h:outputText value="#{item.PRICE}"/> :-</h2>
+                            <p><h:outputText value="#{item.DESCRIPTION}"/></p>
+                            <p><h:outputText value="#{item.date}"/></p>
+                        </div>
+                        <h:graphicImage class="event-image"
+                                        value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
+                    </h:panelGroup>
+                    <hr class="navigation-line-break-inner"/>
+                </ui:repeat>
+            </div>
+        </div>
     </div>
 </ui:composition>
