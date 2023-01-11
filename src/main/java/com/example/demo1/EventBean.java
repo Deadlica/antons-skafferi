@@ -28,10 +28,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Named(value = "EventBean")
 @RequestScoped
-@MultipartConfig(location = "src/main/webapp/resources/images/UPLOAD_DIRECTORY")
+//@MultipartConfig(location = "src/main/webapp/resources/images/UPLOAD_DIRECTORY")
 public class EventBean implements Serializable {
     private URL location = new URL();
     private String link = location.getLink();
@@ -40,13 +41,8 @@ public class EventBean implements Serializable {
         return eventImage;
     }
 
-    public void setImage(Part image) throws IOException {
+    public void setImage(Part image) throws IOException, URISyntaxException, InterruptedException {
         eventImage = image;
-        if (!(eventImage == null)) {
-            String fileName = eventItem.NAME + eventItem.Date + ".jpg";
-            eventImage.write(fileName);
-            Files.copy(Paths.get(System.getProperty("com.sun.aas.instanceRoot") + "/generated/jsp/antons-skafferi-1.0-SNAPSHOT/" + fileName), Paths.get("/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/" + fileName), StandardCopyOption.REPLACE_EXISTING);
-        }
     }
 
     Part eventImage;
@@ -126,7 +122,10 @@ public class EventBean implements Serializable {
     }
 
     public String getImageName(String name, String date) {
-        return name + date;
+        String filename = name.replace(" ", "-");
+        filename = filename.toLowerCase();
+        filename += date + ".jpg";
+        return filename;
     }
 
     public void setFutureEvents(List<Event> futureEvents) {
@@ -219,13 +218,14 @@ public class EventBean implements Serializable {
     }
 
     public void addNewEvent() throws URISyntaxException, IOException, InterruptedException {
-        response += String.valueOf(addEvent()) + " " + eventItem.NAME + " " + eventItem.Date + " " + eventItem.DESCRIPTION + " " + eventImage;
+        addEvent();
+        if (eventImage != null) {
+            uploadImage();
+        }
         setLists();
     }
 
     private HttpResponse<String> addEvent() throws URISyntaxException, IOException, InterruptedException {
-
-
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(eventItem);
 
@@ -240,20 +240,64 @@ public class EventBean implements Serializable {
         return response;
     }
 
+    public static class ImageContent {
+        private byte[] imageBytes;
+        private String imageName;
+
+        public byte[] getImageBytes() {
+            return imageBytes;
+        }
+
+        public void setImageBytes(byte[] imageBytes) {
+            this.imageBytes = imageBytes;
+        }
+
+        public String getImageName() {
+            return imageName;
+        }
+
+        public void setImageName(String imageName) {
+            this.imageName = imageName;
+        }
+    }
+
+    private HttpResponse<String> uploadImage() throws URISyntaxException, IOException, InterruptedException {
+        ImageContent imageContent = new ImageContent();
+        imageContent.setImageName(getImageName(eventItem.NAME, eventItem.Date));
+        imageContent.setImageBytes(eventImage.getInputStream().readAllBytes());
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(imageContent);
+        response = json;
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event/upload"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        return response;
+    }
+
     public void removeEvent(int id) throws URISyntaxException, IOException, InterruptedException {
         String temp = "";
-        for (Event i : allEvents) {
-            if (i.id == id) {
-                response = String.valueOf(removeEvent(i));
-                ObjectMapper objectMapper = new ObjectMapper();
-                temp = i.NAME + i.Date;
+        for (int i = 0; i < allEvents.size(); i++) {
+            if (allEvents.get(i).id == id) {
+                EventBean.Event e = allEvents.get(i);
+                response = String.valueOf(removeEvent(e));
+                temp = getImageName(e.NAME, e.Date);
+                allEvents.remove(i);
+                break;
             }
         }
 
-        File eventImageFile = new File("/Users/cankupeli/IdeaProjects/antons-skafferi/src/main/webapp/resources/images/" + temp + ".jpg");
-        if (eventImageFile.exists()) {
-            eventImageFile.delete();
-        }
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/event/image"))
+                .version(HttpClient.Version.HTTP_2)
+                .header("Content-Type", "text/plain")
+                .PUT(HttpRequest.BodyPublishers.ofString(temp))
+                .build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
     private HttpResponse<String> removeEvent(Event removeEvent) throws URISyntaxException, IOException, InterruptedException {
@@ -267,7 +311,6 @@ public class EventBean implements Serializable {
                 .PUT(HttpRequest.BodyPublishers.ofString(json))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
         return response;
 
 
