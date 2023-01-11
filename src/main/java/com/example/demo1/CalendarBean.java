@@ -2,6 +2,7 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ import java.util.List;
 
 
 @Named(value = "CalendarBean")
-@ApplicationScoped
+@ViewScoped
 public class CalendarBean implements Serializable {
 
     private URL location = new URL();
@@ -71,7 +72,7 @@ public class CalendarBean implements Serializable {
         this.bookingBean = bookingBean;
     }
 
-    BookingBean.infoBooking[] holdAllBookings;
+    InfoBooking[] holdAllBookings;
 
     private int shownMonth;
     private int monthIndex =0;
@@ -82,6 +83,16 @@ public class CalendarBean implements Serializable {
     private int thisDay;
     private int thisMonth;
     private int thisYear;
+    String response="";
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
     private int[] days_of_month={31,getFebDays(shownYear),31,30,31,30,31,31,30,31,30,31};
 
     public CalendarBean() throws IOException, URISyntaxException, InterruptedException {
@@ -95,7 +106,7 @@ public class CalendarBean implements Serializable {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-        holdAllBookings= objectMapper.readValue(getJsonBookings(), BookingBean.infoBooking[].class);
+        holdAllBookings= objectMapper.readValue(getJsonBookings(), InfoBooking[].class);
         startDayIndex = new Date(shownYear, shownMonth -1, 0).getDay();
         generateCalendar();
     }
@@ -113,11 +124,11 @@ public class CalendarBean implements Serializable {
             generateCalendar();
         }
     }
-    public void ConfirmAndSubmit() throws URISyntaxException, IOException, InterruptedException {
-        bookingBean.makeBooking();
+    public void newBookingMade() throws URISyntaxException, IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
-        holdAllBookings= objectMapper.readValue(getJsonBookings(), BookingBean.infoBooking[].class);
+        holdAllBookings= objectMapper.readValue(getJsonBookings(), InfoBooking[].class);
         generateCalendar();
+
     }
 
     public void prevMonth(){
@@ -220,7 +231,7 @@ public class CalendarBean implements Serializable {
 
     private int counting(int yearCount, int monthCount, int dayCount)  {
         int amount=0;
-        for (BookingBean.infoBooking var:holdAllBookings) {
+        for (InfoBooking var:holdAllBookings) {
             String[] holder = String.valueOf(var.date).split("-", 3);
 
             if(Integer.parseInt(holder[0]) == yearCount&&Integer.parseInt(holder[1]) == monthCount&&Integer.parseInt(holder[2]) == dayCount){

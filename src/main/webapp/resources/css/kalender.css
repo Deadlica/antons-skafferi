@@ -77,7 +77,9 @@
 .month-picker {
     display: flex;
     align-items: center;
-    padding: 0 35%;
+    justify-content: space-between;
+    padding: 0% 20%;
+
 }
 
 .month-change {
@@ -85,8 +87,7 @@
     border-radius: 50%;
     display: grid;
     cursor: pointer;
-    padding-left: 20%;
-    padding-right: 20%;
+
 
 }
 

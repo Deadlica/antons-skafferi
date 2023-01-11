@@ -2,17 +2,16 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.ProxySelector;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDate;
 
 @Named(value = "BookingBean")
 @RequestScoped
@@ -24,95 +23,15 @@ public class BookingBean implements Serializable {
     }
 
 
-        public static class infoBooking {
-            String date = "0000-00-00";
-            String firstName;
-            int id = 1;
-            String lastName;
-
-
-            int numberOfPeople;
-
-            String phoneNumber;
-
-            int tableNumber = 1;
-            String time;
-
-
-            public String getPhoneNumber() {
-                return phoneNumber;
-            }
-
-            public void setPhoneNumber(String phoneNumber) {
-                this.phoneNumber = phoneNumber;
-            }
-
-            public String getFirstName() {
-                return firstName;
-            }
-
-            public void setFirstName(String firstName) {
-                this.firstName = firstName;
-            }
-
-            public String getLastName() {
-                return lastName;
-            }
-
-            public void setLastName(String lastName) {
-                this.lastName = lastName;
-            }
-
-            public int getNumberOfPeople() {
-                return numberOfPeople;
-            }
-
-            public void setNumberOfPeople(int numberOfPeople) {
-                this.numberOfPeople = numberOfPeople;
-            }
-
-            public int getTableNumber() {
-                return tableNumber;
-            }
-
-            public void setTableNumber(int tableNumber) {
-                this.tableNumber = tableNumber;
-            }
-
-            public String getTime() {
-                return time;
-            }
-
-            public void setTime(String time) {
-                this.time = time;
-            }
-
-            public String getDate() {
-                return date;
-            }
-
-            public void setDate(String date) {
-                this.date = date;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-        }
-
 
         String receivingMessage;
-        infoBooking infobooking = new infoBooking();
+        InfoBooking infobooking = new InfoBooking();
 
-        public infoBooking getInfobooking() {
+        public InfoBooking getInfobooking() {
             return infobooking;
         }
 
-        public void setInfobooking(infoBooking infobooking) {
+        public void setInfobooking(InfoBooking infobooking) {
             this.infobooking = infobooking;
         }
 
@@ -124,26 +43,78 @@ public class BookingBean implements Serializable {
         public void setReceivingMessage(String receivingMessage) {
             this.receivingMessage = receivingMessage;
         }
-
+        @Inject
+        CalendarBean calendarBean;
         public void makeBooking() throws URISyntaxException, IOException, InterruptedException {
-
+            calendarBean.newBookingMade();
+            receivingMessage="Error: ";
             if (verifyInputs()) {
                 addBooking();
-                receivingMessage = "bokat namn:"+infobooking.firstName+" "+infobooking.lastName+" datum:"+infobooking.date;
+                receivingMessage = "bokat namn:"+infobooking.firstName+" "+infobooking.lastName+" datum:"+infobooking.date+" time:"+infobooking.time;
                 infobooking.date = "0000-00-00";
-                return;
             }
-            receivingMessage = "inputs är ogilltiga!";
-            return;
         }
 
         private boolean verifyInputs() {
+            if (!infobooking.date.equals("0000-00-00")){
+                if (infobooking.phoneNumber.length() == 0 || infobooking.firstName.length() == 0 || infobooking.numberOfPeople == 0 || infobooking.time.length() == 0) {
+                    receivingMessage += "-alla inputs krävs";
 
-
-            if (infobooking.phoneNumber.length() == 0 || infobooking.firstName.length() == 0 || infobooking.date.equals("0000-00-00") || infobooking.numberOfPeople == 0 || infobooking.time.length() == 0) {
+                    return false;
+                }
+                if (checkName() && checkPhoneNumber() && checkNumberOfPeople() && checkTime()) {
+                    return true;
+                }
                 return false;
             }
+            receivingMessage+="-select date";
+            return false;
+        }
+
+        private boolean checkNumberOfPeople(){
+
+if (infobooking.numberOfPeople<5&&infobooking.numberOfPeople>=1)
+{
+    return true;
+}
+receivingMessage+="-ogiltigt antal";
+            return false;
+    }
+        private boolean checkPhoneNumber(){
+        infobooking.phoneNumber=infobooking.phoneNumber.replaceAll("[^0-9]", "");
+        if (infobooking.phoneNumber.matches("^\\d{10}$")) {
             return true;
+        }
+        receivingMessage+="-ogiltigt telefon-nummer";
+            return false;
+    }
+        private boolean checkName(){
+
+if (infobooking.firstName.matches("^[a-zA-Z]+$")&& infobooking.lastName.matches("^[a-zA-Z]+$")){
+return true;
+}
+        receivingMessage+="-ogiltigt för/efter-namn";
+            return false;
+    }
+
+        private boolean checkTime(){
+
+                if (infobooking.time.matches("^\\d\\d:\\d\\d$")) {
+
+                    int hour = Integer.parseInt(infobooking.time.substring(0, 2));
+                    int minute = Integer.parseInt(infobooking.time.substring(3, 5));
+                    if ((hour >= 16 && hour < 21 && minute >= 0 && minute < 60) || (hour == 21 && minute == 0)) {
+                        return true;
+                    }
+                    else {
+                        receivingMessage+="-ogiltig tid";
+                        return false;
+                    }
+
+                }
+                receivingMessage+="-ogiltig tid(xx:xx)";
+            return false;
+
         }
 
 
