@@ -18,21 +18,17 @@ import java.util.*;
 @SessionScoped
 @Named(value = "ShiftBean")
 public class ShiftBean extends HttpServlet {
-    /*
-    private final URL location = new URL();
-    private final String link = location.getLink();*/
     private String date;
     private int week;
     private int year;
     private long newSSN;
-    private ShiftRequest shiftRequest = new ShiftRequest();
+    private final ShiftRequest shiftRequest = new ShiftRequest();
     private Employee selectedDeletedEmployee;
     private Employee selectedEditedEmployee;
     Employee newEmployee = new Employee();
     List<Employee> employees;
     private List<Weekday> dinnerWeekdays;
     private List<Weekday> lunchWeekdays;
-    @Inject
     ShiftBean() throws IOException, URISyntaxException, InterruptedException {
         year = getCurrYear();
         week = getCurrWeek();
@@ -63,52 +59,6 @@ public class ShiftBean extends HttpServlet {
         }
         updateLists();
     }
-
-    /*
-    public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
-        HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/working"))
-                .GET()
-                .build();
-        HttpResponse<String> response = HttpClient
-                .newBuilder()
-                .proxy(ProxySelector.getDefault())
-                .build()
-                .send(request2, HttpResponse.BodyHandlers.ofString());
-        return response.body();
-    }*/
-/*
-    public List<Employee> fetchEmployees() throws IOException, URISyntaxException, InterruptedException {
-        List<Employee> allEmployees = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-        Employee[] list_arr = objectMapper.readValue(getJSONEmployees(), Employee[].class);
-        List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
-        allEmployees.addAll(arr);
-        return allEmployees;
-    }*/
-/*
-    public String fetchShiftBetween(String startDate, String stopDate) throws IOException, InterruptedException, URISyntaxException {
-        HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/range?startDate=" + startDate + "&endDate=" + stopDate))
-                .GET()
-                .build();
-        HttpResponse<String> response = HttpClient
-                .newBuilder()
-                .proxy(ProxySelector.getDefault())
-                .build()
-                .send(request2, HttpResponse.BodyHandlers.ofString());
-        return response.body();
-    }
-    public List<Shift> getShiftBetween(String startDate, String stopDate) throws IOException, URISyntaxException, InterruptedException {
-        List<Shift> shiftsBetween = new ArrayList<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-        Shift[] list_arr = objectMapper.readValue(fetchShiftBetween(startDate, stopDate), Shift[].class);
-        List<Shift> arr = new ArrayList<>(Arrays.asList(list_arr));
-
-        shiftsBetween.addAll(arr);
-        return shiftsBetween;
-    }*/
-
     private boolean isLunch(String beginTime){
         return Integer.parseInt(beginTime.substring(0,2)) < 16;
     }
@@ -122,7 +72,6 @@ public class ShiftBean extends HttpServlet {
         }
         return i;
     }
-
     public List<Weekday> putWeekdays(boolean isDinner, List<Shift> shifts, List<Employee> employees){
         List<Weekday> weekdays = new ArrayList<>();
         weekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY), new ArrayList<>(), new ArrayList<>()));
@@ -270,99 +219,6 @@ public class ShiftBean extends HttpServlet {
         return response;
     }
 
-
-    /*
-    public String addShift(String ssn, boolean isDinner, String date) throws URISyntaxException, IOException, InterruptedException {
-        String beginTime = getBeginTime(isDinner);
-        String endTime = getEndTime(isDinner, isWeekend(date));
-
-        Employee emp = getEmployee(ssn);
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":1}"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        updateLists();
-
-        return response.body();
-    }*/
-/*
-    public String deleteShift(String ssn, boolean isDinner, String date, int id) throws URISyntaxException, IOException, InterruptedException {
-        String beginTime = getBeginTime(isDinner);
-        String endTime = getEndTime(isDinner, isWeekend(date));
-
-        Employee emp = getEmployee(ssn);
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":" + id + "}"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-
-        updateLists();
-
-        return "{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\"" + id + "}";
-    }
-
-    public String deleteStaff() throws URISyntaxException, IOException, InterruptedException {
-        selectedDeletedEmployee = getEmployee(selectedDeletedEmployee.getSsn());
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + selectedDeletedEmployee.getEmail() + "\",\"firstName\":\"" + selectedDeletedEmployee.getFirstName() + "\",\"lastName\":\"" + selectedDeletedEmployee.getLastName() + "\",\"phoneNumber\":\"" + selectedDeletedEmployee.getPhoneNumber() + "\", \"ssn\":\"" + selectedDeletedEmployee.getSsn() + "\"}"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        updateSession();
-
-        return response.body();
-    }
-
-    public String getRetiredEmployees() throws IOException, InterruptedException, URISyntaxException {
-        HttpRequest request2 = HttpRequest.newBuilder()
-                .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/retired"))
-                .GET()
-                .build();
-        HttpResponse<String> response = HttpClient
-                .newBuilder()
-                .proxy(ProxySelector.getDefault())
-                .build()
-                .send(request2, HttpResponse.BodyHandlers.ofString());
-        return response.body();
-    }
-
-    public boolean isRetired(String ssn) throws IOException, URISyntaxException, InterruptedException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Employee[] list_arr = objectMapper.readValue(getRetiredEmployees(), Employee[].class);
-        List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
-        for (Employee i : arr) {
-            if (i.getSsn().contains(ssn)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public String updateStaff() throws URISyntaxException, IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/update"))
-                .version(HttpClient.Version.HTTP_2)
-                .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + selectedEditedEmployee.getEmail() + "\",\"firstName\":\"" + selectedEditedEmployee.getFirstName() + "\",\"lastName\":\"" + selectedEditedEmployee.getLastName() + "\",\"phoneNumber\":\"" + selectedEditedEmployee.getPhoneNumber() + "\", \"ssn\":\"" + selectedEditedEmployee.getSsn() + "\"}"))
-                .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        //return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
-        updateSession();
-        return response.body();
-    }*/
-
     public void updateListener(ValueChangeEvent valueChangeEvent){
         selectedEditedEmployee = getEmployee(valueChangeEvent.getNewValue().toString());
     }
@@ -378,32 +234,6 @@ public class ShiftBean extends HttpServlet {
         dinnerWeekdays = putWeekdays(true, shifts, employees);
         lunchWeekdays = putWeekdays(false, shifts, employees);
     }
-/*
-    public String addStaff() throws URISyntaxException, IOException, InterruptedException {
-        newEmployee.setSsn(String.valueOf(newSSN));
-        employees.add(newEmployee);
-        HttpClient client = HttpClient.newHttpClient();
-        if (isRetired(newEmployee.getSsn())) {
-            HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/unretire"))
-                    .version(HttpClient.Version.HTTP_2)
-                    .header("Content-Type", "application/json;charset=UTF-8")
-                    .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\"" + newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() + "\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\"" + newEmployee.getSsn() + "\"}"))
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            updateSession();
-            return response.body();
-        } else {
-            HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
-                    .version(HttpClient.Version.HTTP_2)
-                    .header("Content-Type", "application/json;charset=UTF-8")
-                    .POST(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\"" + newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() + "\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\"" + newEmployee.getSsn() + "\"}"))
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            updateSession();
-            return response.body();
-        }
-    }*/
-
     public Employee getSelectedDeletedEmployee() {
         return selectedDeletedEmployee;
     }
