@@ -453,9 +453,7 @@ public class ShiftBean implements Serializable {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
-        ec.getSessionMap().clear();
+        updateSession();
 
         return response.body();
     }
@@ -494,14 +492,18 @@ public class ShiftBean implements Serializable {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         //return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
-        ec.getSessionMap().clear();
+        updateSession();
         return response.body();
     }
 
     public void updateListener(ValueChangeEvent valueChangeEvent){
         selectedEditedEmployee = getEmployee(valueChangeEvent.getNewValue().toString());
+    }
+
+    public void updateSession() throws IOException {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
+        ec.getSessionMap().clear();
     }
 
     public String addStaff() throws URISyntaxException, IOException, InterruptedException {
@@ -515,9 +517,7 @@ public class ShiftBean implements Serializable {
                     .PUT(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\"" + newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() + "\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\"" + newEmployee.getSsn() + "\"}"))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
-            ec.getSessionMap().clear();
+            updateSession();
             return response.body();
         } else {
             HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee"))
@@ -526,9 +526,7 @@ public class ShiftBean implements Serializable {
                     .POST(HttpRequest.BodyPublishers.ofString("{\"email\":\"" + newEmployee.getEmail() + "\",\"firstName\":\"" + newEmployee.getFirstName() + "\",\"lastName\":\"" + newEmployee.getLastName() + "\",\"phoneNumber\":\"" + newEmployee.getPhoneNumber() + "\", \"ssn\":\"" + newEmployee.getSsn() + "\"}"))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-            ec.redirect(ec.getRequestContextPath() + "/admin/schedule.xhtml");
-            ec.getSessionMap().clear();
+            updateSession();
             return response.body();
         }
     }
