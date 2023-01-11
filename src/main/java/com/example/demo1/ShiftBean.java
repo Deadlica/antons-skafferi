@@ -332,9 +332,16 @@ public class ShiftBean implements Serializable {
 
     private List<Employee> freeEmployeesFromShifts(List<Shift> shifts, List<Employee> employees){
         List<Employee> freeEmployees = new ArrayList<>();
-        for(Shift s : shifts){
-            if(!employees.contains(s.getEmployee())){
-                freeEmployees.add(s.getEmployee());
+        for(Employee e : employees){
+            boolean isFree = true;
+            for(Shift s : shifts){
+                if(s.getEmployee().getSsn().contains(e.getSsn())){
+                    isFree = false;
+                    break;
+                }
+            }
+            if(isFree){
+                freeEmployees.add(e);
             }
         }
         return freeEmployees;
