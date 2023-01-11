@@ -18,7 +18,7 @@
                         <p><h:outputText value="#{item.date}"/></p>
                     </div>
                     <h:graphicImage class="event-image"
-                                    value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
+                                    value="http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/event/image?fileName=#{EventBean.getImageName(item.NAME, item.date)}"/>
                 </h:panelGroup>
                 <hr class="navigation-line-break-inner"/>
             </ui:repeat>
@@ -38,8 +38,9 @@
                             <p><h:outputText value="#{item.date}"/></p>
                         </div>
                         <h:graphicImage class="event-image"
-                                        value="resources/images/#{EventBean.getImageName(item.NAME, item.date)}.jpg"/>
+                                        value="http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/event/image?fileName=#{EventBean.getImageName(item.NAME, item.date)}"/>
                     </h:panelGroup>
+
                     <hr class="navigation-line-break-inner"/>
                 </ui:repeat>
             </div>
