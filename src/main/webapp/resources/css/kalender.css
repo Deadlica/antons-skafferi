@@ -54,11 +54,15 @@
     align-items: center;
     justify-content: center;
     position: relative;
+
+}
+.notFull{
     cursor: pointer;
     background-color: var(--background_white);
     border-style: solid;
     border-width: thin;
 }
+
 
 .this-day {
     background-color: gray;
@@ -69,7 +73,7 @@
 }
 
 
-.week-day:hover {
+.notFull:hover {
     background-color: var(--joel_brown);
 }
 
