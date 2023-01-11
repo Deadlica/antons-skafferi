@@ -3,8 +3,10 @@ package com.example.demo1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
+import jakarta.servlet.http.Part;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.ProxySelector;
 import java.net.URI;

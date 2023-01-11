@@ -13,23 +13,21 @@
 </head>
 <f:view>
    <h:panelGroup layout="block" styleClass="main">
-<h1>Edit comments</h1>
+   <h1>Kommentarer</h1>
+      <h2>Genomsnittligt betyg: #{CommentsBean.averageRating}/5</h2>
    <div class="window">
       <h:form>
       <ui:repeat value="#{CommentsBean.holdAllReviews}" var="item">
          <div class="review-display">
-         <h:commandButton value="remove" actionListener="#{CommentsBean.removeComment(item.id)}"></h:commandButton>
-         <div class="comment">
-         <h3><h:outputText value="#{item.firstName} #{item.ranking}/5"/></h3>
-         <h5><h:outputText value="#{item.text}"/></h5>
+            <div class="comment">
+            <h3><h:outputText value="#{item.firstName} #{item.ranking}/5"/></h3>
+            <p><h:outputText value="#{item.text}"/></p>
+            </div>
+            <h:commandButton styleClass="remove-btn" title="Ta bort" value="✖" actionListener="#{CommentsBean.removeComment(item.id)}" />
          </div>
-
-         </div>
-         <hr/><br/>
       </ui:repeat>
       </h:form>
    </div>
-
    </h:panelGroup>
 </f:view>
 </html>

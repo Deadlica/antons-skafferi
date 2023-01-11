@@ -16,8 +16,8 @@
 
 
                 <h:outputLabel>Pris</h:outputLabel>
-                <h:inputText value="#{CarteBean.carteItem.price}">
-                </h:inputText>
+                <h:inputText value="#{CarteBean.carteItem.price}"/>
+
 
                 <h:outputLabel>Beskrivning</h:outputLabel>
                 <h:inputTextarea value="#{CarteBean.carteItem.description}">
@@ -31,6 +31,8 @@
                     <f:selectItem itemValue="Dessert" itemLabel="Dessert"/>
                     <f:selectItem itemValue="Dryck" itemLabel="Dryck"/>
                 </h:selectOneMenu>
+
+                
                 <h:commandButton value="Lägg till!">
                     <f:ajax execute="@form" render="@form :starters :mains :desserts :drinks"
                             listener="#{CarteBean.addItem()}"/>

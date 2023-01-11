@@ -1,18 +1,30 @@
 
 .review-display{
-display: flex;
-    border-style: solid;
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    justify-content: space-between;
+    margin-bottom: 2%;
+    padding: 2%;
 }
 .window{
-    border-style: solid;
-    width: 40%;
-    height: 250px;
+    height: 50%;
     overflow: hidden;
     overflow-y:scroll;
+    padding: 3%;
 }
 
 .comment{
     display: block;
-    margin-left: 2%;
+}
 
+.remove-btn{
+    border-style: none;
+    background: transparent;
+    color: var(--joel_brown);
+    cursor: pointer;
+    font-size: larger;
+}
+
+.remove-btn:hover{
+    color: red;
 }

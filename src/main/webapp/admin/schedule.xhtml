@@ -19,20 +19,20 @@
    <h:panelGroup class="admin-main" layout="block">
       <h:form id="schedule">
          <h:panelGroup layout="block" class="schedule-header">
-            <h:commandButton title="Föregående" action="#{DateBean.decreaseWeek()}" value="◀"/> <h2>Vecka #{DateBean.week} (#{DateBean.year})</h2> <h:commandButton action="#{DateBean.increaseWeek()}" title="Nästkommande" value="▶"/>
+            <h:commandButton title="Föregående" action="#{ShiftBean.decreaseWeek()}" value="◀"/> <h2>Vecka #{ShiftBean.week} (#{ShiftBean.year})</h2> <h:commandButton action="#{ShiftBean.increaseWeek()}" title="Nästkommande" value="▶"/>
          </h:panelGroup>
 
          <h:panelGroup layout="block" class="schedule-container">
             <h2 class="schedule-container-title">Lunchpersonal (11:00-14:00)</h2>
             <h:panelGroup layout="block" class="schedule-day-container" id="schedulelunch">
-               <ui:include src="get-lunch-staff.xhtml" />
+               <ui:include src="lunch-shift.xhtml" />
             </h:panelGroup>
          </h:panelGroup>
 
          <h:panelGroup layout="block" class="schedule-container">
             <h2 class="schedule-container-title">Middagspersonal (16:00-23:00)/(16:00-01:00)</h2>
             <h:panelGroup layout="block" class="schedule-day-container" id="scheduledinner">
-                  <ui:include src="get-dinner-staff.xhtml" />
+                  <ui:include src="dinner-shift.xhtml" />
             </h:panelGroup>
          </h:panelGroup>
       </h:form>
@@ -50,68 +50,68 @@
             <h2>Lägg till ny anställd</h2>
             <h:form class="admin-form-add-new-staff">
                <h:outputLabel for="first_name">Förnamn</h:outputLabel>
-               <h:inputText type="text" id="first_name" value="#{StaffBean.newEmployee.firstName}"
+               <h:inputText type="text" id="first_name" value="#{ShiftBean.newEmployee.firstName}"
                             requiredMessage="Du måste skriva in förnamn">
                   <f:validateRequired/>
                </h:inputText>
                <h:message for="first_name" errorStyle="color:red"/>
                <h:outputLabel for="last_name">Efternamn</h:outputLabel>
-               <h:inputText type="text" id="last_name" value="#{StaffBean.newEmployee.lastName}"
+               <h:inputText type="text" id="last_name" value="#{ShiftBean.newEmployee.lastName}"
                             requiredMessage="Du måste skriva in efternamn">
                   <f:validateRequired/>
                </h:inputText>
                <h:message for="last_name" errorStyle="color:red"/>
-               <h:outputLabel for="ssn">Personnummer</h:outputLabel>
-               <h:inputText id="ssn" value="#{StaffBean.newEmployee.ssn}"
+               <h:outputLabel for="ssn">Personnummer (YYYYMMDDXXXX)</h:outputLabel>
+               <h:inputText id="ssn" value="#{ShiftBean.newEmployee.ssn}"
                             requiredMessage="Personnummer enligt YYYYMMDDXXXX">
                   <f:validateLength minimum="12" maximum="12"/>
                </h:inputText>
                <h:message for="ssn" errorStyle="color:red"/>
                <h:outputLabel for="email">Email</h:outputLabel>
-               <h:inputText type="text" id="email" value="#{StaffBean.newEmployee.email}"/>
+               <h:inputText type="text" id="email" value="#{ShiftBean.newEmployee.email}"/>
                <h:outputLabel for="phone_number">Telefonnummer</h:outputLabel>
-               <h:inputText type="number" id="phone_number" value="#{StaffBean.newEmployee.phoneNumber}" min="10" max="10"/>
-               <h:commandButton action="#{StaffBean.addStaff()}" value="Lägg till"/>
+               <h:inputText type="number" id="phone_number" value="#{ShiftBean.newEmployee.phoneNumber}" min="10" max="10"/>
+               <h:commandButton action="#{ShiftBean.addStaff()}" value="Lägg till"/>
             </h:form>
          </h:panelGroup>
 
          <h:panelGroup layout="block" styleClass="edit-staff">
             <h2>Uppdatera anställd</h2>
             <h:form  id="editform" styleClass="edit-staff-form">
-               <h:selectOneMenu id="editStaff" value="#{StaffBean.selectedEditedEmployee.ssn}" valueChangeListener="#{StaffBean.updateListener}">
-                  <f:selectItems value="#{StaffBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
+               <h:selectOneMenu id="editStaff" value="#{ShiftBean.selectedEditedEmployee.ssn}" valueChangeListener="#{ShiftBean.updateListener}">
+                  <f:selectItems value="#{ShiftBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                   <f:ajax execute="@this" render="edit_first_name edit_last_name edit_ssn edit_email edit_phone_number" />
                </h:selectOneMenu>
                <h:outputLabel for="edit_first_name">Förnamn</h:outputLabel>
-               <h:inputText type="text" id="edit_first_name" value="#{StaffBean.selectedEditedEmployee.firstName}"
+               <h:inputText type="text" id="edit_first_name" value="#{ShiftBean.selectedEditedEmployee.firstName}"
                             requiredMessage="Du måste skriva in förnamn">
                   <f:validateRequired/>
                </h:inputText>
                <h:message for="edit_first_name" errorStyle="color:red"/>
                <h:outputLabel for="edit_last_name">Efternamn</h:outputLabel>
-               <h:inputText type="text" id="edit_last_name" value="#{StaffBean.selectedEditedEmployee.lastName}"
+               <h:inputText type="text" id="edit_last_name" value="#{ShiftBean.selectedEditedEmployee.lastName}"
                             requiredMessage="Du måste skriva in efternamn">
                   <f:validateRequired/>
                </h:inputText>
                <h:message for="edit_last_name" errorStyle="color:red"/>
                <h:outputLabel for="edit_ssn">Personnummer</h:outputLabel>
-               <h4><h:outputText id="edit_ssn" value="#{StaffBean.selectedEditedEmployee.ssn}" /></h4>
+               <h4><h:outputText id="edit_ssn" value="#{ShiftBean.selectedEditedEmployee.ssn}" /></h4>
                <h:message for="edit_ssn" errorStyle="color:red"/>
                <h:outputLabel for="edit_email">Email</h:outputLabel>
-               <h:inputText type="text" id="edit_email" value="#{StaffBean.selectedEditedEmployee.email}"/>
+               <h:inputText type="text" id="edit_email" value="#{ShiftBean.selectedEditedEmployee.email}"/>
                <h:outputLabel for="edit_phone_number">Telefonnummer</h:outputLabel>
-               <h:inputText type="number" id="edit_phone_number" value="#{StaffBean.selectedEditedEmployee.phoneNumber}" min="10" max="10"/>
-               <h:commandButton value="Spara" action="#{StaffBean.updateStaff()}" />
+               <h:inputText type="number" id="edit_phone_number" value="#{ShiftBean.selectedEditedEmployee.phoneNumber}" min="10" max="10"/>
+               <h:commandButton value="Spara" action="#{ShiftBean.updateStaff()}" />
             </h:form>
          </h:panelGroup>
 
          <h:panelGroup layout="block" class="delete-staff">
             <h2>Ta bort anställd</h2>
             <h:form class="admin-form-delete-staff" id="deleteform">
-               <h:selectOneMenu id="deleteStaff" value="#{StaffBean.selectedDeletedEmployee.ssn}">
-                  <f:selectItems value="#{StaffBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
+               <h:selectOneMenu id="deleteStaff" value="#{ShiftBean.selectedDeletedEmployee.ssn}">
+                  <f:selectItems value="#{ShiftBean.employees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                </h:selectOneMenu>
-               <h:commandButton value="Ta bort" action="#{StaffBean.deleteStaff}" />
+               <h:commandButton value="Ta bort" action="#{ShiftBean.deleteStaff()}" />
             </h:form>
          </h:panelGroup>
       </h:panelGroup>

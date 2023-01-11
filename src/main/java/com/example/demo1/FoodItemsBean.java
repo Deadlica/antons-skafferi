@@ -2,6 +2,9 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.event.ValueChangeEvent;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -21,6 +24,8 @@ import java.util.Objects;
 @RequestScoped
 public class FoodItemsBean implements Serializable {
     private List<Dish> list;
+    private List<String> categories = new ArrayList<>();
+    String selectedCategory;
     private String name;
     private String category = "";
     private int id;
@@ -42,16 +47,39 @@ public class FoodItemsBean implements Serializable {
         ObjectMapper objectMapper = new ObjectMapper();
         Dish[] list_arr = objectMapper.readValue(getJSON(), Dish[].class);
         setList(new ArrayList<>(Arrays.asList(list_arr)));
+        putCategories();
     }
 
+    public void putCategories(){
+        categories.add("Ny sort...");
+        for(Dish d : list){
+            if(!d.getType().isEmpty()){
+                if(!categories.contains(d.getType())){
+                    categories.add(d.getType());
+                }
+            }
+        }
+        selectedCategory = categories.get(0);
+    }
+
+    public boolean isOldCategory(){
+        return !selectedCategory.contains("Ny sort...");
+    }
+
+    public void updateListener(ValueChangeEvent valueChangeEvent){
+        selectedCategory = valueChangeEvent.getNewValue().toString();
+    }
 
     public HttpResponse<String> addDish(String name, String type) throws IOException, InterruptedException {
         Dish tempDish = new Dish(1, name);
+        if(isOldCategory()) type = selectedCategory;
+
         if (Objects.equals(type, "")) tempDish.setType("");
         else tempDish.setType(type);
         HttpResponse<String> response = API.doPost("dish", tempDish);
-        list.clear();
-        addList();
+
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin");
         return response;
     }
 
@@ -113,5 +141,21 @@ public class FoodItemsBean implements Serializable {
 
     public void setList(List<Dish> list) {
         this.list = list;
+    }
+
+    public String getSelectedCategory() {
+        return selectedCategory;
+    }
+
+    public void setSelectedCategory(String selectedCategory) {
+        this.selectedCategory = selectedCategory;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 }

@@ -80,13 +80,14 @@ public class CommentsBean {
     public CommentsBean() throws URISyntaxException, IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         holdAllReviews= objectMapper.readValue(getJsonReview(), Comment[].class);
-
+        averageRating = calculateAverage();
     }
     private URL location = new URL();
     private String link = location.getLink();
 
     Comment comment=new Comment();
 
+    private double averageRating;
     public Comment getComment() {
         return comment;
     }
@@ -95,7 +96,7 @@ public class CommentsBean {
         this.comment = comment;
     }
 
-String response;
+    String response;
     URI uri;
 
     {
@@ -153,6 +154,15 @@ String response;
         holdAllReviews= objectMapper.readValue(getJsonReview(), Comment[].class);
     }
 
+    private double calculateAverage(){
+        double sum = 0;
+        int size = 0;
+        for(Comment c : holdAllReviews){
+            sum = sum + c.ranking;
+            size++;
+        }
+        return sum/size;
+    }
     private HttpResponse<String> addReview() throws URISyntaxException, IOException, InterruptedException {
 
 
@@ -207,4 +217,11 @@ String response;
         return response.body();
     }
 
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
 }

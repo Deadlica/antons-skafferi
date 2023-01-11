@@ -22,8 +22,6 @@ import java.util.List;
 public class CarteBean implements Serializable {
     CarteItem carteItem = new CarteItem();
     List<Dish> allDishes = new ArrayList<>();
-
-
     List<Dish> unusedDishes = new ArrayList<>();
     List<CarteItem> starters = new ArrayList<>();
     List<CarteItem> mainCourses = new ArrayList<>();
