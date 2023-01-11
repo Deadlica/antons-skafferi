@@ -1,22 +1,15 @@
 package com.example.demo1;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.ValueChangeEvent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.ws.rs.Path;
+import jakarta.servlet.http.HttpServlet;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.net.ProxySelector;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
@@ -24,28 +17,30 @@ import java.util.*;
 
 @SessionScoped
 @Named(value = "ShiftBean")
-public class ShiftBean implements Serializable {
+public class ShiftBean extends HttpServlet {
+    /*
     private final URL location = new URL();
-    private final String link = location.getLink();
-
-    ShiftBean() throws IOException, URISyntaxException, InterruptedException {
-        year = getCurrYear();
-        week = getCurrWeek();
-        employees = fetchEmployees();
-        updateLists();
-        selectedDeletedEmployee = employees.get(0);
-        selectedEditedEmployee = employees.get(0);
-    }
+    private final String link = location.getLink();*/
     private String date;
     private int week;
     private int year;
     private long newSSN;
+    private ShiftRequest shiftRequest = new ShiftRequest();
     private Employee selectedDeletedEmployee;
     private Employee selectedEditedEmployee;
     Employee newEmployee = new Employee();
     List<Employee> employees;
     private List<Weekday> dinnerWeekdays;
     private List<Weekday> lunchWeekdays;
+    @Inject
+    ShiftBean() throws IOException, URISyntaxException, InterruptedException {
+        year = getCurrYear();
+        week = getCurrWeek();
+        employees = shiftRequest.fetchEmployees();
+        updateLists();
+        selectedDeletedEmployee = employees.get(0);
+        selectedEditedEmployee = employees.get(0);
+    }
 
     public Calendar getTodaysDate() {
         return Calendar.getInstance();
@@ -69,6 +64,7 @@ public class ShiftBean implements Serializable {
         updateLists();
     }
 
+    /*
     public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/working"))
@@ -80,8 +76,8 @@ public class ShiftBean implements Serializable {
                 .build()
                 .send(request2, HttpResponse.BodyHandlers.ofString());
         return response.body();
-    }
-
+    }*/
+/*
     public List<Employee> fetchEmployees() throws IOException, URISyntaxException, InterruptedException {
         List<Employee> allEmployees = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -89,8 +85,8 @@ public class ShiftBean implements Serializable {
         List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
         allEmployees.addAll(arr);
         return allEmployees;
-    }
-
+    }*/
+/*
     public String fetchShiftBetween(String startDate, String stopDate) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/range?startDate=" + startDate + "&endDate=" + stopDate))
@@ -111,7 +107,7 @@ public class ShiftBean implements Serializable {
 
         shiftsBetween.addAll(arr);
         return shiftsBetween;
-    }
+    }*/
 
     private boolean isLunch(String beginTime){
         return Integer.parseInt(beginTime.substring(0,2)) < 16;
@@ -127,16 +123,16 @@ public class ShiftBean implements Serializable {
         return i;
     }
 
-    public List<Weekday> putWeekdays(boolean isDinner, List<Shift> shifts, List<Employee> employees) throws URISyntaxException, IOException, InterruptedException {
+    public List<Weekday> putWeekdays(boolean isDinner, List<Shift> shifts, List<Employee> employees){
         List<Weekday> weekdays = new ArrayList<>();
-        weekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY), new ArrayList<Shift>(), new ArrayList<Employee>()));
-        weekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY), new ArrayList<Shift>(), new ArrayList<Employee>()));
-        weekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY), new ArrayList<Shift>(), new ArrayList<Employee>()));
-        weekdays.add(new Weekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY), new ArrayList<Shift>(), new ArrayList<Employee>()));
-        weekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY), new ArrayList<Shift>(), new ArrayList<Employee>()));
+        weekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY), new ArrayList<>(), new ArrayList<>()));
+        weekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY), new ArrayList<>(), new ArrayList<>()));
+        weekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY), new ArrayList<>(), new ArrayList<>()));
+        weekdays.add(new Weekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY), new ArrayList<>(), new ArrayList<>()));
+        weekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY), new ArrayList<>(), new ArrayList<>()));
         if(isDinner) {
-            weekdays.add(new Weekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY), new ArrayList<Shift>(), new ArrayList<Employee>()));
-            weekdays.add(new Weekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY), new ArrayList<Shift>(), new ArrayList<Employee>()));
+            weekdays.add(new Weekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY), new ArrayList<>(), new ArrayList<>()));
+            weekdays.add(new Weekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY), new ArrayList<>(), new ArrayList<>()));
         }
 
         for(Shift s : shifts) {
@@ -214,10 +210,7 @@ public class ShiftBean implements Serializable {
     public boolean isWeekend(String date){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Integer.parseInt(date.substring(0,4)),Integer.parseInt(date.substring(5,7)) - 1, Integer.parseInt(date.substring(8,10)));
-        if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
-            return true;
-        }
-        return false;
+        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
     }
 
     private String getBeginTime(boolean isDinner){
@@ -230,6 +223,55 @@ public class ShiftBean implements Serializable {
         }
         return isDinner ? "23:00:00" : "14:00:00";
     }
+
+    public String deleteStaff() throws URISyntaxException, IOException, InterruptedException {
+        selectedDeletedEmployee = getEmployee(selectedDeletedEmployee.getSsn());
+        String response = shiftRequest.deleteStaff(selectedDeletedEmployee);
+        updateSession();
+        return response;
+    }
+
+    public String addShift(String ssn, boolean isDinner, String date) throws URISyntaxException, IOException, InterruptedException {
+        String beginTime = getBeginTime(isDinner);
+        String endTime = getEndTime(isDinner, isWeekend(date));
+
+        Employee emp = getEmployee(ssn);
+        String response = shiftRequest.addShift(emp, beginTime, endTime, date);
+        updateLists();
+        return response;
+    }
+
+    public String deleteShift(String ssn, boolean isDinner, String date, int id) throws URISyntaxException, IOException, InterruptedException {
+        String beginTime = getBeginTime(isDinner);
+        String endTime = getEndTime(isDinner, isWeekend(date));
+
+        Employee emp = getEmployee(ssn);
+
+        String response = shiftRequest.deleteShift(emp, beginTime, endTime, date, id);
+
+        updateLists();
+        return response;
+    }
+
+    public String updateStaff() throws URISyntaxException, IOException, InterruptedException {
+        String response = shiftRequest.updateStaff(selectedEditedEmployee);
+        updateSession();
+        return response;
+    }
+
+    public String addStaff() throws URISyntaxException, IOException, InterruptedException {
+        newEmployee.setSsn(String.valueOf(newSSN));
+        employees.add(newEmployee);
+
+        String response = shiftRequest.addStaff(newEmployee);
+
+        updateSession();
+
+        return response;
+    }
+
+
+    /*
     public String addShift(String ssn, boolean isDinner, String date) throws URISyntaxException, IOException, InterruptedException {
         String beginTime = getBeginTime(isDinner);
         String endTime = getEndTime(isDinner, isWeekend(date));
@@ -247,8 +289,8 @@ public class ShiftBean implements Serializable {
         updateLists();
 
         return response.body();
-    }
-
+    }*/
+/*
     public String deleteShift(String ssn, boolean isDinner, String date, int id) throws URISyntaxException, IOException, InterruptedException {
         String beginTime = getBeginTime(isDinner);
         String endTime = getEndTime(isDinner, isWeekend(date));
@@ -319,7 +361,7 @@ public class ShiftBean implements Serializable {
         //return "{\"email\":\"" + email + "\",\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\",\"phoneNumber\":\"" + phoneNumber + "\", \"ssn\":\"" + ssn + "\"}";
         updateSession();
         return response.body();
-    }
+    }*/
 
     public void updateListener(ValueChangeEvent valueChangeEvent){
         selectedEditedEmployee = getEmployee(valueChangeEvent.getNewValue().toString());
@@ -332,11 +374,11 @@ public class ShiftBean implements Serializable {
     }
 
     public void updateLists() throws IOException, URISyntaxException, InterruptedException {
-        List<Shift> shifts = getShiftBetween(getDay(Calendar.MONDAY), getDay(Calendar.SUNDAY));
+        List<Shift> shifts = shiftRequest.getShiftBetween(getDay(Calendar.MONDAY), getDay(Calendar.SUNDAY));
         dinnerWeekdays = putWeekdays(true, shifts, employees);
         lunchWeekdays = putWeekdays(false, shifts, employees);
     }
-
+/*
     public String addStaff() throws URISyntaxException, IOException, InterruptedException {
         newEmployee.setSsn(String.valueOf(newSSN));
         employees.add(newEmployee);
@@ -360,7 +402,7 @@ public class ShiftBean implements Serializable {
             updateSession();
             return response.body();
         }
-    }
+    }*/
 
     public Employee getSelectedDeletedEmployee() {
         return selectedDeletedEmployee;

@@ -8,7 +8,6 @@ public class Weekday {
     private String selected;
     private List<Shift> shifts;
     private List<Employee> freeEmployees;
-    //Dependency injection
     Weekday(String text, String date, List<Shift> shifts, List<Employee> freeEmployees) {
         this.text = text;
         this.date = date;
@@ -19,7 +18,6 @@ public class Weekday {
     public String getDate() {
         return date;
     }
-
     public String getText() {
         return text;
     }
@@ -33,11 +31,9 @@ public class Weekday {
     public void setShifts(List<Shift> shifts) {
         this.shifts = shifts;
     }
-
     public List<Employee> getFreeEmployees() {
         return freeEmployees;
     }
-
     public void setFreeEmployees(List<Employee> freeEmployees) {
         this.freeEmployees = freeEmployees;
     }

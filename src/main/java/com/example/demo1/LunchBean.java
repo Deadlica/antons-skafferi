@@ -2,6 +2,8 @@ package com.example.demo1;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 import java.io.IOException;
@@ -110,7 +112,10 @@ public class LunchBean implements Serializable {
 
     public HttpResponse<String> putItem(LunchItem item, List<LunchItem> list) throws IOException, InterruptedException {
         list.remove(item);
-        return API.doPut("lunch", item);
+        HttpResponse<String> toReturn = API.doPut("lunch", item);
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin");
+        return toReturn;
     }
 
     public HttpResponse<String> postItem(String date) throws IOException, InterruptedException {
@@ -119,6 +124,8 @@ public class LunchBean implements Serializable {
         HttpResponse<String> toReturn = API.doPost("lunch", lunchItem);
         lunchItem.description = "";
         lunchItem.price = 0;
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin");
         return toReturn;
     }
 
