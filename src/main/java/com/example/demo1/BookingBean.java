@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Map;
 
 @Named(value = "BookingBean")
 @RequestScoped
@@ -49,8 +50,20 @@ public class BookingBean implements Serializable {
             calendarBean.newBookingMade();
             receivingMessage="Error: ";
             if (verifyInputs()) {
-                addBooking();
                 receivingMessage = "bokat namn:"+infobooking.firstName+" "+infobooking.lastName+" datum:"+infobooking.date+" time:"+infobooking.time;
+                ObjectMapper mapper = new ObjectMapper();
+                String tempResponse ="   "+ addBooking();
+
+                ObjectMapper objectMapper = new ObjectMapper();
+                Map<String, Object> jsonMap = objectMapper.readValue(tempResponse, Map.class);
+                receivingMessage +=": "+ (String) jsonMap.get("firstName");
+
+                if (!((String) jsonMap.get("firstName")).equals("Booking has been made!"))
+                {
+                    receivingMessage="Error: Ett fel uppstod refresha sidan!";
+                }
+
+
                 infobooking.date = "0000-00-00";
             }
         }
@@ -118,7 +131,7 @@ return true;
         }
 
 
-        private HttpResponse<String> addBooking() throws URISyntaxException, IOException, InterruptedException {
+        private String addBooking() throws URISyntaxException, IOException, InterruptedException {
 
 
             ObjectMapper mapper = new ObjectMapper();
@@ -131,8 +144,7 @@ return true;
                     .POST(HttpRequest.BodyPublishers.ofString(json))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
-            return response;
+            return response.body();
         }
 
 
