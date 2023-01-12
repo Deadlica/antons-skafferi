@@ -49,7 +49,7 @@ public class BookingBean implements Serializable {
         public void makeBooking() throws URISyntaxException, IOException, InterruptedException {
             receivingMessage="Error: ";
             if (verifyInputs()) {
-                receivingMessage = "bokat namn:"+infobooking.firstName+" "+infobooking.lastName+" datum:"+infobooking.date+" time:"+infobooking.time;
+                receivingMessage = "boknings info: namn:"+infobooking.firstName+" "+infobooking.lastName+" datum:"+infobooking.date+" time:"+infobooking.time;
                 ObjectMapper mapper = new ObjectMapper();
                 String tempResponse ="   "+ addBooking();
 
@@ -65,7 +65,7 @@ public class BookingBean implements Serializable {
 
                 infobooking.date = "0000-00-00";
             }
-            calendarBean.newBookingMade();
+            calendarBean.updateCalendar();
 
         }
 

@@ -124,7 +124,7 @@ public class CalendarBean implements Serializable {
             generateCalendar();
         }
     }
-    public void newBookingMade() throws URISyntaxException, IOException, InterruptedException {
+    public void updateCalendar() throws URISyntaxException, IOException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         holdAllBookings= objectMapper.readValue(getJsonBookings(), InfoBooking[].class);
         generateCalendar();
