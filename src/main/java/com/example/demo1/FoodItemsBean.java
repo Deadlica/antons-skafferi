@@ -6,6 +6,7 @@ import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.ValueChangeEvent;
 import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -50,11 +51,11 @@ public class FoodItemsBean implements Serializable {
         putCategories();
     }
 
-    public void putCategories(){
+    public void putCategories() {
         categories.add("Ny sort...");
-        for(Dish d : list){
-            if(!d.getType().isEmpty()){
-                if(!categories.contains(d.getType())){
+        for (Dish d : list) {
+            if (!d.getType().isEmpty()) {
+                if (!categories.contains(d.getType())) {
                     categories.add(d.getType());
                 }
             }
@@ -62,17 +63,17 @@ public class FoodItemsBean implements Serializable {
         selectedCategory = categories.get(0);
     }
 
-    public boolean isOldCategory(){
+    public boolean isOldCategory() {
         return !selectedCategory.contains("Ny sort...");
     }
 
-    public void updateListener(ValueChangeEvent valueChangeEvent){
+    public void updateListener(ValueChangeEvent valueChangeEvent) {
         selectedCategory = valueChangeEvent.getNewValue().toString();
     }
 
     public HttpResponse<String> addDish(String name, String type) throws IOException, InterruptedException {
         Dish tempDish = new Dish(1, name);
-        if(isOldCategory()) type = selectedCategory;
+        if (isOldCategory()) type = selectedCategory;
 
         if (Objects.equals(type, "")) tempDish.setType("");
         else tempDish.setType(type);
@@ -92,6 +93,8 @@ public class FoodItemsBean implements Serializable {
                 break;
             }
         }
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        ec.redirect(ec.getRequestContextPath() + "/admin");
         return response;
     }
 
