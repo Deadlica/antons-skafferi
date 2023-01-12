@@ -1,14 +1,14 @@
 package com.example.demo1;
 
+import com.example.demo1.adminschedule.*;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.ValueChangeEvent;
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.servlet.http.HttpServlet;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ import java.util.*;
 
 @SessionScoped
 @Named(value = "ShiftBean")
-public class ShiftBean extends HttpServlet {
+public class ShiftBean implements Serializable {
     private String date;
     private int week;
     private int year;
@@ -27,8 +27,9 @@ public class ShiftBean extends HttpServlet {
     private Employee selectedEditedEmployee;
     Employee newEmployee = new Employee();
     List<Employee> employees;
-    private List<Weekday> dinnerWeekdays;
-    private List<Weekday> lunchWeekdays;
+    private WeekdayContainer dinner;
+    private WeekdayContainer lunch;
+    private List<Shift> shifts;
     ShiftBean() throws IOException, URISyntaxException, InterruptedException {
         year = getCurrYear();
         week = getCurrWeek();
@@ -38,7 +39,7 @@ public class ShiftBean extends HttpServlet {
         selectedEditedEmployee = employees.get(0);
     }
 
-    public Calendar getTodaysDate() {
+    private Calendar getCurrDate() {
         return Calendar.getInstance();
     }
 
@@ -59,67 +60,21 @@ public class ShiftBean extends HttpServlet {
         }
         updateLists();
     }
-    private boolean isLunch(String beginTime){
-        return Integer.parseInt(beginTime.substring(0,2)) < 16;
-    }
 
-    private int getIndexAtDate(String date, List<Weekday> weekdays){
-        int i = 0;
-        for(; i < weekdays.size(); i++){
-            if(weekdays.get(i).getDate().contains(date)){
-                break;
-            }
-        }
-        return i;
-    }
-    public List<Weekday> putWeekdays(boolean isDinner, List<Shift> shifts, List<Employee> employees){
-        List<Weekday> weekdays = new ArrayList<>();
-        weekdays.add(new Weekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY), new ArrayList<>(), new ArrayList<>()));
-        weekdays.add(new Weekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY), new ArrayList<>(), new ArrayList<>()));
-        weekdays.add(new Weekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY), new ArrayList<>(), new ArrayList<>()));
-        weekdays.add(new Weekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY), new ArrayList<>(), new ArrayList<>()));
-        weekdays.add(new Weekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY), new ArrayList<>(), new ArrayList<>()));
-        if(isDinner) {
-            weekdays.add(new Weekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY), new ArrayList<>(), new ArrayList<>()));
-            weekdays.add(new Weekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY), new ArrayList<>(), new ArrayList<>()));
-        }
+    private void setWeekdays(){
+        dinner.addWeekday(new DinnerWeekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY), new ArrayList<>(), new ArrayList<>()));
+        dinner.addWeekday(new DinnerWeekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY), new ArrayList<>(), new ArrayList<>()));
+        dinner.addWeekday(new DinnerWeekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY), new ArrayList<>(), new ArrayList<>()));
+        dinner.addWeekday(new DinnerWeekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY), new ArrayList<>(), new ArrayList<>()));
+        dinner.addWeekday(new LateWeekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY), new ArrayList<>(), new ArrayList<>()));
+        dinner.addWeekday(new LateWeekday(getText(Calendar.SATURDAY), getDay(Calendar.SATURDAY), new ArrayList<>(), new ArrayList<>()));
+        dinner.addWeekday(new DinnerWeekday(getText(Calendar.SUNDAY), getDay(Calendar.SUNDAY), new ArrayList<>(), new ArrayList<>()));
 
-        for(Shift s : shifts) {
-            if (isLunch(s.getBeginTime()) && !isDinner) {
-                int i = getIndexAtDate(s.getDate(), weekdays);
-                weekdays.get(i).pushShift(s);
-            }else if(!isLunch(s.getBeginTime()) && isDinner){
-                int i = getIndexAtDate(s.getDate(), weekdays);
-                weekdays.get(i).pushShift(s);
-            }
-        }
-
-        setFreeEmployeesOnWeekdays(weekdays, employees);
-
-        return weekdays;
-    }
-
-    private void setFreeEmployeesOnWeekdays(List<Weekday> weekdays, List<Employee> employees){
-        for(Weekday w : weekdays){
-            w.setFreeEmployees(freeEmployeesFromShifts(w.getShifts(), employees));
-        }
-    }
-
-    private List<Employee> freeEmployeesFromShifts(List<Shift> shifts, List<Employee> employees){
-        List<Employee> freeEmployees = new ArrayList<>();
-        for(Employee e : employees){
-            boolean isFree = true;
-            for(Shift s : shifts){
-                if(s.getEmployee().getSsn().contains(e.getSsn())){
-                    isFree = false;
-                    break;
-                }
-            }
-            if(isFree){
-                freeEmployees.add(e);
-            }
-        }
-        return freeEmployees;
+        lunch.addWeekday(new LunchWeekday(getText(Calendar.MONDAY), getDay(Calendar.MONDAY), new ArrayList<>(), new ArrayList<>()));
+        lunch.addWeekday(new LunchWeekday(getText(Calendar.TUESDAY), getDay(Calendar.TUESDAY), new ArrayList<>(), new ArrayList<>()));
+        lunch.addWeekday(new LunchWeekday(getText(Calendar.WEDNESDAY), getDay(Calendar.WEDNESDAY), new ArrayList<>(), new ArrayList<>()));
+        lunch.addWeekday(new LunchWeekday(getText(Calendar.THURSDAY), getDay(Calendar.THURSDAY), new ArrayList<>(), new ArrayList<>()));
+        lunch.addWeekday(new LunchWeekday(getText(Calendar.FRIDAY), getDay(Calendar.FRIDAY), new ArrayList<>(), new ArrayList<>()));
     }
     public int getCurrWeek() {
         LocalDate date = LocalDate.now();
@@ -127,20 +82,21 @@ public class ShiftBean extends HttpServlet {
         return date.get(weekFields.weekOfWeekBasedYear());
     }
     public int getCurrYear(){
-        return Calendar.getInstance().get(Calendar.YEAR);
+        return getCurrDate().get(Calendar.YEAR);
     }
+
     public String getText(int day) {
-        Calendar c = Calendar.getInstance();
+        Calendar c = getCurrDate();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.WEEK_OF_YEAR, week);
         c.set(Calendar.DAY_OF_WEEK, day);
         Date date = c.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE d/M");
         SimpleDateFormat todayFormat = new SimpleDateFormat("d/M");
-        return getTodaysDate().get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_MONTH) ? "Idag " + todayFormat.format(date) : dateFormat.format(date);
+        return getCurrDate().get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_MONTH) ? "Idag " + todayFormat.format(date) : dateFormat.format(date);
     }
     public String getDay(int day) {
-        Calendar c = Calendar.getInstance();
+        Calendar c = getCurrDate();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.WEEK_OF_YEAR, week);
         c.set(Calendar.DAY_OF_WEEK, day);
@@ -148,7 +104,7 @@ public class ShiftBean extends HttpServlet {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(date);
     }
-    public Employee getEmployee(String ssn) {
+    public Employee findEmployee(String ssn) {
         for (Employee e : employees) {
             if (e.getSsn().contains(ssn)) {
                 return e;
@@ -156,50 +112,29 @@ public class ShiftBean extends HttpServlet {
         }
         return null;
     }
-    public boolean isWeekend(String date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Integer.parseInt(date.substring(0,4)),Integer.parseInt(date.substring(5,7)) - 1, Integer.parseInt(date.substring(8,10)));
-        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
-    }
-
-    private String getBeginTime(boolean isDinner){
-        return isDinner ? "16:00:00" : "11:00:00";
-    }
-
-    private String getEndTime(boolean isDinner, boolean isWeekend){
-        if(isWeekend && isDinner){
-            return "01:00:00";
-        }
-        return isDinner ? "23:00:00" : "14:00:00";
-    }
-
     public String deleteStaff() throws URISyntaxException, IOException, InterruptedException {
-        selectedDeletedEmployee = getEmployee(selectedDeletedEmployee.getSsn());
+        selectedDeletedEmployee = findEmployee(selectedDeletedEmployee.getSsn());
         String response = shiftRequest.deleteStaff(selectedDeletedEmployee);
         updateSession();
         return response;
     }
 
-    public String addShift(String ssn, boolean isDinner, String date) throws URISyntaxException, IOException, InterruptedException {
-        String beginTime = getBeginTime(isDinner);
-        String endTime = getEndTime(isDinner, isWeekend(date));
-
-        Employee emp = getEmployee(ssn);
-        String response = shiftRequest.addShift(emp, beginTime, endTime, date);
-        updateLists();
-        return response;
+    public Shift findShift(int id){
+        for(Shift s : shifts){
+            if(s.getId() == id){
+                return s;
+            }
+        }
+        return null;
     }
 
-    public String deleteShift(String ssn, boolean isDinner, String date, int id) throws URISyntaxException, IOException, InterruptedException {
-        String beginTime = getBeginTime(isDinner);
-        String endTime = getEndTime(isDinner, isWeekend(date));
-
-        Employee emp = getEmployee(ssn);
-
-        String response = shiftRequest.deleteShift(emp, beginTime, endTime, date, id);
-
-        updateLists();
-        return response;
+    public String deleteShift(int id) throws URISyntaxException, IOException, InterruptedException {
+        if(findShift(id) != null) {
+            String response = shiftRequest.deleteShift(findShift(id));
+            updateLists();
+            return response;
+        }
+        return "Error";
     }
 
     public String updateStaff() throws URISyntaxException, IOException, InterruptedException {
@@ -220,7 +155,7 @@ public class ShiftBean extends HttpServlet {
     }
 
     public void updateListener(ValueChangeEvent valueChangeEvent){
-        selectedEditedEmployee = getEmployee(valueChangeEvent.getNewValue().toString());
+        selectedEditedEmployee = findEmployee(valueChangeEvent.getNewValue().toString());
     }
 
     public void updateSession() throws IOException {
@@ -230,9 +165,14 @@ public class ShiftBean extends HttpServlet {
     }
 
     public void updateLists() throws IOException, URISyntaxException, InterruptedException {
-        List<Shift> shifts = shiftRequest.getShiftBetween(getDay(Calendar.MONDAY), getDay(Calendar.SUNDAY));
-        dinnerWeekdays = putWeekdays(true, shifts, employees);
-        lunchWeekdays = putWeekdays(false, shifts, employees);
+        shifts = shiftRequest.getShiftBetween(getDay(Calendar.MONDAY), getDay(Calendar.SUNDAY));
+        dinner = new DinnerWeekdayContainer(new ArrayList<>(), shiftRequest);
+        lunch = new LunchWeekdayContainer(new ArrayList<>(), shiftRequest);
+        setWeekdays();
+        dinner.addShiftToWeekdays(shifts);
+        lunch.addShiftToWeekdays(shifts);
+        dinner.addFreeEmployeesToWeekdays(employees);
+        lunch.addFreeEmployeesToWeekdays(employees);
     }
     public Employee getSelectedDeletedEmployee() {
         return selectedDeletedEmployee;
@@ -270,17 +210,17 @@ public class ShiftBean extends HttpServlet {
     public void setWeek(int week) {
         this.week = week;
     }
-    public List<Weekday> getDinnerWeekdays() {
-        return dinnerWeekdays;
+    public WeekdayContainer getDinner() {
+        return dinner;
     }
-    public void setDinnerWeekdays(List<Weekday> weekdays) {
-        this.dinnerWeekdays = weekdays;
+    public void setDinner(WeekdayContainer dinner) {
+        this.dinner = dinner;
     }
-    public List<Weekday> getLunchWeekdays() {
-        return lunchWeekdays;
+    public WeekdayContainer getLunch() {
+        return lunch;
     }
-    public void setLunchWeekdays(List<Weekday> lunchWeekdays) {
-        this.lunchWeekdays = lunchWeekdays;
+    public void setLunch(WeekdayContainer lunch) {
+        this.lunch = lunch;
     }
     public int getYear() {
         return year;
@@ -288,11 +228,9 @@ public class ShiftBean extends HttpServlet {
     public void setYear(int year) {
         this.year = year;
     }
-
     public long getNewSSN() {
         return newSSN;
     }
-
     public void setNewSSN(long newSSN) {
         this.newSSN = newSSN;
     }
