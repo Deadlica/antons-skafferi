@@ -12,9 +12,10 @@
                              requiredMessage="Du måste skriva in ett namn"/>
 
                 <h:outputLabel for="category">Välj sort: </h:outputLabel>
-                <h:selectOneMenu value="#{FoodItemsBean.selectedCategory}" valueChangeListener="#{FoodItemsBean.updateListener}">
-                    <f:selectItems value="#{FoodItemsBean.categories}" />
-                    <f:ajax execute="@form" render="@form" />
+                <h:selectOneMenu value="#{FoodItemsBean.selectedCategory}"
+                                 valueChangeListener="#{FoodItemsBean.updateListener}">
+                    <f:selectItems value="#{FoodItemsBean.categories}"/>
+                    <f:ajax execute="@form" render="@form"/>
                 </h:selectOneMenu>
 
                 <h:panelGroup layout="block" rendered="#{not FoodItemsBean.isOldCategory()}">
@@ -35,10 +36,8 @@
                     <f:selectItems value="#{FoodItemsBean.list}" var="dish" itemValue="#{dish.id}"
                                    itemLabel="#{dish.name}"/>
                 </h:selectOneMenu>
-                <h:commandButton value="Ta bort">
-                    <f:ajax event="click" execute="@form" render="@form :carte-admin"
-                            listener="#{FoodItemsBean.putItem(FoodItemsBean.id)}"/>
-                </h:commandButton>
+                <h:commandButton value="Ta bort"
+                                 action="#{FoodItemsBean.putItem(FoodItemsBean.id)}"/>
             </h:form>
         </div>
     </div>
