@@ -22,7 +22,7 @@ public class ShiftBean implements Serializable {
     private int week;
     private int year;
     private long newSSN;
-    private final ShiftRequest shiftRequest = new ShiftRequest();
+    private final ShiftRequest shiftRequest = ShiftRequest.getInstance();
     private Employee selectedDeletedEmployee;
     private Employee selectedEditedEmployee;
     Employee newEmployee = new Employee();

@@ -18,10 +18,23 @@ import java.util.List;
 public class ShiftRequest {
     private final URL location = new URL();
     private final String link = location.getLink();
+    private static volatile ShiftRequest instance;
 
-    public ShiftRequest() throws URISyntaxException {
+    private ShiftRequest() throws URISyntaxException {
     }
 
+    public static ShiftRequest getInstance() throws URISyntaxException {
+        ShiftRequest result = instance;
+        if(result == null){
+            synchronized (ShiftRequest.class){
+                result = instance;
+                if(result == null){
+                    instance = result = new ShiftRequest();
+                }
+            }
+        }
+        return result;
+    }
     public String getJSONEmployees() throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/employee/working"))
