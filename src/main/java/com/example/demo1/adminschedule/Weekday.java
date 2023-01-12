@@ -1,20 +1,29 @@
-package com.example.demo1;
+package com.example.demo1.adminschedule;
 
+import java.util.Iterator;
 import java.util.List;
-
-public class Weekday {
+public abstract class Weekday{
     private final String text;
     private final String date;
     private String selected;
     private List<Shift> shifts;
     private List<Employee> freeEmployees;
-    Weekday(String text, String date, List<Shift> shifts, List<Employee> freeEmployees) {
+    public Weekday(String text, String date, List<Shift> shifts, List<Employee> freeEmployees) {
         this.text = text;
         this.date = date;
         this.shifts = shifts;
         this.freeEmployees = freeEmployees;
     }
-    public void pushShift(Shift shift){ shifts.add(shift); }
+    public abstract void pushShift(Shift shift);
+    public abstract Shift createShift(String date, Employee employee, int id);
+    Employee findFreeEmployee(String ssn){
+        for (Employee e : freeEmployees) {
+            if (e.getSsn().contains(ssn)) {
+                return e;
+            }
+        }
+        return null;
+    }
     public String getDate() {
         return date;
     }

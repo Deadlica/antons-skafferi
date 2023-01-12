@@ -1,11 +1,9 @@
-package com.example.demo1;
+package com.example.demo1.adminschedule;
 
+import com.example.demo1.URL;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.ProxySelector;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,6 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class ShiftRequest {
@@ -36,14 +35,11 @@ public class ShiftRequest {
         return response.body();
     }
     public List<Employee> fetchEmployees() throws IOException, URISyntaxException, InterruptedException {
-        List<Employee> allEmployees = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
         Employee[] list_arr = objectMapper.readValue(getJSONEmployees(), Employee[].class);
         List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
-        allEmployees.addAll(arr);
-        return allEmployees;
+        return new ArrayList<>(arr);
     }
-
     public String fetchShiftBetween(String startDate, String stopDate) throws IOException, InterruptedException, URISyntaxException {
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift/range?startDate=" + startDate + "&endDate=" + stopDate))
@@ -57,32 +53,27 @@ public class ShiftRequest {
         return response.body();
     }
     public List<Shift> getShiftBetween(String startDate, String stopDate) throws IOException, URISyntaxException, InterruptedException {
-        List<Shift> shiftsBetween = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
         Shift[] list_arr = objectMapper.readValue(fetchShiftBetween(startDate, stopDate), Shift[].class);
         List<Shift> arr = new ArrayList<>(Arrays.asList(list_arr));
-
-        shiftsBetween.addAll(arr);
-        return shiftsBetween;
+        return new ArrayList<>(arr);
     }
-
-    public String addShift(Employee emp, String beginTime, String endTime, String date) throws URISyntaxException, IOException, InterruptedException {
+    public String addShift(Shift shift) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":1}"))
+                .POST(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + shift.getBeginTime() + "\",\"date\":\"" + shift.getDate() + "\",\"employee\":{\"email\":\"" + shift.getEmployee().getEmail() + "\",\"firstName\":\"" + shift.getEmployee().getFirstName() + "\",\"lastName\":\"" + shift.getEmployee().getLastName() + "\",\"phoneNumber\":\"" + shift.getEmployee().getPhoneNumber() + "\", \"ssn\":\"" + shift.getEmployee().getSsn() + "\"},\"endTime\":\"" + shift.getEndTime() + "\",\"id\":1}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
     }
-
-    public String deleteShift(Employee emp, String beginTime, String endTime, String date, int id) throws URISyntaxException, IOException, InterruptedException {
+    public String deleteShift(Shift shift) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(new URI("http://" + this.link + ":8080/antons-skafferi-db-1.0-SNAPSHOT/api/shift"))
                 .version(HttpClient.Version.HTTP_2)
                 .header("Content-Type", "application/json;charset=UTF-8")
-                .PUT(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + beginTime + "\",\"date\":\"" + date + "\",\"employee\":{\"email\":\"" + emp.getEmail() + "\",\"firstName\":\"" + emp.getFirstName() + "\",\"lastName\":\"" + emp.getLastName() + "\",\"phoneNumber\":\"" + emp.getPhoneNumber() + "\", \"ssn\":\"" + emp.getSsn() + "\"},\"endTime\":\"" + endTime + "\",\"id\":" + id + "}"))
+                .PUT(HttpRequest.BodyPublishers.ofString("{\"beginTime\":\"" + shift.getBeginTime() + "\",\"date\":\"" + shift.getDate() + "\",\"employee\":{\"email\":\"" + shift.getEmployee().getEmail() + "\",\"firstName\":\"" + shift.getEmployee().getFirstName() + "\",\"lastName\":\"" + shift.getEmployee().getLastName() + "\",\"phoneNumber\":\"" + shift.getEmployee().getPhoneNumber() + "\", \"ssn\":\"" + shift.getEmployee().getSsn() + "\"},\"endTime\":\"" + shift.getEndTime() + "\",\"id\":" + shift.getId() + "}"))
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -117,7 +108,8 @@ public class ShiftRequest {
         ObjectMapper objectMapper = new ObjectMapper();
         Employee[] list_arr = objectMapper.readValue(getRetiredEmployees(), Employee[].class);
         List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
-        for (Employee i : arr) {
+
+        for(Employee i : arr) {
             if (i.getSsn().contains(ssn)) {
                 return true;
             }
@@ -136,7 +128,6 @@ public class ShiftRequest {
 
         return response.body();
     }
-
     public String addStaff(Employee newEmployee) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request;

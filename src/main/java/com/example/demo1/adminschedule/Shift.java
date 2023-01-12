@@ -1,4 +1,4 @@
-package com.example.demo1;
+package com.example.demo1.adminschedule;
 
 public class Shift {
     private int id;
@@ -6,6 +6,26 @@ public class Shift {
     private String beginTime;
     private String endTime;
     private Employee employee;
+    public Shift(){};
+    public Shift(String date, Employee employee){
+        this.date = date;
+        this.employee = employee;
+    }
+    public Shift(String date, Employee employee, int id){
+        this.date = date;
+        this.employee = employee;
+        this.id = id;
+    }
+
+    public Shift(int id, String date, String beginTime, String endTime, Employee employee){
+        this.date = date;
+        this.employee = employee;
+        this.id = id;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+    }
+    public void setWorkingHours(){
+    };
 
     public int getId() {
         return id;
