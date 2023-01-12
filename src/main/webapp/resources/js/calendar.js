@@ -27,7 +27,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if (firstDayStart == 0) {
             firstDayStart = 7
         }
-        console.log(curr_month + "----" + month)
         for (let index = 0; index < days_of_month[month] + firstDayStart; index++) {
             if (index >= firstDayStart - 1) {
                 if ((index - firstDayStart + 2) == currDate.getDate() && currDate.getMonth() == month && currDate.getFullYear() == year) {
@@ -57,7 +56,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     let yearpicker = document.querySelector('.year-book').innerHTML
     let month_picker = document.querySelector('.month').innerHTML
-    console.log("---" + month_names.indexOf(month_picker.substring(0, 3)) + "-" + parseInt(yearpicker))
 
 
     var curr_year = parseInt(myArray[0])
@@ -92,7 +90,6 @@ loadNewDatesListners = (month, year) => {
                 var tempSelectetday = selectetday;
 
             }
-            console.log(tempSelectetMonth + "!!!!!!!!" + tempSelectetday)
 
             input_text.value = parseInt(year) + "-" + (tempSelectetMonth) + "-" + tempSelectetday
             input_text.readOnly = true
@@ -110,7 +107,6 @@ changeMonth = () =>
 
 
     var curr_year = parseInt(myArray[0])
-    console.log(parseInt(myArray[2])+"!!!!!!!!!!!!!"+parseInt(myArray[1]))
 
     let yearpicker = document.querySelector('.year-book').innerHTML
     let month_picker = document.querySelector('.month').innerHTML

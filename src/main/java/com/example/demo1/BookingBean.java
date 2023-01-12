@@ -55,7 +55,7 @@ public class BookingBean implements Serializable {
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 Map<String, Object> jsonMap = objectMapper.readValue(tempResponse, Map.class);
-                receivingMessage +=": "+ (String) jsonMap.get("firstName");
+                receivingMessage +=", bokning genomförd!";
 
                 if (!((String) jsonMap.get("firstName")).equals("Booking has been made!"))
                 {
@@ -81,7 +81,7 @@ public class BookingBean implements Serializable {
                 }
                 return false;
             }
-            receivingMessage+="-select date";
+            receivingMessage+="-välj datum";
             return false;
         }
 
@@ -126,7 +126,7 @@ return true;
                     }
 
                 }
-                receivingMessage+="-ogiltig tid(xx:xx)";
+                receivingMessage+="-ogiltig tids-format(xx:xx)";
             return false;
 
         }
