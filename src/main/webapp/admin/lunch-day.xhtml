@@ -28,7 +28,7 @@
 
             <div>
                 <label>Välj Rätt</label><br/>
-                <h:selectOneMenu value="#{LunchBean.lunchItem.dish.id}">
+                <h:selectOneMenu style="max-width: 150px" value="#{LunchBean.lunchItem.dish.id}">
                     <f:selectItems value="#{FoodItemsBean.list}" var="dish" itemValue="#{dish.id}"
                                    itemLabel="#{dish.name}">
                     </f:selectItems>
