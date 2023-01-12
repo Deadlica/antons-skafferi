@@ -12,6 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class ShiftRequest {
@@ -107,7 +108,8 @@ public class ShiftRequest {
         ObjectMapper objectMapper = new ObjectMapper();
         Employee[] list_arr = objectMapper.readValue(getRetiredEmployees(), Employee[].class);
         List<Employee> arr = new ArrayList<>(Arrays.asList(list_arr));
-        for (Employee i : arr) {
+
+        for(Employee i : arr) {
             if (i.getSsn().contains(ssn)) {
                 return true;
             }

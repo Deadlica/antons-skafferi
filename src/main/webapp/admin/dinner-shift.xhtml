@@ -16,7 +16,10 @@
                <h:selectOneMenu value="#{weekday.selected}">
                   <f:selectItems value="#{weekday.freeEmployees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                </h:selectOneMenu>
-               <h:commandButton value="Lägg till" action="#{ShiftBean.dinner.addShift(weekday.selected, weekday.date)}" />
+               <h:commandButton value="Lägg till" >
+                  <f:actionListener binding="#{ShiftBean.dinner.addShift(weekday.selected, weekday.date)}" />
+                  <f:actionListener binding="#{ShiftBean.updateLists()}" />
+               </h:commandButton>
             </h:panelGroup>
          </h:panelGroup>
       </h:panelGroup>

@@ -1,5 +1,6 @@
 package com.example.demo1.adminschedule;
 
+import java.util.Iterator;
 import java.util.List;
 public abstract class Weekday{
     private final String text;
@@ -13,7 +14,6 @@ public abstract class Weekday{
         this.shifts = shifts;
         this.freeEmployees = freeEmployees;
     }
-    //public void pushShift(Shift shift){ shifts.add(shift); }
     public abstract void pushShift(Shift shift);
     public abstract Shift createShift(String date, Employee employee, int id);
     Employee findFreeEmployee(String ssn){

@@ -1,8 +1,11 @@
 package com.example.demo1.adminschedule;
 
+import com.example.demo1.ShiftBean;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LunchWeekdayContainer extends WeekdayContainer{
@@ -24,5 +27,6 @@ public class LunchWeekdayContainer extends WeekdayContainer{
         int i = getIndexAtDate(date, getWeekdays());
         Employee employee = getWeekdays().get(i).findFreeEmployee(ssn);
         shiftRequest.addShift(getWeekdays().get(i).createShift(date, employee, 0));
+
     }
 }
