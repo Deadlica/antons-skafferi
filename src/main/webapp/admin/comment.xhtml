@@ -6,28 +6,36 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <head>
-<h:outputStylesheet library="css" name="adminComment.css"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+   <link rel="icon" type="image/svg+xml" href="/resources/images/favicon.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 </head>
 <f:view>
-   <h:panelGroup layout="block" styleClass="main">
-   <h1>Kommentarer</h1>
-      <h2>Genomsnittligt betyg: #{CommentsBean.averageRating}/5</h2>
-   <div class="window">
-      <h:form>
-      <ui:repeat value="#{CommentsBean.holdAllReviews}" var="item">
-         <div class="review-display">
-            <div class="comment">
-            <h3><h:outputText value="#{item.firstName} #{item.ranking}/5"/></h3>
-            <p><h:outputText value="#{item.text}"/></p>
-            </div>
-            <h:commandButton styleClass="remove-btn" title="Ta bort" value="✖" actionListener="#{CommentsBean.removeComment(item.id)}" />
-         </div>
-      </ui:repeat>
-      </h:form>
-   </div>
-   </h:panelGroup>
+    <h:panelGroup layout="block" styleClass="admin-main">
+        <h1>Kommentarer</h1>
+        <h2>Genomsnittligt betyg: <h:outputText value="#{CommentsBean.averageRating}"><f:convertNumber maxFractionDigits="2"/></h:outputText>/5</h2>
+        <div class="review-list">
+            <h:form>
+                <ui:repeat value="#{CommentsBean.holdAllReviews}" var="item">
+                    <div class="review-item">
+                        <div class="review-item-header">
+                            <span class="review-item-name"><h:outputText value="#{item.firstName}"/></span>
+                            <span class="review-item-rating">
+                                <h:outputText value="★★★★★" rendered="#{item.ranking == 5}"/>
+                                <h:outputText value="★★★★☆" rendered="#{item.ranking == 4}"/>
+                                <h:outputText value="★★★☆☆" rendered="#{item.ranking == 3}"/>
+                                <h:outputText value="★★☆☆☆" rendered="#{item.ranking == 2}"/>
+                                <h:outputText value="★☆☆☆☆" rendered="#{item.ranking == 1}"/>
+                            </span>
+                            <h:commandButton styleClass="remove-btn" title="Ta bort" value="✖"
+                                             actionListener="#{CommentsBean.removeComment(item.id)}"/>
+                        </div>
+                        <p class="review-item-text"><h:outputText value="#{item.text}"/></p>
+                    </div>
+                </ui:repeat>
+            </h:form>
+        </div>
+    </h:panelGroup>
 </f:view>
 </html>

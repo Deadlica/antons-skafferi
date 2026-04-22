@@ -16,7 +16,7 @@
 .schedule-container{
     padding: 2%;
     margin: 2%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: var(--shadow-card);
     background: white;
 }
 
@@ -41,7 +41,7 @@
 
 .reload-btn input[type="submit"]{
     padding: 1%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: var(--shadow-card);
     border-radius: 50%;
 }
 
@@ -54,18 +54,29 @@
     overflow: auto;
     border: #202020 1px solid;
     padding: 10%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: var(--shadow-card);
     background: var(--background_white);
 }
 
 .admin-form-add-staff{
     margin-top: 10%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    gap: 0.4em;
+    width: 100%;
 }
 
-.admin-form-add-staff *{
+.admin-form-add-staff select,
+.admin-form-add-staff input[type="submit"]{
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.admin-form-add-staff select{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 input[type="submit"]{
@@ -108,7 +119,7 @@ input[type="submit"]:hover{
 }
 
 .add-delete-staff{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: var(--shadow-card);
     padding: 5%;
     display: flex;
     flex-direction: row;
@@ -135,7 +146,7 @@ input[type="submit"]:hover{
 
 .staff{
     padding: 5%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -156,7 +167,7 @@ input[type="submit"]:hover{
 .all-staff{
     padding: 2%;
     margin-top: 1%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
     background: var(--background_white);

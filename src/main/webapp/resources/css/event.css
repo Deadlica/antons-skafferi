@@ -1,21 +1,88 @@
-.today-event {
+#title-event {
+    text-align: center;
+}
+
+.sub-title {
+    color: var(--joel_brown);
+    font-family: Cinzel, cursive;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5em;
+}
+
+.today-event,
+.comming-event {
     display: flex;
     flex-direction: column;
+    gap: 1em;
+    margin-bottom: 2em;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5em;
+}
+
+.today-event .navigation-line-break,
+.comming-events .navigation-line-break {
+    margin-bottom: 1em;
+}
+
+.events {
+    display: flex;
+    gap: 1.25em;
+    align-items: stretch;
+    padding: 1em 1.25em;
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+}
+
+.event-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+.event-name {
+    color: var(--joel_brown);
+    font-family: Cinzel, cursive;
+    font-size: 1.2rem;
+}
+
+.event-main p {
+    color: #333;
+    font-family: Cormorant, serif;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.event-main p:last-child {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: auto;
 }
 
 .event-image {
     width: 150px;
     height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
 }
 
-#title-event {
-    display: flex;
-    justify-content: center;
+/* Hide the old thin dividers between cards — cards separate themselves */
+.today-event .navigation-line-break-inner,
+.comming-events .navigation-line-break-inner {
+    display: none;
 }
 
-.events {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 10%;
-    padding-right: 5%;
+@media (max-width: 750px) {
+    .events {
+        flex-direction: column-reverse;
+        padding: 1em;
+    }
+    .event-image {
+        width: 100%;
+        height: 200px;
+    }
 }

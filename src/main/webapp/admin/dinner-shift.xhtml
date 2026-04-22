@@ -4,7 +4,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core" >
    <ui:repeat class="working-employees" value="#{ShiftBean.dinner.weekdays}" var="weekday">
       <h:panelGroup class="admin-schedule" layout="block">
-         <h3 id="admin-schedule-date">#{weekday.text}</h3>
+         <h3 class="admin-schedule-date">#{weekday.text}</h3>
          <h:panelGroup class="admin-schedule-day" layout="block">
             <ui:repeat class="working-employees" value="#{weekday.shifts}" var="shift"><!--Hämta arbetare från ett specifikt datum-->
                <h:panelGroup class="admin-schedule-workers">
@@ -16,10 +16,7 @@
                <h:selectOneMenu value="#{weekday.selected}">
                   <f:selectItems value="#{weekday.freeEmployees}" var="e" itemValue="#{e.ssn}" itemLabel="#{e.firstName} #{e.lastName}"/>
                </h:selectOneMenu>
-               <h:commandButton value="Lägg till" >
-                  <f:actionListener binding="#{ShiftBean.dinner.addShift(weekday.selected, weekday.date)}" />
-                  <f:actionListener binding="#{ShiftBean.updateLists()}" />
-               </h:commandButton>
+               <h:commandButton value="Lägg till" action="#{ShiftBean.addDinnerShift(weekday.selected, weekday.date)}" />
             </h:panelGroup>
          </h:panelGroup>
       </h:panelGroup>

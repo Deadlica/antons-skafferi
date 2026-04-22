@@ -1,0 +1,201 @@
+:root {
+    --joel_brown: #7D5A3E;
+    --background_white: #f5f5f5;
+    --text-muted: #555;
+    --surface: white;
+    --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.12), 0 6px 20px rgba(0, 0, 0, 0.08);
+    --radius-card: 12px;
+    --method-get: #7da075;
+    --method-post: #6b8ba4;
+    --method-put: #b23a2f;
+    --method-delete: #b23a2f;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/cinzel/v19/8vIU7ww63mVu7gtR-kwKxNvkNOjw-tbnfY3lDWxcZqTFUw.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Cormorant';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/cormorant/v18/H4c2BXOCl9bbnla_nHIA47NMUjsNbCVrFhFTc7Nq7Q.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+html {
+    background: var(--background_white);
+}
+
+body {
+    font-family: Cormorant, serif;
+    color: #222;
+    line-height: 1.5;
+}
+
+b {
+    font-weight: 600;
+    color: var(--joel_brown);
+}
+
+a {
+    color: var(--joel_brown);
+}
+
+.nav_bar {
+    background: var(--joel_brown);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.nav_bar ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0.5em 1em;
+    margin: 0;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.nav_bar ul li {
+    cursor: pointer;
+    font-family: Cinzel, cursive;
+    letter-spacing: 0.05em;
+    font-size: 1rem;
+    text-transform: uppercase;
+    padding: 0.2em 0.4em;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+}
+
+.nav_bar ul li:hover {
+    opacity: 1;
+}
+
+.nav_bar hr {
+    display: none;
+}
+
+.all_entities {
+    max-width: 960px;
+    margin: 2em auto;
+    padding: 0 1em;
+}
+
+.entity {
+    display: none;
+}
+
+.card {
+    display: flex;
+    align-items: stretch;
+    margin: 1.25em 0;
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+}
+
+.http_request_get,
+.http_request_post,
+.http_request_put,
+.http_request_delete {
+    min-width: 5.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: Cinzel, cursive;
+    letter-spacing: 0.05em;
+    padding: 0.5em;
+}
+
+.http_request_get { background: var(--method-get); }
+.http_request_post { background: var(--method-post); }
+.http_request_put { background: var(--method-put); }
+.http_request_delete { background: var(--method-delete); }
+
+.http_request_get h1,
+.http_request_post h1,
+.http_request_put h1,
+.http_request_delete h1 {
+    font-size: 1rem;
+    font-family: Cinzel, cursive;
+}
+
+.vl {
+    display: none;
+}
+
+.card_content {
+    flex: 1;
+    padding: 1em 1.25em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.card_content a {
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    color: var(--joel_brown);
+    word-break: break-all;
+}
+
+.param_title {
+    color: var(--text-muted);
+}
+
+.param {
+    margin-left: 1em;
+}
+
+.param_title a:visited {
+    color: var(--joel_brown);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid rgba(125, 90, 62, 0.2);
+    margin: 0.75em 0;
+}
+
+@media (max-width: 750px) {
+    .all_entities {
+        padding: 0 0.75em;
+    }
+    .card {
+        flex-direction: column;
+    }
+    .http_request_get,
+    .http_request_post,
+    .http_request_put,
+    .http_request_delete {
+        min-width: 0;
+        padding: 0.4em;
+    }
+    .nav_bar ul {
+        justify-content: center;
+    }
+}

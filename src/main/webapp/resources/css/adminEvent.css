@@ -1,133 +1,145 @@
 .event-add {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin-right: 30%;
-    margin-left: 30%;
-    margin-top: 5%;
-    margin-bottom: 5%;
-    border-radius: 50px;
-    background: #e0e0e0;
-    box-shadow: 28px 28px 56px #bebebe,
-    -28px -28px 56px #ffffff;
-}
-
-.event-add * {
-    margin-right: 10%;
-    margin-left: 10%;
-    margin-bottom: 1.5%;
+    gap: 0.75em;
+    max-width: 520px;
+    margin: 2em auto;
+    padding: 2em;
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
 }
 
 .admin-event-title {
-    margin-top: 5%;
     text-align: center;
+    color: var(--joel_brown);
 }
 
-.admin-event-add-button {
-    margin-bottom: 3.5%;
+.event-add input,
+.event-add textarea,
+.event-add select {
+    padding: 0.5em 0.75em;
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    font-family: Cormorant, serif;
+    font-size: 1rem;
+}
+
+.event-add input:focus,
+.event-add textarea:focus {
+    outline: none;
+    border-color: var(--joel_brown);
 }
 
 .all-event {
-    margin-left: 20%;
-    margin-right: 20%;
+    max-width: 900px;
+    margin: 2em auto;
+    padding-right: 0.5em;
+    max-height: 600px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
 }
 
 .event-all-components {
     display: flex;
-    padding-left: 5%;
-    padding-right: 5%;
-    border-radius: 48px;
-    background: #e0e0e0;
-    margin-bottom: 2%;
     justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 1.25em;
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
 }
 
 .event-information {
-    margin-top: 1%;
-    margin-bottom: 1%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    flex: 1;
 }
 
-.event-information * {
-    font-size: large;
+.event-information .event-name {
+    font-family: Cinzel, cursive;
+    font-size: 1.1rem;
+    color: var(--joel_brown);
+}
+
+.event-information .event-meta {
+    color: var(--text-muted);
+    font-family: Cormorant, serif;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+.event-information .event-desc {
+    font-family: Cormorant, serif;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.4;
+    max-width: 80ch;
+}
+
+.admin-event-btn {
+    background: var(--joel_brown);
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: Cinzel, cursive;
+    letter-spacing: 0.05em;
+    font-size: 0.95rem;
+    transition: opacity 0.15s, transform 0.15s;
+}
+
+.admin-event-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.admin-event-btn:active {
+    transform: translateY(0);
+}
+
+.admin-event-btn.danger {
+    background: var(--accent-danger);
+}
+
+/* keep old class names working, via aliases */
+.admin-event-add-button { composes: admin-event-btn; }
+.event-remove-button {
+    background: transparent;
+    color: var(--accent-danger);
+    border: none;
+    padding: 0.4em 0.8em;
+    cursor: pointer;
+    font-family: Cormorant, serif;
+    font-size: 1rem;
+}
+
+.event-remove-button:hover {
+    color: white;
+    background: var(--accent-danger);
+    border-radius: 4px;
 }
 
 .admin-event-add-button {
-    appearance: none;
-    background-color: transparent;
-    border: 0.125em solid #1A1A1A;
-    border-radius: 0.9375em;
-    box-sizing: border-box;
-    color: #3B3B3B;
+    background: var(--joel_brown);
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    border-radius: 6px;
     cursor: pointer;
-    display: inline-block;
-    font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 16px;
-    font-weight: 600;
-    line-height: normal;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    min-height: 3.75em;
-    min-width: 0;
-    outline: none;
-    padding: 0.3em 1.1em;
-    text-align: center;
-    text-decoration: none;
-    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    will-change: transform;
+    font-family: Cinzel, cursive;
+    letter-spacing: 0.05em;
+    font-size: 0.95rem;
+    margin-top: 0.5em;
+    transition: opacity 0.15s, transform 0.15s;
 }
 
 .admin-event-add-button:hover {
-    color: #fff;
-    background-color: black;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
-}
-
-.admin-event-add-button:active {
-    box-shadow: none;
-    transform: translateY(0);
-}
-
-.event-remove-button {
-    appearance: none;
-    background-color: transparent;
-    border: 0.125em solid #1A1A1A;
-    border-radius: 0.9375em;
-    box-sizing: border-box;
-    color: #3B3B3B;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 16px;
-    font-weight: 600;
-    line-height: normal;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    min-height: 3.75em;
-    min-width: 0;
-    outline: none;
-    padding: 0.3em 1.1em;
-    text-align: center;
-    text-decoration: none;
-    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    will-change: transform;
-}
-
-
-.event-remove-button:hover {
-    color: #fff;
-    background-color: red;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
-}
-
-.event-remove-button:active {
-    box-shadow: none;
-    transform: translateY(0);
+    opacity: 0.9;
+    transform: translateY(-1px);
 }

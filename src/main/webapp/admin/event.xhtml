@@ -8,6 +8,7 @@
       lang="sv"
       xml:lang="sv">
 <h:head>
+   <link rel="icon" type="image/svg+xml" href="/resources/images/favicon.svg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <h:outputStylesheet library="css" name="styles.css"/>
     <h:outputStylesheet library="css" name="adminEvent.css"/>
@@ -20,50 +21,43 @@
 <h:body>
     <f:view>
         <ui:include src="nav.xhtml"/>
-        <h:panelGroup layout="block">
+        <h:panelGroup layout="block" styleClass="admin-main">
             <!-- ADD EVENT -->
-            <h:form styleClass="carte-add-item" class="event-add" enctype="multipart/form-data">
-                <h1 class="admin-event-title">ADD AN EVENT</h1>
+            <h:form class="event-add" enctype="multipart/form-data">
+                <h1 class="admin-event-title">Lägg till event</h1>
                 <h:outputLabel>Titel</h:outputLabel>
                 <h:inputText id="given-event-name" value="#{EventBean.eventItem.NAME}"/>
                 <h:outputLabel>Pris</h:outputLabel>
                 <h:inputText id="given-event-price" value="#{EventBean.eventItem.PRICE}"/>
                 <h:outputLabel>Beskrivning</h:outputLabel>
                 <h:inputTextarea id="given-event-description" value="#{EventBean.eventItem.DESCRIPTION}"/>
-                <h:outputLabel>Date</h:outputLabel>
-                <h:inputTextarea id="given-event-date" value="#{EventBean.eventItem.date}"/>
-                <h:outputLabel>Photo</h:outputLabel>
-                <h:inputFile id="given-event-image" value="#{EventBean.image}"></h:inputFile>
-                <h:commandButton value="Lägg till!" action="#{EventBean.addNewEvent()}" class="admin-event-add-button">
-                </h:commandButton>
+                <h:outputLabel>Datum</h:outputLabel>
+                <h:inputText id="given-event-date" value="#{EventBean.eventItem.date}">
+                    <f:passThroughAttribute name="type" value="date"/>
+                </h:inputText>
+                <h:outputLabel>Bild</h:outputLabel>
+                <h:inputFile id="given-event-image" value="#{EventBean.image}"/>
+                <h:commandButton value="Lägg till" action="#{EventBean.addNewEvent()}" class="admin-event-add-button"/>
             </h:form>
-        </h:panelGroup>
 
-
-        <div class="all-event">
-            <h:form id="events-form">
-                <ui:repeat value="#{EventBean.allEvents}" var="item" varStatus="status">
-                    <h:panelGroup class="admin-events" id="refresh">
+            <div class="all-event">
+                <h:form id="events-form">
+                    <ui:repeat value="#{EventBean.allEvents}" var="item" varStatus="status">
                         <div class="event-all-components">
                             <div class="event-information">
-                                <h2 class="event-name">NAMN: <h:outputText id="event-name-id" value="#{item.NAME}"/>
-                                </h2>
-                                <h2>BESKRIVNING: <h:outputText id="event-description-id" value="#{item.DESCRIPTION}"/>
-                                </h2>
-                                <h2>PRIS: <h:outputText id="event-price-id" value="#{item.PRICE}"/> :-</h2>
-                                <h2>DATUM: <h:outputText id="event-date-id" value="#{item.date}"/></h2>
+                                <h2 class="event-name"><h:outputText value="#{item.NAME}"/></h2>
+                                <p class="event-meta"><h:outputText value="#{item.date}"/> · <h:outputText value="#{item.PRICE}"/> :-</p>
+                                <p class="event-desc"><h:outputText value="#{item.DESCRIPTION}"/></p>
                             </div>
-                            <h:commandButton class="event-remove-button" value="Delete"
+                            <h:commandButton class="event-remove-button" value="Ta bort"
                                              action="#{EventBean.removeEvent(item.id)}">
                                 <f:ajax execute="@form" render="events-form"/>
                             </h:commandButton>
-
-
                         </div>
-                    </h:panelGroup>
-                </ui:repeat>
-            </h:form>
-        </div>
+                    </ui:repeat>
+                </h:form>
+            </div>
+        </h:panelGroup>
         <ui:include src="footer.xhtml"/>
     </f:view>
 </h:body>

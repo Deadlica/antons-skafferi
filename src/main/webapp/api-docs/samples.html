@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"/>
+<title>API sample responses</title>
+<link rel="stylesheet" href="resources/css/api-docs.css"/>
+<link rel="icon" type="image/svg+xml" href="../resources/images/favicon.svg"/>
+<style>body{padding:2rem;font-family:sans-serif;max-width:900px;margin:auto}pre{background:#f4f4f4;padding:1rem;border-radius:4px;overflow-x:auto;font-size:13px}h3{margin-top:2rem;color:#333}</style>
+</head><body>
+<h1>API sample responses</h1>
+<p>Example shapes for GET endpoints. Real endpoints return arrays of such objects (or an empty array when no rows match).</p>
+
+<h3>GET api/employee</h3>
+<pre>{
+  "ssn": "200002224970",
+  "firstName": "Samuel",
+  "lastName": "Greenberg",
+  "email": "samuelgreenberg00@gmail.com",
+  "phoneNumber": "0723993114"
+}</pre>
+
+<h3>GET api/employee/working</h3>
+<pre>{
+  "ssn": "200010121314",
+  "firstName": "Marcus",
+  "lastName": "Jakobsson",
+  "email": "maja2001@student.miun.se",
+  "phoneNumber": "0709328484"
+}</pre>
+
+<h3>GET api/employee/retired</h3>
+<pre>{
+  "ssn": "200002224970",
+  "firstName": "Samuel",
+  "lastName": "Greenberg",
+  "email": "samuelgreenberg00@gmail.com",
+  "phoneNumber": "0723993114"
+}</pre>
+
+<h3>GET api/employee/lunch/available?date=</h3>
+<pre>{
+  "ssn": "200102124466",
+  "firstName": "Nikki",
+  "lastName": "Wolg",
+  "email": "niwo2002@student.miun.se",
+  "phoneNumber": "0709203910"
+}</pre>
+
+<h3>GET api/employee/dinner/available?date=</h3>
+<pre>{
+  "ssn": "200006261111",
+  "firstName": "Eric",
+  "lastName": "Johanzon",
+  "email": "erjo2001@student.miun.se",
+  "phoneNumber": "0701239402"
+}</pre>
+
+<h3>GET api/shift</h3>
+<pre>{
+  "id": 4,
+  "date": "2026-04-22",
+  "beginTime": "11:00:00",
+  "endTime": "14:00:00",
+  "employee": {
+    "ssn": "200010121314",
+    "firstName": "Marcus",
+    "lastName": "Jakobsson",
+    "email": "maja2001@student.miun.se",
+    "phoneNumber": "0709328484"
+  }
+}</pre>
+
+<h3>GET api/shift/lunch?date=</h3>
+<pre>{
+  "id": 5,
+  "date": "2026-04-22",
+  "beginTime": "11:00:00",
+  "endTime": "14:00:00",
+  "employee": {
+    "ssn": "200010121314",
+    "firstName": "Marcus",
+    "lastName": "Jakobsson",
+    "email": "maja2001@student.miun.se",
+    "phoneNumber": "0709328484"
+  }
+}</pre>
+
+<h3>GET api/shift/dinner?date=</h3>
+<pre>{
+  "id": 6,
+  "date": "2026-04-22",
+  "beginTime": "16:00:00",
+  "endTime": "23:00:00",
+  "employee": {
+    "ssn": "200109189933",
+    "firstName": "Alexander",
+    "lastName": "Frid",
+    "email": "alfri2005@student.miun.se",
+    "phoneNumber": "0739401839"
+  }
+}</pre>
+
+<h3>GET api/shift/range?startDate=&amp;endDate=</h3>
+<pre>{
+  "id": 7,
+  "date": "2026-04-20",
+  "beginTime": "11:00:00",
+  "endTime": "14:00:00",
+  "employee": {
+    "ssn": "200109189933",
+    "firstName": "Alexander",
+    "lastName": "Frid",
+    "email": "alfri2005@student.miun.se",
+    "phoneNumber": "0739401839"
+  }
+}</pre>
+
+<h3>GET api/shift/upcoming-shifts?id=&amp;date=</h3>
+<pre>{
+  "id": 964,
+  "date": "2026-04-22",
+  "beginTime": "16:00:00",
+  "endTime": "23:00:00",
+  "employee": {
+    "ssn": "200010121314",
+    "firstName": "Marcus",
+    "lastName": "Jakobsson",
+    "email": "maja2001@student.miun.se",
+    "phoneNumber": "0709328484"
+  }
+}</pre>
+
+<h3>GET api/request</h3>
+<pre>{
+  "shift": {
+    "id": 964,
+    "date": "2026-04-22",
+    "beginTime": "16:00:00",
+    "endTime": "23:00:00"
+  },
+  "toEmployee": {
+    "ssn": "200102124466",
+    "firstName": "Nikki",
+    "lastName": "Wolg"
+  }
+}</pre>
+
+<h3>GET api/orders</h3>
+<pre>{
+  "id": 101,
+  "time": "19:15:00",
+  "status": false,
+  "served": false,
+  "notes": "No onions",
+  "dish": { "id": 231, "name": "6-pack nuggets", "type": "" },
+  "booking": {
+    "id": 415,
+    "date": "2026-04-22",
+    "firstName": "Sam",
+    "lastName": "Gre",
+    "numberOfPeople": 2,
+    "phoneNumber": "0700000000",
+    "time": "19:00"
+  },
+  "employee": {
+    "ssn": "200010121314",
+    "firstName": "Marcus",
+    "lastName": "Jakobsson"
+  }
+}</pre>
+
+<h3>GET api/orders/kitchen</h3>
+<pre>{
+  "id": 102,
+  "time": "19:20:00",
+  "status": false,
+  "served": false,
+  "notes": "",
+  "price": 145,
+  "category": "Varmrätt",
+  "description": "Served with lingonberries",
+  "dish": { "id": 204, "name": "Köttbullar", "type": "Varmrätt" },
+  "booking": {
+    "id": 416,
+    "date": "2026-04-22",
+    "firstName": "Lena",
+    "lastName": "Svensson",
+    "numberOfPeople": 2,
+    "phoneNumber": "0707000000",
+    "time": "19:00"
+  },
+  "employee": {
+    "ssn": "200006261111",
+    "firstName": "Eric",
+    "lastName": "Johanzon"
+  }
+}</pre>
+
+<h3>GET api/orders/ready</h3>
+<pre>{
+  "id": 103,
+  "time": "19:25:00",
+  "status": true,
+  "served": false,
+  "notes": "Extra sauce",
+  "price": 95,
+  "category": "Förrätt",
+  "description": "House starter",
+  "dish": { "id": 198, "name": "Toast Skagen", "type": "Förrätt" },
+  "booking": {
+    "id": 416,
+    "date": "2026-04-22",
+    "firstName": "Lena",
+    "lastName": "Svensson",
+    "numberOfPeople": 2,
+    "phoneNumber": "0707000000",
+    "time": "19:00"
+  },
+  "employee": {
+    "ssn": "200006261111",
+    "firstName": "Eric",
+    "lastName": "Johanzon"
+  }
+}</pre>
+
+<h3>GET api/orders/served</h3>
+<pre>{
+  "id": 104,
+  "time": "19:40:00",
+  "status": true,
+  "served": true,
+  "notes": "",
+  "dish": { "id": 246, "name": "Apple Juice", "type": "Dryck" },
+  "booking": {
+    "id": 416,
+    "date": "2026-04-22",
+    "firstName": "Lena",
+    "lastName": "Svensson",
+    "numberOfPeople": 2,
+    "phoneNumber": "0707000000",
+    "time": "19:00"
+  },
+  "employee": {
+    "ssn": "200006261111",
+    "firstName": "Eric",
+    "lastName": "Johanzon"
+  }
+}</pre>
+
+<h3>GET api/orders/sales</h3>
+<pre>{
+  "id": 104,
+  "time": "19:40:00",
+  "status": true,
+  "served": true,
+  "price": 45,
+  "category": "Dryck",
+  "description": "Freshly squeezed from home grown apples",
+  "dish": { "id": 246, "name": "Apple Juice", "type": "Dryck" },
+  "booking": {
+    "id": 416,
+    "date": "2026-04-22",
+    "firstName": "Lena",
+    "lastName": "Svensson"
+  },
+  "employee": {
+    "ssn": "200006261111",
+    "firstName": "Eric",
+    "lastName": "Johanzon"
+  }
+}</pre>
+
+<h3>GET api/booking</h3>
+<pre>{
+  "id": 2,
+  "date": "2026-04-22",
+  "time": "19:00",
+  "firstName": "Lena",
+  "lastName": "Svensson",
+  "numberOfPeople": 2,
+  "phoneNumber": "0707000000"
+}</pre>
+
+<h3>GET api/booking/count?date=</h3>
+<pre>{ "size": 3 }</pre>
+
+<h3>GET api/dish</h3>
+<pre>{ "id": 231, "name": "6-pack nuggets", "type": "" }</pre>
+
+<h3>GET api/dish/available</h3>
+<pre>{ "id": 231, "name": "6-pack nuggets", "type": "" }</pre>
+
+<h3>GET api/carte</h3>
+<pre>{
+  "category": "Dryck",
+  "description": "Freshly squeezed from home grown apples",
+  "price": 45,
+  "dish": { "id": 246, "name": "Apple Juice", "type": "Dryck" }
+}</pre>
+
+<h3>GET api/lunch</h3>
+<pre>{
+  "date": "2026-04-22",
+  "description": "Served with pickled cucumber and cream sauce",
+  "price": 115,
+  "dish": { "id": 204, "name": "Köttbullar", "type": "Varmrätt" }
+}</pre>
+
+<h3>GET api/lunch?date=</h3>
+<pre>{
+  "date": "2026-04-22",
+  "description": "1231231",
+  "price": 111,
+  "dish": { "id": 231, "name": "6-pack nuggets", "type": "" }
+}</pre>
+
+<h3>GET api/lunch/today</h3>
+<pre>{
+  "date": "2026-04-22",
+  "description": "1231231",
+  "price": 111,
+  "dish": { "id": 231, "name": "6-pack nuggets", "type": "" }
+}</pre>
+
+<h3>GET api/event</h3>
+<pre>{
+  "id": 2,
+  "date": "2026-05-15",
+  "name": "KISS Live",
+  "description": "KISS kommer till Antons Skafferi!",
+  "price": 495
+}</pre>
+
+<h3>GET api/event/upcoming</h3>
+<pre>{
+  "id": 212,
+  "date": "2026-04-22",
+  "name": "testttt",
+  "description": "rwearrr",
+  "price": 1233
+}</pre>
+
+<h3>GET api/review</h3>
+<pre>{
+  "id": 209,
+  "firstName": "Tjulo mami",
+  "lastName": "nått",
+  "text": "Deliciouso mama mia!!",
+  "ranking": 5
+}</pre>
+
+</body></html>

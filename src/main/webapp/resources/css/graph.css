@@ -1,101 +1,142 @@
-.center_screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.sales-title {
     text-align: center;
-    min-height: 60vh;
-}
-
-.center_screen > p {
-    transform: rotate(-90deg);
-    font-size: 30px;
-}
-
-.days {
-    display: flex;
-    justify-content: center;
-    font-size: 30px;
-    padding-top: 35px;
+    font-family: Cinzel, cursive;
+    color: var(--joel_brown);
+    letter-spacing: 0.05em;
+    padding: 1em 0 0.25em;
 }
 
 .graph_title {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 0.5em;
+    padding-top: 1em;
+    font-family: Cinzel, cursive;
+    font-size: 1.5rem;
+    color: var(--joel_brown);
+}
+
+.graph_title > #month {
+    width: 16ch;
     text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    padding-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
 }
 
 .graph_title > button {
-    margin: 0 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    background: transparent;
+    border: none;
+    color: var(--joel_brown);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.graph_title > button:hover {
+    background: rgba(125, 90, 62, 0.1);
 }
 
 .month_arrow {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    margin: 5px 5px;
+    font-style: normal;
 }
 
-.next {
-    transform: rotate(-45deg);
+.month_arrow.prev::before { content: "◀"; }
+.month_arrow.next::before { content: "▶"; }
+
+.total_sales {
+    text-align: center;
+    font-family: Cormorant, serif;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    padding: 0.5em 0;
 }
 
-.prev {
-    transform: rotate(135deg);
+.center_screen {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 60vh;
+    padding: 2em 2em 0 4em;
+    position: relative;
+}
+
+.center_screen > p {
+    position: absolute;
+    left: 1em;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center;
+    color: var(--text-muted);
+    font-family: Cormorant, serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
 }
 
 .graph {
-    border-bottom: solid 3px;
-    border-left: solid 3px;
+    flex: 1;
     height: 60vh;
-    width: 80%;
     display: flex;
-    background: linear-gradient(to top, black 0, transparent 1%);
-    background-size: 100% 100px;
-    background-color: whitesmoke;
-}
-
-.graph > div { /*Bar Wrapper*/
-    display: flex;
-    flex: 1;
-    padding: 0 0 0 0.2%;
     align-items: flex-end;
+    padding: 0 0.5em;
+    border-bottom: 2px solid var(--joel_brown);
+    border-left: 2px solid var(--joel_brown);
+    background-image: linear-gradient(to top, rgba(125, 90, 62, 0.08) 1px, transparent 1px);
+    background-size: 100% 20%;
 }
 
-.graph > div > span { /*Bar*/
-    background-color: dodgerblue;
+.graph > div {
     flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 2px;
+}
+
+.graph > div > span {
+    flex: 1;
+    background: var(--joel_brown);
+    border-radius: 3px 3px 0 0;
     position: relative;
     display: flex;
     justify-content: center;
+    min-height: 1px;
+    transition: background 0.15s;
 }
 
-.title { /*Title*/
+.graph > div > span:hover {
+    background: #9a6e4c;
+}
+
+.title {
     position: absolute;
-    bottom: -30px;
+    bottom: -1.5em;
+    font-family: Cormorant, serif;
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 .cost {
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: -1.6em;
+    font-family: Cormorant, serif;
+    font-size: 0.95rem;
+    color: var(--joel_brown);
+    white-space: nowrap;
 }
 
-.total_sales {
-    display: flex;
-    justify-content: center;
-    font-size: 30px;
-    font-weight: bold;
-    padding: 20px 0 5px 0;
+.days {
+    text-align: center;
+    font-family: Cormorant, serif;
+    color: var(--text-muted);
+    padding-top: 2em;
 }
 
-@media only screen and (max-width: 800px){ /*Mobile layout*/
-
+@media (max-width: 800px) {
+    .graph_title { font-size: 1.2rem; }
+    .center_screen { padding: 0 1em; }
 }

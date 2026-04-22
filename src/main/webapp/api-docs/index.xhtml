@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <link rel="stylesheet" href="resources/css/api-docs.css"/>
+    <link rel="icon" type="image/svg+xml" href="../resources/images/favicon.svg"/>
+    <script src="resources/js/api-docs.js"></script>
+</h:head>
+
+<f:view>
+    <div class="nav_bar" id="nav_bar">
+        <ul id="entity_list">
+            <li id="employee_btn">Employee</li>
+            <li id="shift_btn">Shift</li>
+            <li id="request_btn">Request</li>
+            <li id="orders_btn">Orders</li>
+            <li id="booking_btn">Booking</li>
+            <li id="dish_btn">Dish</li>
+            <li id="carte_btn">Carte</li>
+            <li id="lunch_btn">Lunch</li>
+            <li id="event_btn">Event</li>
+            <li id="review_btn">Review</li>
+            <li><a href="samples.html" style="color:inherit;text-decoration:none">Samples</a></li>
+        </ul>
+        <hr/>
+    </div>
+
+    <div class="all_entities">
+
+
+
+        <!-- EMPLOYEE -->
+
+        <div class="entity" id="employee">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee?id=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@id (optional):</b> 12 digit social security number (ssn) of a registered employee.</p>
+                    <p><b>Returns</b><br />The employee matching the snn, or all employees if @id is excluded.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee/working</code></p>
+                    <p><b>Returns</b><br />All working employees.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee/retired</code></p>
+                    <p><b>Returns</b><br />All retired employees.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee/lunch/available?date=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@date (optional):</b> a date following the format yyyy-MM-dd. It will use todays date if the date parameter is excluded</p>
+                    <p><b>Returns</b><br />All employees who doesn't work during lunch of the given date.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee/dinner/available?date=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@date (optional):</b> a date following the format yyyy-MM-dd. It will use todays date if the date parameter is excluded</p>
+                    <p><b>Returns</b><br />All employees who doesn't work during dinner of the given date.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@Employee:</b> {"email":"example@mail.com","firstName":"exampleName","lastName":"exampleLastName","phoneNumber":"0701234567","ssn":"199506239912"}.
+                    </p>
+                    <p><b>Action</b><br />Inserts a new employee.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee/update</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@Employee:</b> {"email":"example@mail.com","firstName":"exampleName","lastName":"exampleLastName","phoneNumber":"0701234567","ssn":"199506239912"}.
+                    </p>
+                    <p><b>Action</b><br />Updates employee attributes.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee/unretire</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@Employee:</b> {"email":"example@mail.com","firstName":"exampleName","lastName":"exampleLastName","phoneNumber":"0701234567","ssn":"199506239912"}.
+                    </p>
+                    <p><b>Action</b><br />Unretires a previously working employee.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/employee</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@Employee:</b> {"email":"example@mail.com","firstName":"exampleName","lastName":"exampleLastName","phoneNumber":"0701234567","ssn":"199506239912"}.
+                    </p>
+                    <p><b>Action</b><br />Retires an employee, deletes all their shifts and requests.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SHIFT -->
+
+        <div class="entity" id="shift">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/shift?employeeId=&amp;shiftId=&amp;date=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@employeeId (optional):</b> 12 digit social security number (ssn) of a registered employee.</p>
+                    <p class="param"><b>@shiftId (optional):</b> id of a shift.</p>
+                    <p class="param"><b>@date (optional):</b> a date following the format yyyy-MM-dd.</p>
+                    <p><b>Returns</b><br />All shifts of date if @employeeId and @shiftId are excluded. If no parameters are set, all shifts are returned. If only @employeeId is set, all shifts of that employee is returned. If only @shiftId is set then that shift is returned.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/shift/lunch?date=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@date (optional):</b> a date following the format yyyy-MM-dd.</p>
+                    <p><b>Returns</b><br />All lunch shifts of the date. Returns all lunch shifts if date is excluded.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/shift/dinner?date=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@date (optional):</b> a date following the format yyyy-MM-dd.</p>
+                    <p><b>Returns</b><br />All dinner shifts of the date. Returns all dinner shifts if date is excluded.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/shift/upcoming-shifts?id=&amp;date=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@id:</b> 12 digit social security number (ssn) of a registered employee.</p>
+                    <p class="param"><b>@date:</b> a date following the format yyyy-MM-dd.</p>
+                    <p><b>Returns</b><br />All shifts of a specific employee on the given date.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/shift/range?startDate=&amp;endDate=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@startDate:</b> a start date of a range following the format yyyy-MM-dd.</p>
+                    <p class="param"><b>@endDate:</b> a end date of a range following the format yyyy-MM-dd.</p>
+                    <p><b>Returns</b><br />All shifts within the given range of dates.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/shift/change-employee</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@ShiftUpdateEmployee:</b> {"id":4,"ssn":"199702238712"}.
+                    </p>
+                    <p><b>Action</b><br />Changes employee of a shift.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/shift</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@Shift:</b> {"beginTime":"16:00:00","date":"2022-12-03","employee":{"email":"caku2200@miun.student.se","firstName":"Can","lastName":"Kupeli","phoneNumber":"0768815432","ssn":"199809117632"},"endTime":"23:00:00","id":1}.
+                    </p>
+                    <p><b>Action</b><br />Inserts a new shift for a registered employee.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/shift</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@Shift:</b> {"beginTime":"16:00:00","date":"2022-12-03","employee":{"email":"caku2200@miun.student.se","firstName":"Can","lastName":"Kupeli","phoneNumber":"0768815432","ssn":"199809117632"},"endTime":"23:00:00","id":1}.
+                    </p>
+                    <p><b>Action</b><br />Deletes a shift and all requests with that shift.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- REQUEST -->
+
+        <div class="entity" id="request">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/request</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param">
+                        <b>@receiverId (optional):</b> Id of a specific request.
+                    </p>
+                    <p><b>Returns</b><br />A specific request of the id. Returns all requests if @receiverId is excluded.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/request</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@RequestPlaceholder:</b> {"ssn":"199705084387","id":4}.
+                    </p>
+                    <p><b>Action</b><br />Inserts a new request.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/request</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param">
+                        <b>@RequestPlaceholer:</b> {"ssn":"199705084387","id":4}.
+                    </p>
+                    <p><b>Action</b><br />Deletes a request.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="entity" id="orders">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders</code></p>
+                    <p><b>Returns</b><br />All orders.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/booking?id=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param">
+                        <b>@id:</b> Id of a booking.
+                    </p>
+                    <p><b>Returns</b><br />All orders of a booking.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/ready</code></p>
+                    <p><b>Returns</b><br />All cooked orders that aren't served of the day.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/kitchen</code></p>
+                    <p><b>Returns</b><br />All orders that are not yet cooked of the day.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/kitchen</code></p>
+                    <p><b>Returns</b><br />All orders of the day that haven't been served yet.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/served</code></p>
+                    <p><b>Returns</b><br />All orders that have been served.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/sales</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@startDate:</b> Starting date following the format yyyy-MM-dd.</p>
+                    <p class="param"><b>@endDate:</b> End date following the format yyyy-MM-dd.</p>
+                    <p><b>Returns</b><br />All orders from all days between the dates (dates days included).</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/update-status-and-served</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Order:</b> {"booking":{"date":"2022-12-07","firstName":"Sam","id":415,"lastName":"Gre","numberOfPeople":2,"phoneNumber":"321321","tableNumber":2,"time":"14:00:00"},"dish":{"id":246,"name":"Apple Juice"},"employee":{"email":"caku2200@miun.student.se","firstName":"Can","lastName":"Kupeli","phoneNumber":"0768815432","ssn":"199809117632"},"id":206,"notes":"no chicken","served":false,"status":false}.</p>
+                    <p><b>Action</b><br />Changes an orders "status", "served" attributes to True or False.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/kitchen</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Order:</b> {"booking":{"date":"2022-12-07","firstName":"Sam","id":415,"lastName":"Gre","numberOfPeople":2,"phoneNumber":"321321","tableNumber":2,"time":"14:00:00"},"dish":{"id":246,"name":"Apple Juice"},"employee":{"email":"caku2200@miun.student.se","firstName":"Can","lastName":"Kupeli","phoneNumber":"0768815432","ssn":"199809117632"},"id":206,"notes":"no chicken","served":false,"status":false}.</p>
+                    <p><b>Action</b><br />Sets an orders "status" attribute to True to indicate that an order has been cooked.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders/served</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Order:</b> {"booking":{"date":"2022-12-07","firstName":"Sam","id":415,"lastName":"Gre","numberOfPeople":2,"phoneNumber":"321321","tableNumber":2,"time":"14:00:00"},"dish":{"id":246,"name":"Apple Juice"},"employee":{"email":"caku2200@miun.student.se","firstName":"Can","lastName":"Kupeli","phoneNumber":"0768815432","ssn":"199809117632"},"id":206,"notes":"no chicken","served":false,"status":false}.</p>
+                    <p><b>Action</b><br />Sets an orders "served" attribute to True or False.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Order:</b> {"booking":{"date":"2022-12-07","firstName":"Sam","id":415,"lastName":"Gre","numberOfPeople":2,"phoneNumber":"321321","tableNumber":2,"time":"14:00:00"},"dish":{"id":246,"name":"Apple Juice"},"employee":{"email":"caku2200@miun.student.se","firstName":"Can","lastName":"Kupeli","phoneNumber":"0768815432","ssn":"199809117632"},"id":206,"notes":"no chicken","served":false,"status":false}.</p>
+                    <p><b>Action</b><br />Inserts an order.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/orders</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Order:</b> {"booking":{"date":"2022-12-07","firstName":"Sam","id":415,"lastName":"Gre","numberOfPeople":2,"phoneNumber":"321321","tableNumber":2,"time":"14:00:00"},"dish":{"id":246,"name":"Apple Juice"},"employee":{"email":"caku2200@miun.student.se","firstName":"Can","lastName":"Kupeli","phoneNumber":"0768815432","ssn":"199809117632"},"id":206,"notes":"no chicken","served":false,"status":false}.</p>
+                    <p><b>Action</b><br />Deletes an order.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="entity" id="booking">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/booking?date=&amp;phoneNumber=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@date (optional):</b> A date following the format yyyy-MM-dd</p>
+                    <p class="param"><b>@phoneNumber (optional):</b> 10 digit phone number</p>
+                    <p><b>Returns</b><br />All bookings done with a phone number at a given date. If both parameters are excluded, all bookings are returned. If the phone number is excluded, all bookings of the date is returned. If the date is excluded, all bookings of the given phone number is returned.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/booking/count?date=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@date:</b> A date following the format yyyy-MM-dd</p>
+                    <p><b>Returns</b><br />Number of bookings made at the given date.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/booking</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Booking:</b> {"date":"2022-11-24","firstName":"Lena","id":2,"lastName":"Svensson","numberOfPeople":2,"phoneNumber":"0757789123","tableNumber":2,"time":"19:30:00"}</p>
+                    <p><b>Action</b><br />Inserts a new booking.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/booking</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Booking:</b> {"date":"2022-11-24","firstName":"Lena","id":2,"lastName":"Svensson","numberOfPeople":2,"phoneNumber":"0757789123","tableNumber":2,"time":"19:30:00"}</p>
+                    <p><b>Action</b><br />Deletes a booking.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="entity" id="dish">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/dish</code></p>
+                    <p><b>Returns</b><br />All dishes.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/dish/available</code></p>
+                    <p><b>Returns</b><br />All dishes that are not added in carte.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/dish</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Dish:</b> {"id":241,"name":"Fanta","type":"Läsk"}.</p>
+                    <p><b>Action</b><br />Inserts a dish.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/dish</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Dish:</b> {"id":241,"name":"Fanta","type":"Läsk"}.</p>
+                    <p><b>Action</b><br />Deletes a dish, all lunches cartes of the corresponding dish.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="entity" id="carte">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/carte</code></p>
+                    <p><b>Returns</b><br />All cartes.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/carte</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Carte:</b> {"category":"Dryck","description":"Fanta-stic Soda","dish":{"id":241,"name":"Fanta","type":"Läsk"},"price":35}.</p>
+                    <p><b>Action</b><br />Inserts a carte.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/carte</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@DishIdPlaceholder:</b> {"id":1}.</p>
+                    <p><b>Action</b><br />Deletes a carte.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="entity" id="lunch">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/lunch?date=</code></p>
+                    <p class="param_title"><b>Parameters</b></p>
+                    <p class="param"><b>@date:</b> A date following the format yyyy-MM-dd.</p>
+                    <p><b>Returns</b><br />All lunches of the given date. If @date is excluded, all lunches are returned.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/lunch/today</code></p>
+                    <p><b>Returns</b><br />All lunches of today.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/lunch</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Lunch:</b> {"date":"2022-11-29","description":"albalb","dish":{"id":3,"name":"Calzone","type":"Pizza"},"price":89}.</p>
+                    <p><b>Action</b><br />Inserts a lunch.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/lunch</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Carte:</b> {"date":"2022-11-29","description":"albalb","dish":{"id":3,"name":"Calzone","type":"Pizza"},"price":89}.</p>
+                    <p><b>Action</b><br />Deletes a lunch.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="entity" id="event">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/event</code></p>
+                    <p><b>Returns</b><br />All events.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/event/upcoming</code></p>
+                    <p><b>Returns</b><br />All upcoming events.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/event</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Event:</b> {"date":"2022-11-30","description":"Ni hörde rätt. KISS kommer till Antons Skafferi!","id":2,"name":"KISS","price":10}</p>
+                    <p><b>Action</b><br />Inserts an event.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/event</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Event:</b> {"date":"2022-11-30","description":"Ni hörde rätt. KISS kommer till Antons Skafferi!","id":2,"name":"KISS","price":10}</p>
+                    <p><b>Action</b><br />Deletes an event.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/event/delete-all</code></p>
+                    <p><b>Action</b><br />Deletes all events.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="entity" id="review">
+            <div class="card">
+                <div class="http_request_get">
+                    <h1>GET</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/review</code></p>
+                    <p><b>Returns</b><br />All reviews.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_post">
+                    <h1>POST</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/review</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Review:</b> {"firstName":"Can","id":107,"lastName":"nått","ranking":1,"text":"skoja de va tjock gott"}.</p>
+                    <p><b>Action</b><br />Inserts a review.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/review</code></p>
+                    <p class="param_title"><b>Body</b></p>
+                    <p class="param"><b>@Review:</b> {"firstName":"Can","id":107,"lastName":"nått","ranking":1,"text":"skoja de va tjock gott"}.</p>
+                    <p><b>Action</b><br />Deletes a review.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="http_request_put">
+                    <h1>PUT</h1>
+                </div>
+                <div class="vl" />
+                <div class="card_content">
+                    <p class="param_title"><b>Extension:</b> <code>api/review/delete-all</code></p>
+                    <p><b>Action</b><br />Deletes all reviews.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:view>
+</html>

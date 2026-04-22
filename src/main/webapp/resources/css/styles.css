@@ -1,6 +1,16 @@
 :root {
     --joel_brown: #7D5A3E;
     --background_white: #f5f5f5;
+    --text-muted: #555;
+    --border-subtle: rgba(125, 90, 62, 0.25);
+    --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.12), 0 6px 20px rgba(0, 0, 0, 0.08);
+    --radius-card: 12px;
+    --accent-danger: #b23a2f;
+    --surface: white;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 * {
@@ -110,7 +120,7 @@ h2, h3, h4, p, label {
 }
 
 .open-hours {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: var(--shadow-card);
     color: white;
     position: absolute;
     top: 0;
@@ -168,13 +178,68 @@ h2, h3, h4, p, label {
 }
 
 
+.review-form {
+    display: grid;
+    gap: 0.75em;
+    max-width: 640px;
+    margin: 1em 0 2em;
+    padding: 1.5em;
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+}
+
 .review-form > label {
     display: none;
 }
 
+.review-form h3 {
+    color: var(--joel_brown);
+    margin-bottom: 0.25em;
+}
+
+.review-form input[type="text"],
+.review-form textarea {
+    width: 100%;
+    padding: 0.5em 0.75em;
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    font-family: Cormorant, serif;
+    font-size: 1rem;
+}
+
+.review-form textarea {
+    min-height: 6em;
+    resize: vertical;
+}
+
+.review-form input[type="text"]:focus,
+.review-form textarea:focus {
+    outline: none;
+    border-color: var(--joel_brown);
+}
+
+.review-form input[type="submit"] {
+    justify-self: start;
+    background: var(--joel_brown);
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: Cinzel, cursive;
+    letter-spacing: 0.05em;
+    transition: opacity 0.15s;
+}
+
+.review-form input[type="submit"]:hover {
+    opacity: 0.9;
+}
+
 .star-name {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    gap: 1em;
 }
 
 .review-name-input {
@@ -182,15 +247,11 @@ h2, h3, h4, p, label {
     font-size: x-large;
 }
 
-.review-form > textarea {
-    display: block;
-    max-width: 100%;
-}
-
 .stars {
     display: inline-flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
+    align-items: center;
 }
 
 .stars > input {
@@ -199,34 +260,85 @@ h2, h3, h4, p, label {
 
 .stars > label {
     position: relative;
-    font-size: xxx-large;
-    height: fit-content;
-    color: #FFD700;
+    font-size: 2rem;
+    color: #ddd;
     cursor: pointer;
+    transition: color 0.1s;
+    padding: 0 0.05em;
 }
 
 .stars > label::before {
     content: "\2605";
     position: absolute;
+    top: 0;
+    left: 0.05em;
+    color: #FFD700;
     opacity: 0;
+    transition: opacity 0.1s;
 }
 
 .stars > label:hover:before,
-.stars > label:hover ~ label:before {
-    opacity: 1 !important;
-}
-
+.stars > label:hover ~ label:before,
 .stars > input:checked ~ label:before {
     opacity: 1;
 }
 
-.rating:hover > input:checked ~ label:before {
-    opacity: 0.4;
+.stars > #ranking,
+.stars input[type="text"] {
+    display: none;
+}
+
+/* Existing comments list */
+#grade_loc > .review-form ~ h2 {
+    margin-top: 2em;
+    color: var(--joel_brown);
+}
+
+.review-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5em;
+}
+
+.review-item {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 1em 1.25em;
+    margin-bottom: 0.75em;
+}
+
+.review-item-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 0.25em;
+}
+
+.review-item-name {
+    font-family: Cinzel, cursive;
+    font-size: 1.1rem;
+    color: var(--joel_brown);
+}
+
+.review-item-rating {
+    color: #FFD700;
+    letter-spacing: 0.1em;
+    font-size: 0.95rem;
+}
+
+.review-item-text {
+    color: #333;
+    font-family: Cormorant, serif;
+    font-size: 1.05rem;
+    line-height: 1.4;
 }
 
 .last {
     padding-bottom: 6vh;
 }
+
 
 
 .footer-container {
@@ -269,7 +381,7 @@ h2, h3, h4, p, label {
 .admin-day {
     padding: 3px;
     border: #202020 1px solid;
-    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    box-shadow: var(--shadow-card);
     padding: 1em;
 }
 
@@ -414,4 +526,86 @@ h2, h3, h4, p, label {
     .admin-carte-categories {
         grid-template-columns: 1fr;
     }
+}
+
+
+/* Shared food list (lunch + carte) */
+.lunch-days ul,
+.menu-days ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0.5em 0 1em;
+}
+
+.lunch-days ul li,
+.menu-days ul li {
+    transition: opacity 0.2s, color 0.2s;
+    cursor: pointer;
+    opacity: 0.6;
+    font-family: Cinzel, cursive;
+    letter-spacing: 0.05em;
+}
+
+.lunch-days ul li:hover,
+.menu-days ul li:hover {
+    opacity: 1;
+    color: var(--joel_brown);
+}
+
+.lunch-item,
+.menu-item {
+    margin: 1.25em 2% 1.25em 2%;
+    padding-right: 8%;
+}
+
+.menu-item {
+    cursor: pointer;
+}
+
+.lunch-item-main,
+.menu-item-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1em;
+    margin-bottom: 0.35em;
+}
+
+.lunch-item-name,
+.menu-item-name {
+    color: var(--joel_brown);
+    font-family: Cinzel, cursive;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+}
+
+.lunch-item-price,
+.menu-item-price {
+    color: var(--joel_brown);
+    font-family: Cormorant, serif;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    opacity: 0.85;
+}
+
+.lunch-item-description,
+.menu-item-description {
+    color: #333;
+    font-family: Cormorant, serif;
+    font-size: 1.05rem;
+    line-height: 1.45;
+    word-wrap: break-word;
+    max-width: 80ch;
+}
+
+.menu-item-ingr {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-top: 0.3em;
+}
+
+.break-point {
+    margin: 0 2%;
 }

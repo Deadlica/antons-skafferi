@@ -4,7 +4,7 @@ const dateStringToInt = new Map();
 const dateIntToString = new Map();
 const dates = new Map();
 
-const data_url = "http://89.233.229.182:8080/antons-skafferi-db-1.0-SNAPSHOT/api/orders/sales?";
+const data_url = "/api-proxy/orders/sales?";
 let selectedMonth = new Date()
 let startDate = "";
 let endDate = "";

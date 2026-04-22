@@ -7,6 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
+   <link rel="icon" type="image/svg+xml" href="/resources/images/favicon.svg"/>
    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
    <h:outputStylesheet library="css" name="styles.css"/>
    <h:outputStylesheet library="css" name="adminschedule.css"/>
@@ -14,7 +15,7 @@
    <link rel="stylesheet"
          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 </h:head>
-<f:view transient="true">
+<f:view>
    <ui:include src="nav.xhtml" />
    <h:panelGroup class="admin-main" layout="block">
       <h:form id="schedule">
@@ -68,9 +69,10 @@
                <h:outputLabel for="ssn">Personnummer (YYYYMMDDXXXX)</h:outputLabel>
                <h:inputText id="ssn" value="#{ShiftBean.newSSN}"
                             requiredMessage="Personnummer enligt YYYYMMDDXXXX">
-                  <f:validateLength minimum="12" maximum="12"/>
+                  <f:validateRegex pattern="\d{12}"/>
                </h:inputText>
                <h:message for="ssn" errorStyle="color:red"/>
+               <h:messages globalOnly="true" errorStyle="color:red"/>
                <h:outputLabel for="email">Email</h:outputLabel>
                <h:inputText type="text" id="email" value="#{ShiftBean.newEmployee.email}"/>
                <h:outputLabel for="phone_number">Telefonnummer</h:outputLabel>

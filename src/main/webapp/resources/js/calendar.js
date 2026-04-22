@@ -1,115 +1,76 @@
 window.addEventListener('DOMContentLoaded', (event) => {
+    init();
+});
 
-    isLeapYear = (year) => {
-        return (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) || (year % 100 === 0 && year % 400 === 0)
-    }
+function init() {
+    const month_names = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+    const isLeapYear = y => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+    const getFebDays = y => isLeapYear(y) ? 29 : 28;
 
-    getFebDays = (year) => {
+    const input_text = document.getElementById('myform:inputText');
+    if (!input_text) return;
+    input_text.readOnly = true;
 
-        if (isLeapYear(year))
-            return 29
-        else
-            return 28
-    }
+    const days = () => Array.from(document.querySelectorAll('#days .week-day'));
+    const selectedParts = (input_text.value || '').split('-', 3);
+    const yearpicker = document.querySelector('.year-book').innerHTML;
+    const month_picker = document.querySelector('.month').innerHTML;
+    const month = month_names.indexOf(month_picker.substring(0, 3));
+    const year = parseInt(yearpicker);
+    const selectedDay = parseInt(selectedParts[2]);
+    const selectedMonth = parseInt(selectedParts[1]);
 
-    month_names = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
-
-
-    generateCalender = (month, year,currDate2,curr_month) => {
-        let currDate = new Date()
-
-        let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
-        let first_day = new Date(year, month, 1)
-        let last_day = new Date(year, month + 1, 1)
-        firstDayStart = first_day.getDay()
-
-        if (firstDayStart == 0) {
-            firstDayStart = 7
-        }
-        for (let index = 0; index < days_of_month[month] + firstDayStart; index++) {
-            if (index >= firstDayStart - 1) {
-                if ((index - firstDayStart + 2) == currDate.getDate() && currDate.getMonth() == month && currDate.getFullYear() == year) {
-                    document.getElementById("myform:j_idt111:" + (index) + ":item2").classList.add("this-day")
-                }
-                if ((index - firstDayStart + 2) == currDate2 && curr_month == month + 1 && currDate.getFullYear() == year) {
-                    document.getElementById("myform:j_idt111:" + (index) + ":item2").classList.add("selected")
-                    prevTarget = document.getElementById("myform:j_idt110:" + (index) + ":item2")
-                }
-            } else {
-                document.getElementById("myform:j_idt111:" + (index) + ":item2").innerHTML = "";
-            }
-        }
-    }
-    let prevTarget = undefined
-
-
-
-
-    var input_text = document.getElementById('myform:inputText')
-
-
-    input_text.readOnly = true
-
-
-     myArray = input_text.value.split("-", 3);
-
-    let yearpicker = document.querySelector('.year-book').innerHTML
-    let month_picker = document.querySelector('.month').innerHTML
-
-
-    var curr_year = parseInt(myArray[0])
-
-    generateCalender(month_names.indexOf(month_picker.substring(0, 3)), parseInt(yearpicker),parseInt(myArray[2]),parseInt(myArray[1]))
-    loadNewDatesListners(month_names.indexOf(month_picker.substring(0, 3)), parseInt(yearpicker),parseInt(myArray[2]),parseInt(myArray[1]));
-})
-loadNewDatesListners = (month, year) => {
-    let prevTarget = undefined
-    var input_text = document.getElementById('myform:inputText')
-    document.querySelectorAll('#days .notFull').forEach(day => {
-        day.addEventListener("click", async event => {
-            document.querySelectorAll('#days .selected').forEach(Removeselected => {
-                Removeselected.classList.remove("selected")
-            });
-            event.currentTarget.classList.toggle("selected");
-            prevTarget = event.currentTarget
-            input_text.readOnly = false
-
-            var selectetMonth = month+ 1;
-            var selectetday = document.getElementById(event.target.id).innerHTML;
-
-            if (selectetMonth < 10) {
-                var tempSelectetMonth = "0" + String(selectetMonth);
-            } else {
-                var tempSelectetMonth = String(selectetMonth);
-
-            }
-            if (selectetday.length == 1) {
-                var tempSelectetday = "0" + selectetday;
-            } else {
-                var tempSelectetday = selectetday;
-
-            }
-
-            input_text.value = parseInt(year) + "-" + (tempSelectetMonth) + "-" + tempSelectetday
-            input_text.readOnly = true
-
-        });
-    });
+    generateCalender(month, year, selectedDay, selectedMonth, days());
+    loadNewDatesListeners(month, year, days(), input_text);
 }
 
-changeMonth = () =>
-{
+function generateCalender(month, year, selectedDay, selectedMonth, cells) {
+    const currDate = new Date();
+    const days_of_month = [31, (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    let firstDayStart = new Date(year, month, 1).getDay();
+    if (firstDayStart === 0) firstDayStart = 7;
 
-    var input_text = document.getElementById('myform:inputText')
-    input_text.readOnly = true
-    myArray = input_text.value.split("-", 3);
+    for (let index = 0; index < days_of_month[month] + firstDayStart - 1; index++) {
+        const cell = cells[index];
+        if (!cell) continue;
+        if (index >= firstDayStart - 1) {
+            const day = index - firstDayStart + 2;
+            if (day === currDate.getDate() && currDate.getMonth() === month && currDate.getFullYear() === year) {
+                cell.classList.add("this-day");
+            }
+            if (day === selectedDay && selectedMonth === month + 1 && currDate.getFullYear() === year) {
+                cell.classList.add("selected");
+            }
+        } else {
+            cell.innerHTML = "";
+        }
+    }
+}
 
+function loadNewDatesListeners(month, year, cells, input_text) {
+    document.querySelectorAll('#days .notFull').forEach(day => {
+        day.addEventListener("click", event => {
+            document.querySelectorAll('#days .selected').forEach(el => el.classList.remove("selected"));
+            event.currentTarget.classList.add("selected");
+            const selectedMonth = String(month + 1).padStart(2, '0');
+            const dayText = event.currentTarget.textContent.trim();
+            const selectedDay = dayText.padStart(2, '0');
+            input_text.readOnly = false;
+            input_text.value = year + "-" + selectedMonth + "-" + selectedDay;
+            input_text.readOnly = true;
+            input_text.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+    });
 
-    var curr_year = parseInt(myArray[0])
+    // Auto-select today or first available day if nothing is selected
+    if (!input_text.value || input_text.value === "0000-00-00") {
+        const today = document.querySelector('#days .this-day.notFull');
+        const firstAvailable = document.querySelector('#days .notFull');
+        const target = today || firstAvailable;
+        if (target) target.click();
+    }
+}
 
-    let yearpicker = document.querySelector('.year-book').innerHTML
-    let month_picker = document.querySelector('.month').innerHTML
-    generateCalender(month_names.indexOf(month_picker.substring(0, 3)), parseInt(yearpicker),parseInt(myArray[2]),parseInt(myArray[1]))
-    loadNewDatesListners(month_names.indexOf(month_picker.substring(0, 3)), parseInt(yearpicker));
+function changeMonth() {
+    init();
 }

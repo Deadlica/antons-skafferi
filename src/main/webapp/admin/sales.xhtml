@@ -10,6 +10,7 @@
       xml:lang="sv">
 
 <h:head>
+   <link rel="icon" type="image/svg+xml" href="/resources/images/favicon.svg"/>
    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
    <h:outputStylesheet library="css" name="styles.css"/>
    <h:outputStylesheet library="css" name="graph.css"/>
@@ -22,7 +23,10 @@
 <h:body>
    <f:view>
       <ui:include src="nav.xhtml"/>
-      <ui:include src="graph.xhtml"/>
+      <h:panelGroup class="admin-main" layout="block">
+         <ui:include src="graph.xhtml"/>
+      </h:panelGroup>
+      <ui:include src="footer.xhtml"/>
    </f:view>
 </h:body>
 </html>
